@@ -1,0 +1,5 @@
+name: SLogin
+version: ${project.version}
+main: me.serafin.me.serafin.slogin.SLogin
+api-version: 1.16
+authors: [ _Serafin ]
