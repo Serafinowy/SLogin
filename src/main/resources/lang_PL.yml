@@ -1,0 +1,72 @@
+#################################
+#           SeraLogin           #
+#         Author _Serafin       #
+#################################
+
+
+# Wiadomości dla gracza
+userMessages:
+  # Główne wiadomości
+  onlyForPlayers: "&cTa komenda jest przeznaczona tylko dla graczy!"
+  wrongPassword: "&cPodałeś złe hasło!"
+  alreadyLogged: "&cJesteś już zalogowany!"
+  mustLogin: "&cMusisz się zalogować, by to zrobić!"
+
+  # Wiadomości z logowania
+  loginInfo: "&7Zaloguj się: &e/login <hasło>"
+  loginCorrectUsage: "&cPoprawne użycie: /login <hasło>"
+  loginSuccess: "&aPomyślnie się zalogowałeś!"
+
+  loginTitle: "&a&lWitaj"
+  loginSubTitle: "&7Wpisz: /login <hasło>"
+
+  loginSuccessTitle: "&a&lWeryfikacja"
+  loginSuccessSubTitle: "&7Pomyślnie się zalogowałeś!"
+
+  # Wiadomości z rejestracji
+  notAllowedPasswordLength: "&cHasło musi zawierać od 5 do 20 znaków!"
+  differentPasswords: "&cPodałeś różne hasła! Hasła muszą być identyczne!"
+  alreadyRegistered: "&cJesteś już zarejestrowany! Użyj komendy: &e/login <hasło>"
+  notRegistered: "&cNie jesteś zarejestrowany! Użyj komendy &e/register <hasło> <hasło>"
+
+  registerInfo: "&7Zarejstruj się: &e/register <hasło> <hasło>"
+  registerCorrectUsage: "&cPoprawne użycie: &e/register <hasło> <hasło>"
+  registerSuccess: "&aPomyślnie się zarejestrowałeś!"
+
+  registerTitle: "&a&lWitaj"
+  registerSubTitle: "&7Wpisz: /reg <hasło> <hasło>"
+
+  registerSuccessTitle: "&a&lWeryfikacja"
+  registerSuccessSubTitle: "&7Pomyślnie się zarejestrowałeś!"
+
+  # Wiadomości z zmianą hasła
+  changePassCorrectUsage: "&cPoprawne użycie: &e/cp <stare_hasło> <nowe_hasło>"
+  changePassSuccess: "&aPomyślnie zmieniłeś hasło! Nie zapomnij go!"
+
+
+# Wiadomości dla administratora
+adminMessages:
+  # Info o graczu
+  userNotExists: "&cTaki gracz nie istnieje!"
+  userIsNotOnline: "&cTen gracz nie jest online!"
+
+  # Info about player
+  playerInfoCorrectUsage: "&cPoprawne użycie: /sl playerinfo <nick>"
+
+  # Change password
+  changePassAdminCorrectUsage: "&cPoprawne użycie: /sl changepassword <nick> <hasło>"
+  changePassAdminSuccess: "&aPomyślnie zmieniłeś hasło gracza!"
+
+  # Force login
+  forceLoginCorrectUsage: "&cPoprawne użycie: /sl forcelogin <nick>"
+  forceLoginSuccess: "&aPomyślnie zalogowałeś gracza!"
+  forceLoginDeny: "&cTen gracz jest już zalogowany!"
+
+  # Register
+  registerAdminCorrectUsage: "&cPoprawne użycie: /sl register <nick> <hasło>"
+  registerAdminSuccess: "&aPomyślnie zarejestrowałeś gracza!"
+  registerAdminDeny: "&cTen gracz jest już zalogowany!"
+
+  # Unregister
+  unRegisterCorrectUsage: "&cPoprawne użycie: /sl unregister <nick>"
+  unRegisterSuccess: "&aPomyślnie wyrejestrowałeś gracza!"

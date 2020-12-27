@@ -1,0 +1,73 @@
+#################################
+#           SeraLogin           #
+#         Author _Serafin       #
+#################################
+
+
+# Messages for player
+userMessages:
+  # General messages
+  onlyForPlayers: "&cThis command is only for players!"
+  wrongPassword: "&cYou entered wrong password!"
+  alreadyLogged: "&cYou are already logged in!"
+  mustLogin: "&cYou must log in to do that!"
+  maxAccounts: "&cYou have registered the maximum amount of accounts on this IP!"
+
+  # Log in
+  loginInfo: "&7Log in: &e/login <password>"
+  loginCorrectUsage: "&cCorrect usage: /login <password>"
+  loginSuccess: "&aYou have logged in successfully!"
+
+  loginTitle: "&a&lWelcome"
+  loginSubTitle: "&7Type: /login <password>"
+
+  loginSuccessTitle: "&a&lVerification"
+  loginSuccessSubTitle: "&7You have logged in successfully!"
+
+  # Register
+  notAllowedPasswordLength: "&cThe password must be 5-20 characters long!"
+  differentPasswords: "&cYou entered wrong password! Passwords must be identical!"
+  alreadyRegistered: "&cYou are already registered! Use command: &e/login <password>"
+  notRegistered: "&cYou are not registered! Use command: &e/register <password> <password>"
+
+  registerInfo: "&7Register: &e/register <password> <password>"
+  registerCorrectUsage: "&cCorrect usage: &e/register <password> <password>"
+  registerSuccess: "&aYou have registered successfully!"
+
+  registerTitle: "&a&lWelcome"
+  registerSubTitle: "&7Type: /reg <password> <password>"
+
+  registerSuccessTitle: "&a&lVerification"
+  registerSuccessSubTitle: "&7You have registered successfully!"
+
+  # Change password
+  changePassCorrectUsage: "&cCorrect usage: &e/cp <old pass> <new pass>"
+  changePassSuccess: "&aYou changed password successfully! Do not forget it!"
+
+
+# Messages for administrator
+adminMessages:
+  # General messages
+  userNotExists: "&cThis player do not exist!"
+  userIsNotOnline: "&cThis player is not online!"
+
+  # Info about player
+  playerInfoCorrectUsage: "&cCorrect usage: /sl playerinfo <nick>"
+
+  # Change password
+  changePassAdminCorrectUsage: "&cCorrect usage: /sl changepassword <nick> <pass>"
+  changePassAdminSuccess: "&aYou changed player's password successfully!"
+
+  # Force login
+  forceLoginCorrectUsage: "&cCorrect usage: /sl forcelogin <nick>"
+  forceLoginSuccess: "&aYou have logged in a player successfully!"
+  forceLoginDeny: "&cYou cannot log in this player (player is already logged in or player has not an account)!"
+
+  # Register
+  registerAdminCorrectUsage: "&cCorrect usage: /sl register <nick> <pass>"
+  registerAdminSuccess: "&aYou have registered a player successfully!"
+  registerAdminDeny: "&cThis player is already registered!"
+
+  # Unregister
+  unRegisterCorrectUsage: "&cCorrect usage: /sl unregister <nick>"
+  unRegisterSuccess: "&aYou have unregistered a player successfully!"

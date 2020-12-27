@@ -1,0 +1,41 @@
+#################################
+#           SeraLogin           #
+#         Author _Serafin       #
+#################################
+
+# The language settings file contains in-game messages
+# Languages available: EN (English), PL (Polish)
+Language: EN
+
+# The place where the data will be saved
+# Choose between FLAT and MYSQL
+DataType: FLAT
+
+# Fill only if you chose MYSQL data type
+MySQL:
+  Host: "localhost"
+  Port: 3306
+  User: "root"
+  Pass: ""
+  DataBase: "seralogin"
+
+# One IP address cannot have more than this number of accounts
+MaxAccountsPerIP: 2
+
+Messages:
+  # Shows chat messages on join
+  ChatMessages: true
+  # Shows title messages on join
+  TitleMessages: true
+
+# Allowed commands when you are not logged in
+AllowedCommands:
+  - l
+  - login
+  - reg
+  - register
+
+# Set minimum and maximum password length
+Password:
+  min-length: 5
+  max-length: 20
