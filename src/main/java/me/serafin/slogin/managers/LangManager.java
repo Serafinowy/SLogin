@@ -93,6 +93,11 @@ public class LangManager {
 
     ///////////////////////////////////////////
 
+    public String captcha_guiName;
+    public String captcha_kickMessage;
+
+    ///////////////////////////////////////////
+
     /**
      * Loading default language file (from plugin)
      */
@@ -173,5 +178,10 @@ public class LangManager {
 
         unRegisterCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterCorrectUsage"));
         unRegisterSuccess = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterSuccess"));
+
+        ///////////////////////////////////////////
+
+        captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
+        captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
     }
 }

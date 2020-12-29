@@ -65,8 +65,36 @@ public class Utils {
                 return scanner.next();
             }
         } catch (IOException exception) {
-            Bukkit.getLogger().severe("Update checker is broken, can't find an update!" + exception.getMessage());
+            Bukkit.getLogger().severe("Update checker is broken, cannot find an update!" + exception.getMessage());
         }
         return null;
+    }
+
+    public static String getServerVersion() {
+        String bukkitVersion = Bukkit.getBukkitVersion();
+        String serverVersion = "1.8";
+
+        if(bukkitVersion.contains("1.9")) serverVersion = "1.9";
+        else if(bukkitVersion.contains("1.10")) serverVersion = "1.10";
+        else if(bukkitVersion.contains("1.11")) serverVersion = "1.11";
+        else if(bukkitVersion.contains("1.12")) serverVersion = "1.12";
+        else if(bukkitVersion.contains("1.13")) serverVersion = "1.13";
+        else if(bukkitVersion.contains("1.14")) serverVersion = "1.14";
+        else if(bukkitVersion.contains("1.15")) serverVersion = "1.15";
+        else if(bukkitVersion.contains("1.16")) serverVersion = "1.16";
+
+        return serverVersion;
+    }
+
+    public static boolean isHigherVersion(String minVersion, String curVersion) {
+        String[] minVersionT = minVersion.split("\\.");
+        String[] curVersionT = curVersion.split("\\.");
+
+        try {
+            if( Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]) )
+                return true;
+            return Integer.parseInt(curVersionT[1]) > Integer.parseInt(minVersionT[1]);
+        } catch (Exception ignored) { }
+        return false;
     }
 }

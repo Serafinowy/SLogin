@@ -4,12 +4,12 @@ import me.serafin.slogin.managers.ConfigManager;
 
 import java.sql.*;
 
-public class MYSQL implements DataBase {
+public class MySQL implements DataBase {
 
     Connection connection;
     ConfigManager config;
 
-    public MYSQL(ConfigManager config){
+    public MySQL(ConfigManager config){
         this.config = config;
     }
 

@@ -3,7 +3,6 @@ version: ${project.version}
 author: _Serafin
 description: Plugin for the login system
 main: me.serafin.slogin.SLogin
-api-version: 1.15
 commands:
   register:
     description: Register new player

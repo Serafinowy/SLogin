@@ -1,5 +1,5 @@
 #################################
-#           SeraLogin           #
+#             SLogin            #
 #         Author _Serafin       #
 #################################
 
@@ -17,7 +17,7 @@ MySQL:
   Port: 3306
   User: "root"
   Pass: ""
-  DataBase: "seralogin"
+  DataBase: "slogin"
 
 # One IP address cannot have more than this number of accounts
 MaxAccountsPerIP: 2
@@ -26,6 +26,7 @@ Messages:
   # Shows chat messages on join
   ChatMessages: true
   # Shows title messages on join
+  # Enable only if your server version is 1.11 or newer
   TitleMessages: true
 
 # Allowed commands when you are not logged in
@@ -39,3 +40,6 @@ AllowedCommands:
 Password:
   min-length: 5
   max-length: 20
+
+# Captcha - checking starts when the player enters the server
+CaptchaEnabled: false

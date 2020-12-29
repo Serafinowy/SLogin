@@ -6,10 +6,7 @@ import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 
 public class PlayerActionListener implements Listener {
 
@@ -40,8 +37,9 @@ public class PlayerActionListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event){
-        if(!manager.isLogged(event.getPlayer().getName()))
-            event.setCancelled(true);
+        if(!manager.isLogged(event.getPlayer().getName())) {
+            event.getPlayer().teleport(event.getFrom());
+        }
     }
 
     @EventHandler
@@ -56,4 +54,11 @@ public class PlayerActionListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent event) {
+        if(!manager.isLogged(event.getPlayer().getName())){
+            event.getPlayer().sendMessage(lang.mustLogin);
+            event.setCancelled(true);
+        }
+    }
 }

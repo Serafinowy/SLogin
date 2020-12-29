@@ -1,5 +1,5 @@
 #################################
-#           SeraLogin           #
+#             SLogin            #
 #         Author _Serafin       #
 #################################
 
@@ -56,7 +56,7 @@ adminMessages:
 
   # Change password
   changePassAdminCorrectUsage: "&cCorrect usage: /sl changepassword <nick> <pass>"
-  changePassAdminSuccess: "&aYou changed player's password successfully!"
+  changePassAdminSuccess: "&aYou have changed player's password successfully!"
 
   # Force login
   forceLoginCorrectUsage: "&cCorrect usage: /sl forcelogin <nick>"
@@ -71,3 +71,16 @@ adminMessages:
   # Unregister
   unRegisterCorrectUsage: "&cCorrect usage: /sl unregister <nick>"
   unRegisterSuccess: "&aYou have unregistered a player successfully!"
+
+# Captcha messages
+captchaMessages:
+  # GUI name
+  guiName: "[Captcha] Click on an apple!"
+  # Kick message
+  kickMessage: |
+    &6SLogin CAPTCHA
+
+    &cYou have been recognized as a bot!
+
+    &7If this is an error,
+    &7please join the server again.

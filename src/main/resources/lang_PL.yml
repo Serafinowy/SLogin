@@ -1,5 +1,5 @@
 #################################
-#           SeraLogin           #
+#             SLogin            #
 #         Author _Serafin       #
 #################################
 
@@ -46,27 +46,40 @@ userMessages:
 
 # Wiadomości dla administratora
 adminMessages:
-  # Info o graczu
+  # Podstawowe wiadomości
   userNotExists: "&cTaki gracz nie istnieje!"
   userIsNotOnline: "&cTen gracz nie jest online!"
 
-  # Info about player
+  # Informacje o graczu
   playerInfoCorrectUsage: "&cPoprawne użycie: /sl playerinfo <nick>"
 
-  # Change password
+  # Zmiana hasła
   changePassAdminCorrectUsage: "&cPoprawne użycie: /sl changepassword <nick> <hasło>"
   changePassAdminSuccess: "&aPomyślnie zmieniłeś hasło gracza!"
 
-  # Force login
+  # Zmuszone logowanie
   forceLoginCorrectUsage: "&cPoprawne użycie: /sl forcelogin <nick>"
   forceLoginSuccess: "&aPomyślnie zalogowałeś gracza!"
   forceLoginDeny: "&cTen gracz jest już zalogowany!"
 
-  # Register
+  # Rejestracja
   registerAdminCorrectUsage: "&cPoprawne użycie: /sl register <nick> <hasło>"
   registerAdminSuccess: "&aPomyślnie zarejestrowałeś gracza!"
   registerAdminDeny: "&cTen gracz jest już zalogowany!"
 
-  # Unregister
+  # Wyrejestrowanie
   unRegisterCorrectUsage: "&cPoprawne użycie: /sl unregister <nick>"
   unRegisterSuccess: "&aPomyślnie wyrejestrowałeś gracza!"
+
+# Wiadomości captcha
+captchaMessages:
+  # nazwa GUI
+  guiName: "[Captcha] Kliknij w jabłko!"
+  # Kick message
+  kickMessage: |
+    &6SLogin CAPTCHA
+
+    &cZostałeś rozpoznany jako bot!
+
+    &7Jeżeli to pomyłka
+    &7wejdź ponownie na serwer.

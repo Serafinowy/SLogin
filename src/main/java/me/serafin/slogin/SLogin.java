@@ -1,9 +1,9 @@
 package me.serafin.slogin;
 
 import me.serafin.slogin.commands.*;
-import me.serafin.slogin.commands.admin.SeraLoginCommand;
+import me.serafin.slogin.commands.admin.SLoginCommand;
 import me.serafin.slogin.database.DataBase;
-import me.serafin.slogin.database.MYSQL;
+import me.serafin.slogin.database.MySQL;
 import me.serafin.slogin.database.SQLite;
 import me.serafin.slogin.listeners.PlayerActionListener;
 import me.serafin.slogin.listeners.PlayerJoinListener;
@@ -41,6 +41,9 @@ public final class SLogin extends JavaPlugin {
         setupListeners();
         setupCommands();
 
+        if(configManager.CAPTCHA_ENABLED)
+            new CaptchaManager(this);
+
         new LoggerFilter().registerFilter();
 
         checkVersion();
@@ -55,14 +58,14 @@ public final class SLogin extends JavaPlugin {
 
         try {
             dataBase.closeConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
     private boolean setupDatabase() {
         if(configManager.DATATYPE.equals("MYSQL")) {
-            this.dataBase = new MYSQL(configManager);
+            this.dataBase = new MySQL(configManager);
         } else {
             this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
         }
@@ -94,14 +97,16 @@ public final class SLogin extends JavaPlugin {
         getCommand("login").setExecutor(new LoginCommand(this));
         getCommand("changepassword").setExecutor(new ChangePasswordCommand(this));
 
-        getCommand("seralogin").setExecutor(new SeraLoginCommand(this));
+        getCommand("seralogin").setExecutor(new SLoginCommand(this));
     }
 
     private void checkVersion() {
         String latestVersion = Utils.getLatestVersion();
-        if(!getDescription().getVersion().equalsIgnoreCase(latestVersion)) {
-            getLogger().warning("New plugin version is available " + latestVersion);
-            getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
+        if(latestVersion != null) {
+            if(Utils.isHigherVersion(latestVersion, getDescription().getVersion())) {
+                getLogger().warning("New plugin version is available " + latestVersion);
+                getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
+            }
         }
     }
 

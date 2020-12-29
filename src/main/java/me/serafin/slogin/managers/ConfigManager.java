@@ -44,6 +44,10 @@ public class ConfigManager {
 
     ///////////////////////////////////////////
 
+    public boolean CAPTCHA_ENABLED;
+
+    ///////////////////////////////////////////
+
     /**
      * Loading default settings (from plugin)
      */
@@ -75,11 +79,13 @@ public class ConfigManager {
         this.MAX_ACCOUNTS_PER_IP = configuration.getInt("MaxAccountsPerIP");
 
         this.MESSAGES_CHAT_MESSAGES = configuration.getBoolean("Messages.ChatMessages");
-        this.MESSAGES_TITLE_MESSAGES = configuration.getBoolean("Messages.TitleMessages");
+        this.MESSAGES_TITLE_MESSAGES = Utils.isHigherVersion("1.10", Utils.getServerVersion()) && configuration.getBoolean("Messages.TitleMessages");
 
         this.ALLOWED_COMMANDS = configuration.getStringList("AllowedCommands");
 
         this.PASSWORD_MIN_LENGTH = configuration.getInt("Password.min-length");
         this.PASSWORD_MAX_LENGTH = configuration.getInt("Password.max-length");
+
+        this.CAPTCHA_ENABLED = configuration.getBoolean("CaptchaEnabled");
     }
 }

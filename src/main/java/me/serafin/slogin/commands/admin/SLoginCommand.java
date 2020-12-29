@@ -14,14 +14,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeraLoginCommand implements CommandExecutor, TabCompleter {
+public class SLoginCommand implements CommandExecutor, TabCompleter {
 
     ArrayList<SubCommand> commands = new ArrayList<>();
 
     SLogin plugin;
     LangManager lang;
 
-    public SeraLoginCommand(SLogin plugin){
+    public SLoginCommand(SLogin plugin){
         this.plugin = plugin;
         this.lang = plugin.getLangManager();
 
@@ -49,10 +49,15 @@ public class SeraLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for(SubCommand subCommand : commands){
-            sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                    Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
-                    Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
-                    "/sl " + subCommand.getName() + " "));
+            if(Utils.isHigherVersion("1.11", Utils.getServerVersion())) {
+                sender.spigot().sendMessage(Utils.sendCommandSuggest(
+                        Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
+                        Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
+                        "/sl " + subCommand.getName() + " "));
+            }
+            else {
+                sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
+            }
         }
 
         sender.sendMessage("");
@@ -61,7 +66,7 @@ public class SeraLoginCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender ,@NotNull Command command, @NotNull String alias, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> sub = new ArrayList<>();
 
         if(args.length == 1)
