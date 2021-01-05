@@ -85,7 +85,9 @@ captchaMessages:
     &7If this is an error,
     &7please join the server again.
 
+# Player enters wrong password
 wrongPassword:
+  # Kick message
   kickMessage: |
     &6SLogin
 

@@ -75,7 +75,7 @@ adminMessages:
 captchaMessages:
   # nazwa GUI
   guiName: "[Captcha] Kliknij w jabłko!"
-  # Kick message
+  # Wiadomość wyrzucenia
   kickMessage: |
     &6SLogin CAPTCHA
 
@@ -84,7 +84,9 @@ captchaMessages:
     &7Jeżeli to pomyłka
     &7wejdź ponownie na serwer.
 
+# Gracz wpisuje złe hasło
 wrongPassword:
+  # Wiadomość wyrzucenia
   kickMessage: |
     &6SLogin
 
