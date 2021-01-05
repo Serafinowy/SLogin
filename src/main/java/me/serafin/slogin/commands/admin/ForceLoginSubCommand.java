@@ -68,10 +68,10 @@ public class ForceLoginSubCommand implements SubCommand {
 
         if(config.MESSAGES_TITLE_MESSAGES)
             player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
-        if(config.MESSAGES_CHAT_MESSAGES) {
+        if(config.MESSAGES_CHAT_MESSAGES)
             player.sendMessage(lang.loginSuccess);
-        }
 
+        player.setInvulnerable(false);
         sender.sendMessage(lang.forceLoginSuccess);
 
     }

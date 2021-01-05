@@ -71,6 +71,7 @@ public class RegisterCommand implements CommandExecutor {
         if(config.MESSAGES_CHAT_MESSAGES) {
             player.sendMessage(lang.registerSuccess);
         }
+        player.setInvulnerable(false);
 
         return true;
     }

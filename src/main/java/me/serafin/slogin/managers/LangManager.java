@@ -98,6 +98,10 @@ public class LangManager {
 
     ///////////////////////////////////////////
 
+    public String wrongPassword_kickMessage;
+
+    ///////////////////////////////////////////
+
     /**
      * Loading default language file (from plugin)
      */
@@ -183,5 +187,8 @@ public class LangManager {
 
         captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
         captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
+
+
+        wrongPassword_kickMessage = Utils.format(lang.getString("wrongPassword.kickMessage"));
     }
 }

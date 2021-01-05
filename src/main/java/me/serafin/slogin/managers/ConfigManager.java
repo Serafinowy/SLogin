@@ -45,6 +45,7 @@ public class ConfigManager {
     ///////////////////////////////////////////
 
     public boolean CAPTCHA_ENABLED;
+    public boolean KICK_ON_WRONG_PASSWORD;
 
     ///////////////////////////////////////////
 
@@ -87,5 +88,6 @@ public class ConfigManager {
         this.PASSWORD_MAX_LENGTH = configuration.getInt("Password.max-length");
 
         this.CAPTCHA_ENABLED = configuration.getBoolean("CaptchaEnabled");
+        this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
 }

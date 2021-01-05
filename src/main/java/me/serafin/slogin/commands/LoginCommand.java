@@ -52,11 +52,13 @@ public class LoginCommand implements CommandExecutor {
         if(manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], false)) {
             if(config.MESSAGES_TITLE_MESSAGES)
                 player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
-            if(config.MESSAGES_CHAT_MESSAGES) {
+            if(config.MESSAGES_CHAT_MESSAGES)
                 player.sendMessage(lang.loginSuccess);
-            }
+            player.setInvulnerable(false);
         } else {
             player.sendMessage(lang.wrongPassword);
+            if(config.KICK_ON_WRONG_PASSWORD)
+                player.kickPlayer(lang.wrongPassword_kickMessage);
         }
 
         return true;

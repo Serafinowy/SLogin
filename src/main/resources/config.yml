@@ -43,3 +43,6 @@ Password:
 
 # Captcha - checking starts when the player enters the server
 CaptchaEnabled: false
+
+# Kick the player after entering the wrong password
+KickOnWrongPassword: true

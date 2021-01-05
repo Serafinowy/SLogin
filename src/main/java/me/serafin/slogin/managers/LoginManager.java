@@ -62,10 +62,11 @@ public class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(config.MESSAGES_CHAT_MESSAGES)
-                        player.sendMessage(lang.loginInfo);
-                    if(config.MESSAGES_TITLE_MESSAGES)
-                        player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4*20, 10);
+                    if(!isLogged(player.getName()))
+                        if(config.MESSAGES_CHAT_MESSAGES)
+                            player.sendMessage(lang.loginInfo);
+                        if(config.MESSAGES_TITLE_MESSAGES)
+                            player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4*20, 10);
                 }
             }.runTaskLater(plugin, 20);
         } else {
@@ -73,10 +74,11 @@ public class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(config.MESSAGES_CHAT_MESSAGES)
-                        player.sendMessage(lang.registerInfo);
-                    if(config.MESSAGES_TITLE_MESSAGES)
-                        player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4*20, 10);
+                    if(!isLogged(player.getName()))
+                        if(config.MESSAGES_CHAT_MESSAGES)
+                            player.sendMessage(lang.registerInfo);
+                        if(config.MESSAGES_TITLE_MESSAGES)
+                            player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4*20, 10);
                 }
             }.runTaskLater(plugin, 20);
         }

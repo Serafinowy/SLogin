@@ -83,3 +83,11 @@ captchaMessages:
 
     &7Jeżeli to pomyłka
     &7wejdź ponownie na serwer.
+
+wrongPassword:
+  kickMessage: |
+    &6SLogin
+
+    &cWpisałeś złe hasło!
+
+    &7Wejdź na serwer, by spróbować ponownie.

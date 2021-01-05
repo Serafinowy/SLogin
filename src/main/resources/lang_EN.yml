@@ -8,10 +8,10 @@
 userMessages:
   # General messages
   onlyForPlayers: "&cThis command is only for players!"
-  wrongPassword: "&cYou entered wrong password!"
+  wrongPassword: "&cYou have entered wrong password!"
   alreadyLogged: "&cYou are already logged in!"
   mustLogin: "&cYou must log in to do that!"
-  maxAccounts: "&cYou have registered the maximum amount of accounts on this IP!"
+  maxAccounts: "&cYou registered the maximum amount of accounts on this IP!"
 
   # Log in
   loginInfo: "&7Log in: &e/login <password>"
@@ -26,7 +26,7 @@ userMessages:
 
   # Register
   notAllowedPasswordLength: "&cThe password must be 5-20 characters long!"
-  differentPasswords: "&cYou entered wrong password! Passwords must be identical!"
+  differentPasswords: "&cYou have entered wrong password! Passwords must be identical!"
   alreadyRegistered: "&cYou are already registered! Use command: &e/login <password>"
   notRegistered: "&cYou are not registered! Use command: &e/register <password> <password>"
 
@@ -42,7 +42,7 @@ userMessages:
 
   # Change password
   changePassCorrectUsage: "&cCorrect usage: &e/cp <old pass> <new pass>"
-  changePassSuccess: "&aYou changed password successfully! Do not forget it!"
+  changePassSuccess: "&aYou have changed password successfully! Do not forget it!"
 
 
 # Messages for administrator
@@ -84,3 +84,11 @@ captchaMessages:
 
     &7If this is an error,
     &7please join the server again.
+
+wrongPassword:
+  kickMessage: |
+    &6SLogin
+
+    &cYou have entered wrong password!
+
+    &7Please join the sever to try again.
