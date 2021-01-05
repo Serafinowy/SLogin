@@ -86,14 +86,14 @@ public class Utils {
         return serverVersion;
     }
 
-    public static boolean isHigherVersion(String minVersion, String curVersion) {
-        String[] minVersionT = minVersion.split("\\.");
+    public static boolean isCorrectVersion(String curVersion, String minVersion) {
         String[] curVersionT = curVersion.split("\\.");
+        String[] minVersionT = minVersion.split("\\.");
 
         try {
             if( Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]) )
                 return true;
-            return Integer.parseInt(curVersionT[1]) > Integer.parseInt(minVersionT[1]);
+            return Integer.parseInt(curVersionT[1]) >= Integer.parseInt(minVersionT[1]);
         } catch (Exception ignored) { }
         return false;
     }

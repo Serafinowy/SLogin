@@ -49,7 +49,7 @@ public class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for(SubCommand subCommand : commands){
-            if(Utils.isHigherVersion("1.11", Utils.getServerVersion())) {
+            if(Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
                         Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
                         Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),

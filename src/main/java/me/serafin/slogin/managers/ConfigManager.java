@@ -80,7 +80,7 @@ public class ConfigManager {
         this.MAX_ACCOUNTS_PER_IP = configuration.getInt("MaxAccountsPerIP");
 
         this.MESSAGES_CHAT_MESSAGES = configuration.getBoolean("Messages.ChatMessages");
-        this.MESSAGES_TITLE_MESSAGES = Utils.isHigherVersion("1.10", Utils.getServerVersion()) && configuration.getBoolean("Messages.TitleMessages");
+        this.MESSAGES_TITLE_MESSAGES = Utils.isCorrectVersion(Utils.getServerVersion(), "1.11") && configuration.getBoolean("Messages.TitleMessages");
 
         this.ALLOWED_COMMANDS = configuration.getStringList("AllowedCommands");
 

@@ -103,7 +103,7 @@ public final class SLogin extends JavaPlugin {
     private void checkVersion() {
         String latestVersion = Utils.getLatestVersion();
         if(latestVersion != null) {
-            if(Utils.isHigherVersion(latestVersion, getDescription().getVersion())) {
+            if(!Utils.isCorrectVersion(getDescription().getVersion(), latestVersion)) {
                 getLogger().warning("New plugin version is available " + latestVersion);
                 getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
             }
