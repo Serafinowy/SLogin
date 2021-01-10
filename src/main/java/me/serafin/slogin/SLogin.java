@@ -25,6 +25,9 @@ public final class SLogin extends JavaPlugin {
     private LangManager langManager;
     private LoginManager loginManager;
 
+    private LoginTimeoutManager loginTimeoutManager;
+    private CaptchaManager captchaManager;
+
     @Override
     public void onEnable() {
         this.configManager = new ConfigManager(this);
@@ -41,8 +44,8 @@ public final class SLogin extends JavaPlugin {
         setupListeners();
         setupCommands();
 
-        if(configManager.CAPTCHA_ENABLED)
-            new CaptchaManager(this);
+        this.loginTimeoutManager = new LoginTimeoutManager(this);
+        this.captchaManager = new CaptchaManager(this);
 
         new LoggerFilter().registerFilter();
 
@@ -97,7 +100,7 @@ public final class SLogin extends JavaPlugin {
         getCommand("login").setExecutor(new LoginCommand(this));
         getCommand("changepassword").setExecutor(new ChangePasswordCommand(this));
 
-        getCommand("seralogin").setExecutor(new SLoginCommand(this));
+        getCommand("slogin").setExecutor(new SLoginCommand(this));
     }
 
     private void checkVersion() {
@@ -118,5 +121,12 @@ public final class SLogin extends JavaPlugin {
     }
     public LoginManager getLoginManager() {
         return loginManager;
+    }
+
+    public LoginTimeoutManager getLoginTimeoutManager() {
+        return loginTimeoutManager;
+    }
+    public CaptchaManager getCaptchaManager() {
+        return captchaManager;
     }
 }

@@ -16,7 +16,7 @@ commands:
     description: Change your password
     permission: slogin.changepassword
     aliases: [ cp, changepass ]
-  seralogin:
+  slogin:
     description: Admin commands
     permission: slogin.admin
     aliases: [ sl, slogin ]

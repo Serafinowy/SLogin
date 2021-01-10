@@ -17,8 +17,9 @@ import java.util.*;
 
 public class CaptchaManager {
 
-    SLogin plugin;
-    LangManager lang;
+    private SLogin plugin;
+    private LangManager lang;
+
     public CaptchaManager(SLogin plugin) {
         this.plugin = plugin;
         this.lang = plugin.getLangManager();
@@ -27,7 +28,7 @@ public class CaptchaManager {
 
     private final Set<String> tempCaptcha = new HashSet<>();
 
-    public Inventory inventory() {
+    private Inventory inventory() {
         Random random = new Random();
 
         Material chose = Material.APPLE;
@@ -46,18 +47,17 @@ public class CaptchaManager {
         return inv;
     }
 
-    private class Events implements Listener {
+    public void sendCaptcha(Player player) {
+        tempCaptcha.add(player.getName());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.openInventory(inventory());
+            }
+        }.runTaskLater(plugin, 10);
+    }
 
-        @EventHandler
-        public void onJoin(PlayerJoinEvent event){
-            tempCaptcha.add(event.getPlayer().getName());
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    event.getPlayer().openInventory(inventory());
-                }
-            }.runTaskLater(plugin, 10);
-        }
+    private class Events implements Listener {
 
         @EventHandler
         public void onClick(InventoryClickEvent event) {

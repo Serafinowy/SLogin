@@ -71,6 +71,14 @@ adminMessages:
   unRegisterCorrectUsage: "&cPoprawne użycie: /sl unregister <nick>"
   unRegisterSuccess: "&aPomyślnie wyrejestrowałeś gracza!"
 
+# Za długie logowanie
+loginTimeoutKick: |
+  &6SLogin CAPTCHA
+
+  &cMinął czas logowania
+
+  &7Dołącz na serwer, by znów spróbować.
+
 # Wiadomości captcha
 captchaMessages:
   # nazwa GUI

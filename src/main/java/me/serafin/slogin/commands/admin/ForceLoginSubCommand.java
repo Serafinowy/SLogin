@@ -71,7 +71,7 @@ public class ForceLoginSubCommand implements SubCommand {
         if(config.MESSAGES_CHAT_MESSAGES)
             player.sendMessage(lang.loginSuccess);
 
-        player.setInvulnerable(false);
+        manager.playerLogged(player);
         sender.sendMessage(lang.forceLoginSuccess);
 
     }

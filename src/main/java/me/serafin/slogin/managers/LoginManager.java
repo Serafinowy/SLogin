@@ -57,8 +57,14 @@ public class LoginManager {
     public void playerJoin(Player player){
         Optional<Account> account = Account.get(dataBase, player.getName());
 
+        plugin.getLoginTimeoutManager().addTimeout(player);
+
         if(account.isPresent()) {
             tempAccounts.put(player.getName(), account);
+
+            if(config.CAPTCHA_ON_LOGIN)
+                plugin.getCaptchaManager().sendCaptcha(player);
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -71,6 +77,10 @@ public class LoginManager {
             }.runTaskLater(plugin, 20);
         } else {
             tempAccounts.put(player.getName(), Optional.empty());
+
+            if(config.CAPTCHA_ON_REGISTER)
+                plugin.getCaptchaManager().sendCaptcha(player);
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -130,6 +140,14 @@ public class LoginManager {
         tempAccounts.remove(name);
     }
 
+    /**
+     * Execute when player successfully logged in
+     * @param player - player
+     */
+    public void playerLogged(Player player) {
+        player.setInvulnerable(false);
+        plugin.getLoginTimeoutManager().removeTimeout(player);
+    }
     ///////////////////////////////////////
 
     /**

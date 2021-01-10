@@ -72,6 +72,14 @@ adminMessages:
   unRegisterCorrectUsage: "&cCorrect usage: /sl unregister <nick>"
   unRegisterSuccess: "&aYou have unregistered a player successfully!"
 
+# Log in timeout message
+loginTimeoutKick: |
+  &6SLogin CAPTCHA
+
+  &cLogin time has expired
+
+  &7Please join the server to try login again.
+
 # Captcha messages
 captchaMessages:
   # GUI name
@@ -93,4 +101,4 @@ wrongPassword:
 
     &cYou have entered wrong password!
 
-    &7Please join the sever to try again.
+    &7Please join the server to try again.

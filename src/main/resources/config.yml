@@ -41,8 +41,16 @@ Password:
   min-length: 5
   max-length: 20
 
+# Time to log in (in seconds)
+# 0 -> disabled
+LoginTimeout: 10
+
 # Captcha - checking starts when the player enters the server
-CaptchaEnabled: false
+Captcha:
+  # Verify new player who is not registered
+  OnRegister: false
+  # Verify player who is registered
+  OnLogin: false
 
 # Kick the player after entering the wrong password
 KickOnWrongPassword: true

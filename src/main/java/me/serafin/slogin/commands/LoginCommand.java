@@ -54,7 +54,7 @@ public class LoginCommand implements CommandExecutor {
                 player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
             if(config.MESSAGES_CHAT_MESSAGES)
                 player.sendMessage(lang.loginSuccess);
-            player.setInvulnerable(false);
+            manager.playerLogged(player);
         } else {
             player.sendMessage(lang.wrongPassword);
             if(config.KICK_ON_WRONG_PASSWORD)

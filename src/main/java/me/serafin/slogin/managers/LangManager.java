@@ -93,6 +93,8 @@ public class LangManager {
 
     ///////////////////////////////////////////
 
+    public String loginTimeoutKick;
+
     public String captcha_guiName;
     public String captcha_kickMessage;
 
@@ -184,6 +186,8 @@ public class LangManager {
         unRegisterSuccess = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterSuccess"));
 
         ///////////////////////////////////////////
+
+        loginTimeoutKick = Utils.format(lang.getString("loginTimeoutKick"));
 
         captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
         captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));

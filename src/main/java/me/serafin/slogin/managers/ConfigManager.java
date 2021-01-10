@@ -44,7 +44,11 @@ public class ConfigManager {
 
     ///////////////////////////////////////////
 
-    public boolean CAPTCHA_ENABLED;
+    public int LOGIN_TIMEOUT;
+
+    public boolean CAPTCHA_ON_REGISTER;
+    public boolean CAPTCHA_ON_LOGIN;
+
     public boolean KICK_ON_WRONG_PASSWORD;
 
     ///////////////////////////////////////////
@@ -87,7 +91,11 @@ public class ConfigManager {
         this.PASSWORD_MIN_LENGTH = configuration.getInt("Password.min-length");
         this.PASSWORD_MAX_LENGTH = configuration.getInt("Password.max-length");
 
-        this.CAPTCHA_ENABLED = configuration.getBoolean("CaptchaEnabled");
+        this.LOGIN_TIMEOUT = configuration.getInt("LoginTimeout");
+
+        this.CAPTCHA_ON_REGISTER = configuration.getBoolean("Captcha.OnRegister");
+        this.CAPTCHA_ON_LOGIN = configuration.getBoolean("Captcha.OnLogin");
+
         this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
 }
