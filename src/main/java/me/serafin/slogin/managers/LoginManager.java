@@ -13,15 +13,12 @@ import java.util.Optional;
 public class LoginManager {
 
     private final DataBase dataBase;
-
-    private final SLogin plugin;
     private final LangManager lang;
     private final ConfigManager config;
 
-    public LoginManager(SLogin plugin, DataBase dataBase) {
-        this.plugin = plugin;
-        this.lang = plugin.getLangManager();
-        this.config = plugin.getConfigManager();
+    public LoginManager(DataBase dataBase) {
+        this.lang = SLogin.getInstance().langManager;
+        this.config = SLogin.getInstance().configManager;
         this.dataBase = dataBase;
     }
 
@@ -57,13 +54,13 @@ public class LoginManager {
     public void playerJoin(Player player){
         Optional<Account> account = Account.get(dataBase, player.getName());
 
-        plugin.getLoginTimeoutManager().addTimeout(player);
+        SLogin.getInstance().loginTimeoutManager.addTimeout(player);
 
         if(account.isPresent()) {
             tempAccounts.put(player.getName(), account);
 
             if(config.CAPTCHA_ON_LOGIN)
-                plugin.getCaptchaManager().sendCaptcha(player);
+                SLogin.getInstance().captchaManager.sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -74,12 +71,12 @@ public class LoginManager {
                         if(config.MESSAGES_TITLE_MESSAGES)
                             player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4*20, 10);
                 }
-            }.runTaskLater(plugin, 20);
+            }.runTaskLater(SLogin.getInstance(), 20);
         } else {
             tempAccounts.put(player.getName(), Optional.empty());
 
             if(config.CAPTCHA_ON_REGISTER)
-                plugin.getCaptchaManager().sendCaptcha(player);
+                SLogin.getInstance().captchaManager.sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -90,7 +87,7 @@ public class LoginManager {
                         if(config.MESSAGES_TITLE_MESSAGES)
                             player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4*20, 10);
                 }
-            }.runTaskLater(plugin, 20);
+            }.runTaskLater(SLogin.getInstance(), 20);
         }
     }
 
@@ -146,7 +143,7 @@ public class LoginManager {
      */
     public void playerLogged(Player player) {
         player.setInvulnerable(false);
-        plugin.getLoginTimeoutManager().removeTimeout(player);
+        SLogin.getInstance().loginTimeoutManager.removeTimeout(player);
     }
     ///////////////////////////////////////
 

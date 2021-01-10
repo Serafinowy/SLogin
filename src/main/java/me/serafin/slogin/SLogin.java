@@ -30,8 +30,8 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.configManager = new ConfigManager(this);
-        this.langManager = new LangManager(this, configManager.LANG);
+        this.configManager = new ConfigManager();
+        this.langManager = new LangManager( configManager.LANG);
 
         if(!setupDatabase()) {
             Bukkit.getLogger().severe("Failed to connect database. Disabling plugin...");
@@ -39,13 +39,13 @@ public final class SLogin extends JavaPlugin {
             return;
         }
 
-        this.loginManager = new LoginManager(this, dataBase);
+        this.loginManager = new LoginManager(dataBase);
 
         setupListeners();
         setupCommands();
 
-        this.loginTimeoutManager = new LoginTimeoutManager(this);
-        this.captchaManager = new CaptchaManager(this);
+        this.loginTimeoutManager = new LoginTimeoutManager();
+        this.captchaManager = new CaptchaManager();
 
         new LoggerFilter().registerFilter();
 
@@ -92,7 +92,7 @@ public final class SLogin extends JavaPlugin {
 
     private void setupListeners() {
         getServer().getPluginManager().registerEvents(new PlayerActionListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(loginManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
     private void setupCommands() {

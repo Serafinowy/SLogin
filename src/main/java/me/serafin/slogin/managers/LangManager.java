@@ -10,11 +10,9 @@ import java.io.File;
 
 public class LangManager {
 
-    private final SLogin plugin;
     private final String lang_yml;
 
-    public LangManager(SLogin plugin, String language){
-        this.plugin = plugin;
+    public LangManager(String language){
 
         if ("PL".equalsIgnoreCase(language)) {
             lang_yml = "lang_PL.yml";
@@ -109,10 +107,10 @@ public class LangManager {
      */
     FileConfiguration lang;
     private void loadDefault() {
-        File lang_file = new File(plugin.getDataFolder(), lang_yml);
+        File lang_file = new File(SLogin.getInstance().getDataFolder(), lang_yml);
 
         if(!lang_file.exists()){
-            plugin.saveResource(lang_yml, true);
+            SLogin.getInstance().saveResource(lang_yml, true);
             Bukkit.getLogger().info("Created: " + lang_yml + " file");
         }
         Bukkit.getLogger().info("Loaded: " + lang_yml + " file");

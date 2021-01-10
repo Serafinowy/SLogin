@@ -14,9 +14,9 @@ public class PlayerActionListener implements Listener {
     LangManager lang;
     LoginManager manager;
     public PlayerActionListener(SLogin plugin){
-        this.config = plugin.getConfigManager();
-        this.lang = plugin.getLangManager();
-        this.manager = plugin.getLoginManager();
+        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @EventHandler
