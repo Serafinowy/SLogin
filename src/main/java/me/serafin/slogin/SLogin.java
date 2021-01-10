@@ -30,6 +30,7 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         this.configManager = new ConfigManager();
         this.langManager = new LangManager( configManager.LANG);
 
