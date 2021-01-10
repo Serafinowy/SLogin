@@ -17,31 +17,35 @@ public class LoginTimeoutManager {
     public LoginTimeoutManager(SLogin plugin) {
         this.config = plugin.getConfigManager();
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Iterator<Map.Entry<Player, Integer>> iterator = loginTimeout.entrySet().iterator();
+        if(config.LOGIN_TIMEOUT > 0) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Iterator<Map.Entry<Player, Integer>> iterator = loginTimeout.entrySet().iterator();
 
-                while(iterator.hasNext()) {
-                    Map.Entry<Player, Integer> entry = iterator.next();
+                    while (iterator.hasNext()) {
+                        Map.Entry<Player, Integer> entry = iterator.next();
 
-                    loginTimeout.put(entry.getKey(), entry.getValue() - 1);
+                        loginTimeout.put(entry.getKey(), entry.getValue() - 1);
 
-                    if(entry.getValue() <= 0) {
-                        removeTimeout(entry.getKey());
-                        entry.getKey().kickPlayer(plugin.getLangManager().loginTimeoutKick);
+                        if (entry.getValue() <= 0) {
+                            iterator.remove();
+                            entry.getKey().kickPlayer(plugin.getLangManager().loginTimeoutKick);
+                        }
                     }
                 }
-            }
-        }.runTaskTimer(plugin, 0, 20);
+            }.runTaskTimer(plugin, 0, 20);
+        }
     }
 
     public void addTimeout(Player player) {
-        loginTimeout.put(player, config.LOGIN_TIMEOUT);
+        if(config.LOGIN_TIMEOUT > 0)
+            loginTimeout.put(player, config.LOGIN_TIMEOUT);
     }
 
     public void removeTimeout(Player player) {
-        loginTimeout.remove(player);
+        if(config.LOGIN_TIMEOUT > 0)
+            loginTimeout.remove(player);
     }
 
 }

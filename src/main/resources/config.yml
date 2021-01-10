@@ -43,7 +43,7 @@ Password:
 
 # Time to log in (in seconds)
 # 0 -> disabled
-LoginTimeout: 10
+LoginTimeout: 30
 
 # Captcha - checking starts when the player enters the server
 Captcha:
