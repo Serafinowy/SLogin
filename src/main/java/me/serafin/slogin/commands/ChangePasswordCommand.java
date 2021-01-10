@@ -15,17 +15,14 @@ import java.util.Optional;
 
 public class ChangePasswordCommand implements CommandExecutor {
 
-    SLogin plugin;
-
     ConfigManager config;
     LangManager lang;
     LoginManager manager;
 
-    public ChangePasswordCommand(SLogin plugin){
-        this.plugin = plugin;
-        this.config = plugin.getConfigManager();
-        this.lang = plugin.getLangManager();
-        this.manager = plugin.getLoginManager();
+    public ChangePasswordCommand(){
+        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        Optional<Account> account = plugin.getLoginManager().getAccount(player.getName());
+        Optional<Account> account = manager.getAccount(player.getName());
         assert account.isPresent();
 
         if(!account.get().comparePassword(args[0])){

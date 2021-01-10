@@ -14,16 +14,14 @@ import java.util.Optional;
 
 public class ChangePasswordSubCommand implements SubCommand {
 
-    SLogin plugin;
     ConfigManager config;
     LangManager lang;
     LoginManager manager;
 
-    public ChangePasswordSubCommand(SLogin plugin){
-        this.plugin = plugin;
-        this.config = plugin.getConfigManager();
-        this.lang = plugin.getLangManager();
-        this.manager = plugin.getLoginManager();
+    public ChangePasswordSubCommand(){
+        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @Override
@@ -53,7 +51,7 @@ public class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        Optional<Account> account = plugin.getLoginManager().getAccount(args[1]);
+        Optional<Account> account = manager.getAccount(args[1]);
         if(!account.isPresent()){
             sender.sendMessage(lang.userNotExists);
             return;

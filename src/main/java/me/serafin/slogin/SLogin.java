@@ -19,14 +19,14 @@ import java.sql.SQLException;
 
 public final class SLogin extends JavaPlugin {
 
+    public static SLogin instance;
     private DataBase dataBase;
+    public ConfigManager configManager;
+    public LangManager langManager;
+    public LoginManager loginManager;
 
-    private ConfigManager configManager;
-    private LangManager langManager;
-    private LoginManager loginManager;
-
-    private LoginTimeoutManager loginTimeoutManager;
-    private CaptchaManager captchaManager;
+    public LoginTimeoutManager loginTimeoutManager;
+    public CaptchaManager captchaManager;
 
     @Override
     public void onEnable() {
@@ -96,11 +96,11 @@ public final class SLogin extends JavaPlugin {
     }
 
     private void setupCommands() {
-        getCommand("register").setExecutor(new RegisterCommand(this));
-        getCommand("login").setExecutor(new LoginCommand(this));
-        getCommand("changepassword").setExecutor(new ChangePasswordCommand(this));
+        getCommand("register").setExecutor(new RegisterCommand());
+        getCommand("login").setExecutor(new LoginCommand());
+        getCommand("changepassword").setExecutor(new ChangePasswordCommand());
 
-        getCommand("slogin").setExecutor(new SLoginCommand(this));
+        getCommand("slogin").setExecutor(new SLoginCommand());
     }
 
     private void checkVersion() {
@@ -113,20 +113,7 @@ public final class SLogin extends JavaPlugin {
         }
     }
 
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-    public LangManager getLangManager() {
-        return langManager;
-    }
-    public LoginManager getLoginManager() {
-        return loginManager;
-    }
-
-    public LoginTimeoutManager getLoginTimeoutManager() {
-        return loginTimeoutManager;
-    }
-    public CaptchaManager getCaptchaManager() {
-        return captchaManager;
+    public static SLogin getInstance() {
+        return instance;
     }
 }

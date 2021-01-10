@@ -18,10 +18,10 @@ public class RegisterCommand implements CommandExecutor {
     LangManager lang;
     LoginManager manager;
 
-    public RegisterCommand(SLogin plugin){
-        this.config = plugin.getConfigManager();
-        this.lang = plugin.getLangManager();
-        this.manager = plugin.getLoginManager();
+    public RegisterCommand(){
+        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @Override
