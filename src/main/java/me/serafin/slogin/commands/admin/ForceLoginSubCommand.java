@@ -15,16 +15,14 @@ import java.util.Objects;
 
 public class ForceLoginSubCommand implements SubCommand {
 
-    SLogin plugin;
     ConfigManager config;
     LangManager lang;
     LoginManager manager;
 
-    public ForceLoginSubCommand(SLogin plugin){
-        this.plugin = plugin;
-        this.config = plugin.getConfigManager();
-        this.lang = plugin.getLangManager();
-        this.manager = plugin.getLoginManager();
+    public ForceLoginSubCommand(){
+        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @Override

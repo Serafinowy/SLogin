@@ -17,13 +17,11 @@ import java.util.*;
 
 public class CaptchaManager {
 
-    private SLogin plugin;
-    private LangManager lang;
+    private final LangManager lang;
 
-    public CaptchaManager(SLogin plugin) {
-        this.plugin = plugin;
-        this.lang = plugin.getLangManager();
-        plugin.getServer().getPluginManager().registerEvents(new Events(), plugin);
+    public CaptchaManager() {
+        this.lang = SLogin.getInstance().langManager;
+        SLogin.getInstance().getServer().getPluginManager().registerEvents(new Events(), SLogin.getInstance());
     }
 
     private final Set<String> tempCaptcha = new HashSet<>();
@@ -54,7 +52,7 @@ public class CaptchaManager {
             public void run() {
                 player.openInventory(inventory());
             }
-        }.runTaskLater(plugin, 10);
+        }.runTaskLater(SLogin.getInstance(), 10);
     }
 
     private class Events implements Listener {

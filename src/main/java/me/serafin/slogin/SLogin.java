@@ -19,19 +19,20 @@ import java.sql.SQLException;
 
 public final class SLogin extends JavaPlugin {
 
+    public static SLogin instance;
     private DataBase dataBase;
+    public ConfigManager configManager;
+    public LangManager langManager;
+    public LoginManager loginManager;
 
-    private ConfigManager configManager;
-    private LangManager langManager;
-    private LoginManager loginManager;
-
-    private LoginTimeoutManager loginTimeoutManager;
-    private CaptchaManager captchaManager;
+    public LoginTimeoutManager loginTimeoutManager;
+    public CaptchaManager captchaManager;
 
     @Override
     public void onEnable() {
-        this.configManager = new ConfigManager(this);
-        this.langManager = new LangManager(this, configManager.LANG);
+        instance = this;
+        this.configManager = new ConfigManager();
+        this.langManager = new LangManager( configManager.LANG);
 
         if(!setupDatabase()) {
             Bukkit.getLogger().severe("Failed to connect database. Disabling plugin...");
@@ -39,13 +40,13 @@ public final class SLogin extends JavaPlugin {
             return;
         }
 
-        this.loginManager = new LoginManager(this, dataBase);
+        this.loginManager = new LoginManager(dataBase);
 
         setupListeners();
         setupCommands();
 
-        this.loginTimeoutManager = new LoginTimeoutManager(this);
-        this.captchaManager = new CaptchaManager(this);
+        this.loginTimeoutManager = new LoginTimeoutManager();
+        this.captchaManager = new CaptchaManager();
 
         new LoggerFilter().registerFilter();
 
@@ -92,15 +93,15 @@ public final class SLogin extends JavaPlugin {
 
     private void setupListeners() {
         getServer().getPluginManager().registerEvents(new PlayerActionListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(loginManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
     private void setupCommands() {
-        getCommand("register").setExecutor(new RegisterCommand(this));
-        getCommand("login").setExecutor(new LoginCommand(this));
-        getCommand("changepassword").setExecutor(new ChangePasswordCommand(this));
+        getCommand("register").setExecutor(new RegisterCommand());
+        getCommand("login").setExecutor(new LoginCommand());
+        getCommand("changepassword").setExecutor(new ChangePasswordCommand());
 
-        getCommand("slogin").setExecutor(new SLoginCommand(this));
+        getCommand("slogin").setExecutor(new SLoginCommand());
     }
 
     private void checkVersion() {
@@ -113,20 +114,7 @@ public final class SLogin extends JavaPlugin {
         }
     }
 
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-    public LangManager getLangManager() {
-        return langManager;
-    }
-    public LoginManager getLoginManager() {
-        return loginManager;
-    }
-
-    public LoginTimeoutManager getLoginTimeoutManager() {
-        return loginTimeoutManager;
-    }
-    public CaptchaManager getCaptchaManager() {
-        return captchaManager;
+    public static SLogin getInstance() {
+        return instance;
     }
 }

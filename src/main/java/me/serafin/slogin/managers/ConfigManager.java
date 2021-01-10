@@ -11,11 +11,9 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private final SLogin plugin;
     private FileConfiguration configuration;
 
-    public ConfigManager(SLogin plugin){
-        this.plugin = plugin;
+    public ConfigManager(){
 
         loadDefault();
         loadSettings();
@@ -57,10 +55,10 @@ public class ConfigManager {
      * Loading default settings (from plugin)
      */
     private void loadDefault(){
-        File file = new File(plugin.getDataFolder(), "config.yml");
+        File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
         if(!file.exists()){
-            plugin.saveResource("config.yml", false);
+            SLogin.getInstance().saveResource("config.yml", false);
         }
         configuration = YamlConfiguration.loadConfiguration(file);
 

@@ -2,6 +2,7 @@ package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
+import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -12,12 +13,12 @@ import java.util.Optional;
 
 public class UnRegisterCommand implements SubCommand {
 
-    SLogin plugin;
     LangManager lang;
+    LoginManager manager;
 
-    public UnRegisterCommand(SLogin plugin) {
-        this.plugin = plugin;
-        this.lang = plugin.getLangManager();
+    public UnRegisterCommand() {
+        this.lang = SLogin.getInstance().langManager;
+        this.manager = SLogin.getInstance().loginManager;
     }
 
     @Override
@@ -47,13 +48,13 @@ public class UnRegisterCommand implements SubCommand {
             return;
         }
 
-        Optional<Account> account = plugin.getLoginManager().getAccount(args[1]);
+        Optional<Account> account = manager.getAccount(args[1]);
         if(!account.isPresent()){
             sender.sendMessage(lang.userNotExists);
             return;
         }
 
-        plugin.getLoginManager().unRegister(args[1]);
+        manager.unRegister(args[1]);
         sender.sendMessage(lang.unRegisterSuccess);
     }
 }
