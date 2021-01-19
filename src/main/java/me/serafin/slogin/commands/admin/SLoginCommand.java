@@ -16,11 +16,11 @@ import java.util.List;
 
 public class SLoginCommand implements CommandExecutor, TabCompleter {
 
-    ArrayList<SubCommand> commands = new ArrayList<>();
-    LangManager lang;
+    private final ArrayList<SubCommand> commands = new ArrayList<>();
+    private final LangManager lang;
 
     public SLoginCommand(){
-        this.lang = SLogin.getInstance().langManager;
+        this.lang = SLogin.getInstance().getLangManager();
 
         commands.add(new PlayerInfoSubCommand());
         commands.add(new ForceLoginSubCommand());

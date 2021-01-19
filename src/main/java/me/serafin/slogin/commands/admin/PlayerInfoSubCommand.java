@@ -16,12 +16,12 @@ import java.util.Optional;
 
 public class PlayerInfoSubCommand implements SubCommand {
 
-    LangManager lang;
-    LoginManager manager;
+    private final LangManager lang;
+    private final LoginManager manager;
 
     public PlayerInfoSubCommand(){
-        this.lang = SLogin.getInstance().langManager;
-        this.manager = SLogin.getInstance().loginManager;
+        this.lang = SLogin.getInstance().getLangManager();
+        this.manager = SLogin.getInstance().getLoginManager();
     }
 
     @Override

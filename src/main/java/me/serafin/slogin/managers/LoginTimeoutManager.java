@@ -11,11 +11,10 @@ import java.util.Map;
 public class LoginTimeoutManager {
 
     private final HashMap<Player, Integer> loginTimeout = new HashMap<>();
-
     private final ConfigManager config;
 
     public LoginTimeoutManager() {
-        this.config = SLogin.getInstance().configManager;
+        this.config = SLogin.getInstance().getConfigManager();
 
         if(config.LOGIN_TIMEOUT > 0) {
             new BukkitRunnable() {
@@ -30,7 +29,7 @@ public class LoginTimeoutManager {
 
                         if (entry.getValue() <= 0) {
                             iterator.remove();
-                            entry.getKey().kickPlayer(SLogin.getInstance().langManager.loginTimeoutKick);
+                            entry.getKey().kickPlayer(SLogin.getInstance().getLangManager().loginTimeoutKick);
                         }
                     }
                 }

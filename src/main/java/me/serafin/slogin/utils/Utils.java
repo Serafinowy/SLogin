@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Utils {
+
     public static String format(String s){
         return (s==null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);
     }
