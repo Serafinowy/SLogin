@@ -11,102 +11,17 @@ import java.io.File;
 public class LangManager {
 
     private final String lang_yml;
+    private final FileConfiguration lang;
 
     public LangManager(String language){
 
-        if ("PL".equalsIgnoreCase(language)) {
-            lang_yml = "lang_PL.yml";
+        if (language.equals("PL")) {
+            this.lang_yml = "lang_PL.yml";
         } else {
-            lang_yml = "lang_EN.yml";
+            this.lang_yml = "lang_EN.yml";
         }
 
-        loadDefault();
-        setupMessages();
-    }
-
-    ///////////////////////////////////////////
-
-    public final String PREFIX = Utils.format("&e[SLogin] &r");
-
-    public String onlyForPlayers;
-    public String wrongPassword;
-    public String alreadyLogged;
-    public String mustLogin;
-    public String maxAccounts;
-
-    ///////////////////////////////////////////
-
-    public String loginInfo;
-    public String loginCorrectUsage;
-    public String loginSuccess;
-
-    public String loginTitle;
-    public String loginSubTitle;
-
-    public String loginSuccessTitle;
-    public String loginSuccessSubTitle;
-
-    ///////////////////////////////////////////
-
-    public String notAllowedPasswordLength;
-    public String differentPasswords;
-    public String alreadyRegistered;
-    public String notRegistered;
-
-    public String registerInfo;
-    public String registerCorrectUsage;
-    public String registerSuccess;
-
-    public String registerTitle;
-    public String registerSubTitle;
-
-    public String registerSuccessTitle;
-    public String registerSuccessSubTitle;
-
-    ///////////////////////////////////////////
-
-    public String changePassCorrectUsage;
-    public String changePassSuccess;
-
-    ///////////////////////////////////////////
-
-    public String userNotExists;
-    public String userIsNotOnline;
-
-    public String playerInfoCorrectUsage;
-
-    public String changePassAdminCorrectUsage;
-    public String changePassAdminSuccess;
-
-    public String forceLoginCorrectUsage;
-    public String forceLoginSuccess;
-    public String forceLoginDeny;
-
-    public String registerAdminCorrectUsage;
-    public String registerAdminSuccess;
-    public String registerAdminDeny;
-
-    public String unRegisterCorrectUsage;
-    public String unRegisterSuccess;
-
-    ///////////////////////////////////////////
-
-    public String loginTimeoutKick;
-
-    public String captcha_guiName;
-    public String captcha_kickMessage;
-
-    ///////////////////////////////////////////
-
-    public String wrongPassword_kickMessage;
-
-    ///////////////////////////////////////////
-
-    /**
-     * Loading default language file (from plugin)
-     */
-    FileConfiguration lang;
-    private void loadDefault() {
+        // load Defaults
         File lang_file = new File(SLogin.getInstance().getDataFolder(), lang_yml);
 
         if(!lang_file.exists()){
@@ -114,83 +29,156 @@ public class LangManager {
             Bukkit.getLogger().info("Created: " + lang_yml + " file");
         }
         Bukkit.getLogger().info("Loaded: " + lang_yml + " file");
-        lang = YamlConfiguration.loadConfiguration(lang_file);
+        this.lang = YamlConfiguration.loadConfiguration(lang_file);
         Utils.matchConfig(lang, lang_file);
+
+        //load Messages
+        this.onlyForPlayers = PREFIX + Utils.format(lang.getString("userMessages.onlyForPlayers"));
+        this.wrongPassword = PREFIX + Utils.format(lang.getString("userMessages.wrongPassword"));
+        this.alreadyLogged = PREFIX + Utils.format(lang.getString("userMessages.alreadyLogged"));
+        this.mustLogin = PREFIX + Utils.format(lang.getString("userMessages.mustLogin"));
+        this.maxAccounts = PREFIX + Utils.format(lang.getString("userMessages.maxAccounts"));
+
+        ///////////////////////////////////////////
+
+        this.loginInfo = PREFIX + Utils.format(lang.getString("userMessages.loginInfo"));
+        this.loginCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.loginCorrectUsage"));
+        this.loginSuccess = PREFIX + Utils.format(lang.getString("userMessages.loginSuccess"));
+
+        this.loginTitle = Utils.format(lang.getString("userMessages.loginTitle"));
+        this.loginSubTitle = Utils.format(lang.getString("userMessages.loginSubTitle"));
+
+        this.loginSuccessTitle = Utils.format(lang.getString("userMessages.loginSuccessTitle"));
+        this.loginSuccessSubTitle = Utils.format(lang.getString("userMessages.loginSuccessSubTitle"));
+
+        ///////////////////////////////////////////
+
+        this.notAllowedPasswordLength = PREFIX + Utils.format(lang.getString("userMessages.notAllowedPasswordLength"));
+        this.differentPasswords = PREFIX + Utils.format(lang.getString("userMessages.differentPasswords"));
+        this.alreadyRegistered = PREFIX + Utils.format(lang.getString("userMessages.alreadyRegistered"));
+        this.notRegistered = PREFIX + Utils.format(lang.getString("userMessages.notRegistered"));
+
+        this.registerInfo = PREFIX + Utils.format(lang.getString("userMessages.registerInfo"));
+        this.registerCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.registerCorrectUsage"));
+        this.registerSuccess = PREFIX + Utils.format(lang.getString("userMessages.registerSuccess"));
+
+        this.registerTitle = Utils.format(lang.getString("userMessages.registerTitle"));
+        this.registerSubTitle = Utils.format(lang.getString("userMessages.registerSubTitle"));
+
+        this.registerSuccessTitle = Utils.format(lang.getString("userMessages.registerSuccessTitle"));
+        this.registerSuccessSubTitle = Utils.format(lang.getString("userMessages.registerSuccessSubTitle"));
+
+        ///////////////////////////////////////////
+
+        this.changePassCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.changePassCorrectUsage"));
+        this.changePassSuccess = PREFIX + Utils.format(lang.getString("userMessages.changePassSuccess"));
+
+        ///////////////////////////////////////////
+
+        this.userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
+        this.userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
+
+        this.playerInfoCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.playerInfoCorrectUsage"));
+
+        this.changePassAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminCorrectUsage"));
+        this.changePassAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminSuccess"));
+
+        this.forceLoginCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginCorrectUsage"));
+        this.forceLoginSuccess = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginSuccess"));
+        this.forceLoginDeny = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginDeny"));
+
+        this.registerAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminCorrectUsage"));
+        this.registerAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminSuccess"));
+        this.registerAdminDeny = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminDeny"));
+
+        this.unRegisterCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterCorrectUsage"));
+        this.unRegisterSuccess = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterSuccess"));
+
+        ///////////////////////////////////////////
+
+        this.loginTimeoutKick = Utils.format(lang.getString("loginTimeoutKick"));
+
+        this.captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
+        this.captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
+
+
+        this.wrongPassword_kickMessage = Utils.format(lang.getString("wrongPassword.kickMessage"));
     }
 
-    /**
-     * Loading messages
-     */
-    private void setupMessages(){
-        onlyForPlayers = PREFIX + Utils.format(lang.getString("userMessages.onlyForPlayers"));
-        wrongPassword = PREFIX + Utils.format(lang.getString("userMessages.wrongPassword"));
-        alreadyLogged = PREFIX + Utils.format(lang.getString("userMessages.alreadyLogged"));
-        mustLogin = PREFIX + Utils.format(lang.getString("userMessages.mustLogin"));
-        maxAccounts = PREFIX + Utils.format(lang.getString("userMessages.maxAccounts"));
+    ///////////////////////////////////////////
 
-        ///////////////////////////////////////////
+    public final String PREFIX = Utils.format("&e[SLogin] &r");
 
-        loginInfo = PREFIX + Utils.format(lang.getString("userMessages.loginInfo"));
-        loginCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.loginCorrectUsage"));
-        loginSuccess = PREFIX + Utils.format(lang.getString("userMessages.loginSuccess"));
+    public final String onlyForPlayers;
+    public final String wrongPassword;
+    public final String alreadyLogged;
+    public final String mustLogin;
+    public final String maxAccounts;
 
-        loginTitle = Utils.format(lang.getString("userMessages.loginTitle"));
-        loginSubTitle = Utils.format(lang.getString("userMessages.loginSubTitle"));
+    ///////////////////////////////////////////
 
-        loginSuccessTitle = Utils.format(lang.getString("userMessages.loginSuccessTitle"));
-        loginSuccessSubTitle = Utils.format(lang.getString("userMessages.loginSuccessSubTitle"));
+    public final String loginInfo;
+    public final String loginCorrectUsage;
+    public final String loginSuccess;
 
-        ///////////////////////////////////////////
+    public final String loginTitle;
+    public final String loginSubTitle;
 
-        notAllowedPasswordLength = PREFIX + Utils.format(lang.getString("userMessages.notAllowedPasswordLength"));
-        differentPasswords = PREFIX + Utils.format(lang.getString("userMessages.differentPasswords"));
-        alreadyRegistered = PREFIX + Utils.format(lang.getString("userMessages.alreadyRegistered"));
-        notRegistered = PREFIX + Utils.format(lang.getString("userMessages.notRegistered"));
+    public final String loginSuccessTitle;
+    public final String loginSuccessSubTitle;
 
-        registerInfo = PREFIX + Utils.format(lang.getString("userMessages.registerInfo"));
-        registerCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.registerCorrectUsage"));
-        registerSuccess = PREFIX + Utils.format(lang.getString("userMessages.registerSuccess"));
+    ///////////////////////////////////////////
 
-        registerTitle = Utils.format(lang.getString("userMessages.registerTitle"));
-        registerSubTitle = Utils.format(lang.getString("userMessages.registerSubTitle"));
+    public final String notAllowedPasswordLength;
+    public final String differentPasswords;
+    public final String alreadyRegistered;
+    public final String notRegistered;
 
-        registerSuccessTitle = Utils.format(lang.getString("userMessages.registerSuccessTitle"));
-        registerSuccessSubTitle = Utils.format(lang.getString("userMessages.registerSuccessSubTitle"));
+    public final String registerInfo;
+    public final String registerCorrectUsage;
+    public final String registerSuccess;
 
-        ///////////////////////////////////////////
+    public final String registerTitle;
+    public final String registerSubTitle;
 
-        changePassCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.changePassCorrectUsage"));
-        changePassSuccess = PREFIX + Utils.format(lang.getString("userMessages.changePassSuccess"));
+    public final String registerSuccessTitle;
+    public final String registerSuccessSubTitle;
 
-        ///////////////////////////////////////////
+    ///////////////////////////////////////////
 
-        userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
-        userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
+    public final String changePassCorrectUsage;
+    public final String changePassSuccess;
 
-        playerInfoCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.playerInfoCorrectUsage"));
+    ///////////////////////////////////////////
 
-        changePassAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminCorrectUsage"));
-        changePassAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminSuccess"));
+    public final String userNotExists;
+    public final String userIsNotOnline;
 
-        forceLoginCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginCorrectUsage"));
-        forceLoginSuccess = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginSuccess"));
-        forceLoginDeny = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginDeny"));
+    public final String playerInfoCorrectUsage;
 
-        registerAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminCorrectUsage"));
-        registerAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminSuccess"));
-        registerAdminDeny = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminDeny"));
+    public final String changePassAdminCorrectUsage;
+    public final String changePassAdminSuccess;
 
-        unRegisterCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterCorrectUsage"));
-        unRegisterSuccess = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterSuccess"));
+    public final String forceLoginCorrectUsage;
+    public final String forceLoginSuccess;
+    public final String forceLoginDeny;
 
-        ///////////////////////////////////////////
+    public final String registerAdminCorrectUsage;
+    public final String registerAdminSuccess;
+    public final String registerAdminDeny;
 
-        loginTimeoutKick = Utils.format(lang.getString("loginTimeoutKick"));
+    public final String unRegisterCorrectUsage;
+    public final String unRegisterSuccess;
 
-        captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
-        captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
+    ///////////////////////////////////////////
 
+    public final String loginTimeoutKick;
 
-        wrongPassword_kickMessage = Utils.format(lang.getString("wrongPassword.kickMessage"));
-    }
+    public final String captcha_guiName;
+    public final String captcha_kickMessage;
+
+    ///////////////////////////////////////////
+
+    public final String wrongPassword_kickMessage;
+
 }
