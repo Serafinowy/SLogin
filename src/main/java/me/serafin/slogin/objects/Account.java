@@ -56,6 +56,35 @@ public class Account {
         return BCrypt.checkpw(password, this.hashedPassword);
     }
 
+    /**
+     * Updating player's account
+     * @param hashedPassword player's hashed password
+     * @param lastLoginIP player's last login IP address
+     * @param lastLoginDate player's last login date
+     */
+    public void update(DataBase dataBase, String hashedPassword, String lastLoginIP, Long lastLoginDate) {
+        String command = "UPDATE `seralogin` SET `password` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
+        try {
+            dataBase.update(command, hashedPassword, lastLoginIP, lastLoginDate+"", this.displayName.toLowerCase());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
+    }
+
+    /**
+     * Deleting player's account
+     */
+    public void delete(DataBase dataBase) {
+        String command = "DELETE FROM `seralogin` WHERE `name` = ?";
+        try {
+            dataBase.update(command, this.displayName.toLowerCase());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
+    }
+
     ///////////////////////////////////////
 
     /**
@@ -64,7 +93,7 @@ public class Account {
      * @return optional player's account
      */
     public static Optional<Account> get(DataBase dataBase, String name) {
-        try (ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `name` = '" + name.toLowerCase() + "'")) {
+        try (ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `name` = ?", name.toLowerCase())) {
             if(result.next()) {
                 return Optional.of(new Account(
                         result.getString("name"),
@@ -87,49 +116,9 @@ public class Account {
      * @param IP player's register IP address
      */
     public static void create(DataBase dataBase, String name, String hashedPassword, String IP) {
-        String command = "INSERT INTO `seralogin` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES " +
-                "('" + name.toLowerCase() + "', '" +
-                hashedPassword + "', '" +
-                IP + "', '" +
-                System.currentTimeMillis() + "', '" +
-                IP + "', '" +
-                System.currentTimeMillis() + "')";
+        String command = "INSERT INTO `seralogin` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            dataBase.update(command);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    /**
-     * Updating player's account
-     * @param name player's name
-     * @param hashedPassword player's hashed password
-     * @param lastLoginIP player's last login IP address
-     * @param lastLoginDate player's last login date
-     */
-    public static void update(DataBase dataBase, String name, String hashedPassword, String lastLoginIP, Long lastLoginDate) {
-        String command = "UPDATE `seralogin` SET " + (hashedPassword==null ? "" : "`password` = '" + hashedPassword + "', ") +
-                (lastLoginIP==null ? "" : "`lastLoginIP` = '" + lastLoginIP + "', ") +
-                (lastLoginDate==null ? "" : "`lastLoginDate` = '" + lastLoginDate + "' ") +
-                "WHERE `name` = '" + name.toLowerCase() + "'";
-        try {
-            dataBase.update(command);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    /**
-     * Deleting player's account
-     * @param name player's name
-     */
-    public static void delete(DataBase dataBase, String name) {
-        String command = "DELETE FROM `seralogin` WHERE `name` = '" + name.toLowerCase() + "'";
-        try {
-            dataBase.update(command);
+            dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis()+"", IP, System.currentTimeMillis()+"");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
@@ -143,7 +132,7 @@ public class Account {
      */
     public static int accountIPCount(DataBase dataBase, String address){
         int count = 0;
-        try(ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `registerIP` = '" + address + "'")) {
+        try(ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `registerIP` = ?", address)) {
             if(result.next())
                 count++;
         } catch (SQLException throwables) {
