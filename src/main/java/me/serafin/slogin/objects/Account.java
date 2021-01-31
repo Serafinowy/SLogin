@@ -133,7 +133,8 @@ public class Account {
     public static int accountIPCount(DataBase dataBase, String address){
         int count = 0;
         try(ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `registerIP` = ?", address)) {
-            return result.getFetchSize();
+            if(result.next())
+                count++;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
