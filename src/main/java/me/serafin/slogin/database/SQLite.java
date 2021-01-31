@@ -5,8 +5,8 @@ import java.sql.*;
 
 public class SQLite implements DataBase {
 
-    Connection connection;
-    File file;
+    private Connection connection;
+    private final File file;
 
     public SQLite(File file){
         this.file = file;

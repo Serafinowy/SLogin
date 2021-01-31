@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,13 +17,12 @@ import java.util.*;
 public class CaptchaManager {
 
     private final LangManager lang;
+    private final Set<String> tempCaptcha = new HashSet<>();
 
     public CaptchaManager() {
-        this.lang = SLogin.getInstance().langManager;
+        this.lang = SLogin.getInstance().getLangManager();
         SLogin.getInstance().getServer().getPluginManager().registerEvents(new Events(), SLogin.getInstance());
     }
-
-    private final Set<String> tempCaptcha = new HashSet<>();
 
     private Inventory inventory() {
         Random random = new Random();

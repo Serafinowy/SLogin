@@ -19,22 +19,22 @@ import java.sql.SQLException;
 
 public final class SLogin extends JavaPlugin {
 
-    public static SLogin instance;
+    private static SLogin instance;
     private DataBase dataBase;
-    public ConfigManager configManager;
-    public LangManager langManager;
-    public LoginManager loginManager;
+    private ConfigManager configManager;
+    private LangManager langManager;
+    private LoginManager loginManager;
 
-    public LoginTimeoutManager loginTimeoutManager;
-    public CaptchaManager captchaManager;
+    private LoginTimeoutManager loginTimeoutManager;
+    private CaptchaManager captchaManager;
 
     @Override
     public void onEnable() {
         instance = this;
         this.configManager = new ConfigManager();
-        this.langManager = new LangManager( configManager.LANG);
+        this.langManager = new LangManager(configManager.LANG);
 
-        if(!setupDatabase()) {
+        if (!setupDatabase()) {
             Bukkit.getLogger().severe("Failed to connect database. Disabling plugin...");
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -51,7 +51,7 @@ public final class SLogin extends JavaPlugin {
         new LoggerFilter().registerFilter();
 
         checkVersion();
-        for(Player online : Bukkit.getOnlinePlayers())
+        for (Player online : Bukkit.getOnlinePlayers())
             loginManager.playerJoin(online);
     }
 
@@ -68,7 +68,7 @@ public final class SLogin extends JavaPlugin {
     }
 
     private boolean setupDatabase() {
-        if(configManager.DATATYPE.equals("MYSQL")) {
+        if (configManager.DATATYPE.equals("MYSQL")) {
             this.dataBase = new MySQL(configManager);
         } else {
             this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
@@ -76,13 +76,7 @@ public final class SLogin extends JavaPlugin {
 
         try {
             dataBase.openConnection();
-            dataBase.update("CREATE TABLE IF NOT EXISTS `seralogin`" +
-                    "(`name` TEXT NOT NULL, " +
-                    "`password` VARCHAR(255) NOT NULL, " +
-                    "`registerIP` TEXT NOT NULL, " +
-                    "`registerDate` BIGINT NOT NULL, " +
-                    "`lastLoginIP` TEXT NOT NULL, " +
-                    "`lastLoginDate` BIGINT NOT NULL)");
+            dataBase.update("CREATE TABLE IF NOT EXISTS `seralogin`" + "(`name` TEXT NOT NULL, " + "`password` VARCHAR(255) NOT NULL, " + "`registerIP` TEXT NOT NULL, " + "`registerDate` BIGINT NOT NULL, " + "`lastLoginIP` TEXT NOT NULL, " + "`lastLoginDate` BIGINT NOT NULL)");
             Bukkit.getLogger().info("Connected to the database");
             return true;
         } catch (SQLException e) {
@@ -92,7 +86,7 @@ public final class SLogin extends JavaPlugin {
     }
 
     private void setupListeners() {
-        getServer().getPluginManager().registerEvents(new PlayerActionListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerActionListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
@@ -106,8 +100,8 @@ public final class SLogin extends JavaPlugin {
 
     private void checkVersion() {
         String latestVersion = Utils.getLatestVersion();
-        if(latestVersion != null) {
-            if(!Utils.isCorrectVersion(getDescription().getVersion(), latestVersion)) {
+        if (latestVersion != null) {
+            if (!Utils.isCorrectVersion(getDescription().getVersion(), latestVersion)) {
                 getLogger().warning("New plugin version is available " + latestVersion);
                 getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
             }
@@ -116,5 +110,25 @@ public final class SLogin extends JavaPlugin {
 
     public static SLogin getInstance() {
         return instance;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public LangManager getLangManager() {
+        return langManager;
+    }
+
+    public LoginManager getLoginManager() {
+        return loginManager;
+    }
+
+    public LoginTimeoutManager getLoginTimeoutManager() {
+        return loginTimeoutManager;
+    }
+
+    public CaptchaManager getCaptchaManager() {
+        return captchaManager;
     }
 }

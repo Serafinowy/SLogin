@@ -17,8 +17,8 @@ public class LoginManager {
     private final ConfigManager config;
 
     public LoginManager(DataBase dataBase) {
-        this.lang = SLogin.getInstance().langManager;
-        this.config = SLogin.getInstance().configManager;
+        this.lang = SLogin.getInstance().getLangManager();
+        this.config = SLogin.getInstance().getConfigManager();
         this.dataBase = dataBase;
     }
 
@@ -54,13 +54,13 @@ public class LoginManager {
     public void playerJoin(Player player){
         Optional<Account> account = Account.get(dataBase, player.getName());
 
-        SLogin.getInstance().loginTimeoutManager.addTimeout(player);
+        SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
         if(account.isPresent()) {
             tempAccounts.put(player.getName(), account);
 
             if(config.CAPTCHA_ON_LOGIN)
-                SLogin.getInstance().captchaManager.sendCaptcha(player);
+                SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -76,7 +76,7 @@ public class LoginManager {
             tempAccounts.put(player.getName(), Optional.empty());
 
             if(config.CAPTCHA_ON_REGISTER)
-                SLogin.getInstance().captchaManager.sendCaptcha(player);
+                SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -143,7 +143,7 @@ public class LoginManager {
      */
     public void playerLogged(Player player) {
         player.setInvulnerable(false);
-        SLogin.getInstance().loginTimeoutManager.removeTimeout(player);
+        SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
     }
     ///////////////////////////////////////
 
@@ -164,8 +164,7 @@ public class LoginManager {
      */
     public void unRegister(String name) {
         Optional<Account> account = Account.get(dataBase, name);
-        if(account.isPresent())
-            account.get().delete(dataBase);
+        account.ifPresent(value -> value.delete(dataBase));
     }
 
     ///////////////////////////////////////

@@ -15,61 +15,18 @@ public class ConfigManager {
 
     public ConfigManager(){
 
-        loadDefault();
-        loadSettings();
-    }
-
-    ///////////////////////////////////////////
-
-    public String LANG;
-    public String DATATYPE;
-
-    public String MYSQL_HOST;
-    public String MYSQL_PORT;
-    public String MYSQL_USER;
-    public String MYSQL_PASS;
-    public String MYSQL_DATABASE;
-
-    public int MAX_ACCOUNTS_PER_IP;
-
-    public boolean MESSAGES_CHAT_MESSAGES;
-    public boolean MESSAGES_TITLE_MESSAGES;
-
-    public List<String> ALLOWED_COMMANDS;
-
-    public int PASSWORD_MIN_LENGTH;
-    public int PASSWORD_MAX_LENGTH;
-
-    ///////////////////////////////////////////
-
-    public int LOGIN_TIMEOUT;
-
-    public boolean CAPTCHA_ON_REGISTER;
-    public boolean CAPTCHA_ON_LOGIN;
-
-    public boolean KICK_ON_WRONG_PASSWORD;
-
-    ///////////////////////////////////////////
-
-    /**
-     * Loading default settings (from plugin)
-     */
-    private void loadDefault(){
+        // load Defaults
         File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
         if(!file.exists()){
             SLogin.getInstance().saveResource("config.yml", false);
         }
-        configuration = YamlConfiguration.loadConfiguration(file);
+        this.configuration = YamlConfiguration.loadConfiguration(file);
 
         Utils.matchConfig(configuration, file);
         Bukkit.getLogger().info("Loaded: config.yml file");
-    }
 
-    /**
-     * Loading settings
-     */
-    private void loadSettings(){
+        // load Settings
         this.LANG = configuration.getString("Language");
         this.DATATYPE = configuration.getString("DataType");
 
@@ -96,4 +53,34 @@ public class ConfigManager {
 
         this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
+
+    ///////////////////////////////////////////
+
+    public final String LANG;
+    public final String DATATYPE;
+
+    public final String MYSQL_HOST;
+    public final String MYSQL_PORT;
+    public final String MYSQL_USER;
+    public final String MYSQL_PASS;
+    public final String MYSQL_DATABASE;
+
+    public final int MAX_ACCOUNTS_PER_IP;
+
+    public final boolean MESSAGES_CHAT_MESSAGES;
+    public final boolean MESSAGES_TITLE_MESSAGES;
+
+    public final List<String> ALLOWED_COMMANDS;
+
+    public final int PASSWORD_MIN_LENGTH;
+    public final int PASSWORD_MAX_LENGTH;
+
+    ///////////////////////////////////////////
+
+    public final int LOGIN_TIMEOUT;
+
+    public final boolean CAPTCHA_ON_REGISTER;
+    public final boolean CAPTCHA_ON_LOGIN;
+
+    public final boolean KICK_ON_WRONG_PASSWORD;
 }

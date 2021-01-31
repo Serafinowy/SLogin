@@ -6,8 +6,8 @@ import java.sql.*;
 
 public class MySQL implements DataBase {
 
-    Connection connection;
-    ConfigManager config;
+    private Connection connection;
+    private final ConfigManager config;
 
     public MySQL(ConfigManager config){
         this.config = config;

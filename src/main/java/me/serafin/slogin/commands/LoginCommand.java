@@ -14,14 +14,14 @@ import java.util.Objects;
 
 public class LoginCommand implements CommandExecutor {
 
-    ConfigManager config;
-    LangManager lang;
-    LoginManager manager;
+    private final ConfigManager config;
+    private final LangManager lang;
+    private final LoginManager manager;
 
     public LoginCommand(){
-        this.config = SLogin.getInstance().configManager;
-        this.lang = SLogin.getInstance().langManager;
-        this.manager = SLogin.getInstance().loginManager;
+        this.config = SLogin.getInstance().getConfigManager();
+        this.lang = SLogin.getInstance().getLangManager();
+        this.manager = SLogin.getInstance().getLoginManager();
     }
 
     @Override

@@ -10,9 +10,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    LoginManager manager;
+    private final LoginManager manager;
+
     public PlayerJoinListener(){
-        this.manager = SLogin.getInstance().loginManager;
+        this.manager = SLogin.getInstance().getLoginManager();
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
