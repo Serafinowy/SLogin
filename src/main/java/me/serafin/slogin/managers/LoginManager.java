@@ -117,7 +117,7 @@ public class LoginManager {
         if(account.isPresent()) {
             if(bypass || account.get().comparePassword(password)) {
                 tempAccounts.remove(name);
-                Account.update(dataBase, name, account.get().getHashedPassword(), loginIP, System.currentTimeMillis());
+                account.get().update(dataBase, account.get().getHashedPassword(), loginIP, System.currentTimeMillis());
                 return true;
             }
         }
@@ -155,7 +155,7 @@ public class LoginManager {
     public void changePassword(Account account, String password) {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
-        Account.update(dataBase, account.getDisplayName(), hashedPassword, account.getLastLoginIP(), account.getLastLoginDate());
+        account.update(dataBase, hashedPassword, account.getLastLoginIP(), account.getLastLoginDate());
     }
 
     /**
@@ -163,7 +163,9 @@ public class LoginManager {
      * @param name player's name
      */
     public void unRegister(String name) {
-        Account.delete(dataBase, name);
+        Optional<Account> account = Account.get(dataBase, name);
+        if(account.isPresent())
+            account.get().delete(dataBase);
     }
 
     ///////////////////////////////////////

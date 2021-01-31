@@ -33,16 +33,22 @@ public class SQLite implements DataBase {
     }
 
     @Override
-    public void update(String command) throws SQLException {
+    public void update(String command, String... params) throws SQLException {
         openConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(command);
+        PreparedStatement statement = connection.prepareStatement(command);
+        for(int i = 0; i<params.length; i++) {
+            statement.setString(i+1, params[i]);
+        }
+        statement.executeUpdate();
     }
 
     @Override
-    public ResultSet query(String command) throws SQLException {
+    public ResultSet query(String command, String... params) throws SQLException {
         openConnection();
-        Statement statement = connection.createStatement();
-        return statement.executeQuery(command);
+        PreparedStatement statement = connection.prepareStatement(command);
+        for(int i = 0; i<params.length; i++) {
+            statement.setString(i+1, params[i]);
+        }
+        return statement.executeQuery();
     }
 }

@@ -9,8 +9,8 @@ public interface DataBase {
 
     void closeConnection() throws SQLException;
 
-    void update(String command) throws SQLException;
+    void update(String command, String... params) throws SQLException;
 
-    ResultSet query(String command) throws SQLException;
+    ResultSet query(String command, String... params) throws SQLException;
 
 }
