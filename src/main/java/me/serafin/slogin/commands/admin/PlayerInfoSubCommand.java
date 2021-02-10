@@ -60,21 +60,15 @@ public class PlayerInfoSubCommand implements SubCommand {
         String pattern = "dd.MM.yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-
-        sender.sendMessage("");
-        sender.sendMessage(Utils.format("&7___________/ &e" + account.get().getDisplayName().toUpperCase() + " INFO &7\\___________"));
-        sender.sendMessage("");
-
-        sender.sendMessage(Utils.format("&eRegister IP: &7" + account.get().getRegisterIP()));
-
         Date registerDate = new Date(account.get().getRegisterDate());
-        sender.sendMessage(Utils.format("&eRegister date: &7" + simpleDateFormat.format(registerDate)));
-
-        sender.sendMessage(Utils.format("&eLast login IP: &7" + account.get().getLastLoginIP()));
-
         Date lastLoginDate = new Date(account.get().getLastLoginDate());
-        sender.sendMessage(Utils.format("&eLast login date: &7" + simpleDateFormat.format(lastLoginDate)));
 
-        sender.sendMessage("");
+        sender.sendMessage(lang.playerInfoMessage
+            .replace("{PLAYER}", account.get().getDisplayName().toUpperCase())
+            .replace("{EMAIL}", account.get().getEmail())
+            .replace("{REGISTER_IP}", account.get().getRegisterIP())
+            .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
+            .replace("{LASTLOGIN_IP}", account.get().getLastLoginIP())
+            .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate)));
     }
 }

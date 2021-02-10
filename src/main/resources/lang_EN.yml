@@ -27,11 +27,11 @@ userMessages:
   # Register
   notAllowedPasswordLength: "&cThe password must be 5-20 characters long!"
   differentPasswords: "&cYou have entered wrong password! Passwords must be identical!"
-  alreadyRegistered: "&cYou are already registered! Use command: &e/login <password>"
-  notRegistered: "&cYou are not registered! Use command: &e/register <password> <password>"
+  alreadyRegistered: "&cYou are already registered! Use command: /login <password>"
+  notRegistered: "&cYou are not registered! Use command: /register <password> <password>"
 
   registerInfo: "&7Register: &e/register <password> <password>"
-  registerCorrectUsage: "&cCorrect usage: &e/register <password> <password>"
+  registerCorrectUsage: "&cCorrect usage: /register <password> <password>"
   registerSuccess: "&aYou have registered successfully!"
 
   registerTitle: "&a&lWelcome"
@@ -41,9 +41,16 @@ userMessages:
   registerSuccessSubTitle: "&7You have registered successfully!"
 
   # Change password
-  changePassCorrectUsage: "&cCorrect usage: &e/cp <old pass> <new pass>"
+  changePassCorrectUsage: "&cCorrect usage: /cp <old pass> <new pass>"
   changePassSuccess: "&aYou have changed password successfully! Do not forget it!"
 
+  # Email
+  emailInfo: "&7Your current email: &e{EMAIL}\n&7 You can change it by typing: /email set <email>"
+  emailCorrectUsage: "&cCorrect usage: /email or /email <set> <email>"
+  emailChangeSuccess: "&7You have set up your email successfully!"
+
+  emailNotSet: "&cYou did not set your email! Do it now by typing: /email set <email>"
+  emailBadFormat: "&cYou have typed bad email format! Correct format: username@example.com!"
 
 # Messages for administrator
 adminMessages:
@@ -53,6 +60,14 @@ adminMessages:
 
   # Info about player
   playerInfoCorrectUsage: "&cCorrect usage: /sl playerinfo <nick>"
+  playerInfoMessage: |
+    &7___________/ &e{PLAYER} INFO &7\___________
+    &r
+    &eEmail: &7{EMAIL}
+    &eRegister IP: &7{REGISTER_IP}
+    &eRegister date: &7{REGISTER_DATE}
+    &eLast login IP: &7{LASTLOGIN_IP}
+    &eLast login date: &7{LASTLOGIN_DATE}
 
   # Change password
   changePassAdminCorrectUsage: "&cCorrect usage: /sl changepassword <nick> <pass>"
@@ -74,7 +89,7 @@ adminMessages:
 
 # Log in timeout message
 loginTimeoutKick: |
-  &6SLogin CAPTCHA
+  &6SLogin TIMEOUT
 
   &cLogin time has expired
 

@@ -32,6 +32,8 @@ public final class SLogin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.configManager = new ConfigManager();
+
+        assert configManager.LANG != null;
         this.langManager = new LangManager(configManager.LANG);
 
         if (!setupDatabase()) {
@@ -68,6 +70,7 @@ public final class SLogin extends JavaPlugin {
     }
 
     private boolean setupDatabase() {
+        assert configManager.DATATYPE != null;
         if (configManager.DATATYPE.equals("MYSQL")) {
             this.dataBase = new MySQL(configManager);
         } else {
@@ -76,8 +79,16 @@ public final class SLogin extends JavaPlugin {
 
         try {
             dataBase.openConnection();
-            dataBase.update("CREATE TABLE IF NOT EXISTS `seralogin`" + "(`name` TEXT NOT NULL, " + "`password` VARCHAR(255) NOT NULL, " + "`registerIP` TEXT NOT NULL, " + "`registerDate` BIGINT NOT NULL, " + "`lastLoginIP` TEXT NOT NULL, " + "`lastLoginDate` BIGINT NOT NULL)");
-            Bukkit.getLogger().info("Connected to the database");
+            dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
+                    "(`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT, " +
+                    "`name` TEXT NOT NULL, " +
+                    "`password` VARCHAR(255) NOT NULL, " +
+                    "`email` VARCHAR(255) NULL, " +
+                    "`registerIP` TEXT NOT NULL, " +
+                    "`registerDate` BIGINT NOT NULL, " +
+                    "`lastLoginIP` TEXT NOT NULL, " +
+                    "`lastLoginDate` BIGINT NOT NULL)");
+            Bukkit.getLogger().info("Connected to the " + configManager.DATATYPE + " database");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,6 +105,7 @@ public final class SLogin extends JavaPlugin {
         getCommand("register").setExecutor(new RegisterCommand());
         getCommand("login").setExecutor(new LoginCommand());
         getCommand("changepassword").setExecutor(new ChangePasswordCommand());
+        getCommand("email").setExecutor(new EmailCommand());
 
         getCommand("slogin").setExecutor(new SLoginCommand());
     }

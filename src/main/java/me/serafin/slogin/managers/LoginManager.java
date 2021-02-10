@@ -65,11 +65,12 @@ public class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(!isLogged(player.getName()))
-                        if(config.MESSAGES_CHAT_MESSAGES)
+                    if (!isLogged(player.getName())) {
+                        if (config.MESSAGES_CHAT_MESSAGES)
                             player.sendMessage(lang.loginInfo);
-                        if(config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4*20, 10);
+                        if (config.MESSAGES_TITLE_MESSAGES)
+                            player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4 * 20, 10);
+                    }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
         } else {
@@ -81,11 +82,12 @@ public class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(!isLogged(player.getName()))
-                        if(config.MESSAGES_CHAT_MESSAGES)
+                    if (!isLogged(player.getName())) {
+                        if (config.MESSAGES_CHAT_MESSAGES)
                             player.sendMessage(lang.registerInfo);
-                        if(config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4*20, 10);
+                        if (config.MESSAGES_TITLE_MESSAGES)
+                            player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4 * 20, 10);
+                    }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
         }
@@ -106,18 +108,17 @@ public class LoginManager {
      * @param name player's name
      * @param loginIP player's login IP
      * @param password player's password
-     * @param bypass login even if password is incorrect
+     * @param requirePassword login even if password is incorrect
      * @return login success
      */
-    public boolean login(String name, String loginIP, String password, boolean bypass) {
+    public boolean login(String name, String loginIP, String password, boolean requirePassword) {
         if(!tempAccounts.containsKey(name))
             return false;
 
         Optional<Account> account = tempAccounts.get(name);
         if(account.isPresent()) {
-            if(bypass || account.get().comparePassword(password)) {
-                tempAccounts.remove(name);
-                account.get().update(dataBase, account.get().getHashedPassword(), loginIP, System.currentTimeMillis());
+            if(!requirePassword || account.get().comparePassword(password)) {
+                account.get().update(dataBase, account.get().getHashedPassword(), account.get().getEmail(), loginIP, System.currentTimeMillis());
                 return true;
             }
         }
@@ -134,17 +135,24 @@ public class LoginManager {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
         Account.create(dataBase, name, hashedPassword, IP);
-        tempAccounts.remove(name);
+
     }
 
     /**
      * Execute when player successfully logged in
-     * @param player - player
+     * @param player player
      */
     public void playerLogged(Player player) {
         player.setInvulnerable(false);
         SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
+        Optional<Account> account = tempAccounts.get(player.getName());
+        assert account.isPresent();
+        if(config.EMAIL_NOTIFICATION && account.get().getEmail() == null)
+            player.sendMessage(lang.emailNotSet);
+
+        tempAccounts.remove(player.getName());
     }
+
     ///////////////////////////////////////
 
     /**
@@ -155,7 +163,16 @@ public class LoginManager {
     public void changePassword(Account account, String password) {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
-        account.update(dataBase, hashedPassword, account.getLastLoginIP(), account.getLastLoginDate());
+        account.update(dataBase, hashedPassword, account.getEmail(), account.getLastLoginIP(), account.getLastLoginDate());
+    }
+
+    /**
+     * Password change
+     * @param account player's account
+     * @param email player's new email
+     */
+    public void setEmail(Account account, String email) {
+        account.update(dataBase, account.getHashedPassword(), email, account.getLastLoginIP(), account.getLastLoginDate());
     }
 
     /**

@@ -2,9 +2,9 @@ package me.serafin.slogin.utils;
 
 import me.serafin.slogin.SLogin;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,6 +17,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -55,7 +57,7 @@ public class Utils {
     public static TextComponent sendCommandSuggest(String text, String hover, String cmd){
         TextComponent component = new TextComponent(text);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, cmd));
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hover)));
         return component;
     }
 
@@ -97,5 +99,13 @@ public class Utils {
             return Integer.parseInt(curVersionT[1]) >= Integer.parseInt(minVersionT[1]);
         } catch (Exception ignored) { }
         return false;
+    }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
     }
 }

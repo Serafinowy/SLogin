@@ -11,8 +11,6 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private FileConfiguration configuration;
-
     public ConfigManager(){
 
         // load Defaults
@@ -21,7 +19,7 @@ public class ConfigManager {
         if(!file.exists()){
             SLogin.getInstance().saveResource("config.yml", false);
         }
-        this.configuration = YamlConfiguration.loadConfiguration(file);
+        FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         Utils.matchConfig(configuration, file);
         Bukkit.getLogger().info("Loaded: config.yml file");
@@ -45,6 +43,8 @@ public class ConfigManager {
 
         this.PASSWORD_MIN_LENGTH = configuration.getInt("Password.min-length");
         this.PASSWORD_MAX_LENGTH = configuration.getInt("Password.max-length");
+
+        this.EMAIL_NOTIFICATION = configuration.getBoolean("EmailNotification");
 
         this.LOGIN_TIMEOUT = configuration.getInt("LoginTimeout");
 
@@ -74,6 +74,8 @@ public class ConfigManager {
 
     public final int PASSWORD_MIN_LENGTH;
     public final int PASSWORD_MAX_LENGTH;
+
+    public final boolean EMAIL_NOTIFICATION;
 
     ///////////////////////////////////////////
 

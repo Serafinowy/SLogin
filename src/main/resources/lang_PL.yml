@@ -11,6 +11,7 @@ userMessages:
   wrongPassword: "&cPodałeś złe hasło!"
   alreadyLogged: "&cJesteś już zalogowany!"
   mustLogin: "&cMusisz się zalogować, by to zrobić!"
+  maxAccounts: "&cZarejestrowałeś już maksymalną liczbę kont na tym adresie IP!"
 
   # Wiadomości z logowania
   loginInfo: "&7Zaloguj się: &e/login <hasło>"
@@ -26,11 +27,11 @@ userMessages:
   # Wiadomości z rejestracji
   notAllowedPasswordLength: "&cHasło musi zawierać od 5 do 20 znaków!"
   differentPasswords: "&cPodałeś różne hasła! Hasła muszą być identyczne!"
-  alreadyRegistered: "&cJesteś już zarejestrowany! Użyj komendy: &e/login <hasło>"
-  notRegistered: "&cNie jesteś zarejestrowany! Użyj komendy &e/register <hasło> <hasło>"
+  alreadyRegistered: "&cJesteś już zarejestrowany! Użyj komendy: /login <hasło>"
+  notRegistered: "&cNie jesteś zarejestrowany! Użyj komendy /register <hasło> <hasło>"
 
   registerInfo: "&7Zarejstruj się: &e/register <hasło> <hasło>"
-  registerCorrectUsage: "&cPoprawne użycie: &e/register <hasło> <hasło>"
+  registerCorrectUsage: "&cPoprawne użycie: /register <hasło> <hasło>"
   registerSuccess: "&aPomyślnie się zarejestrowałeś!"
 
   registerTitle: "&a&lWitaj"
@@ -40,8 +41,16 @@ userMessages:
   registerSuccessSubTitle: "&7Pomyślnie się zarejestrowałeś!"
 
   # Wiadomości z zmianą hasła
-  changePassCorrectUsage: "&cPoprawne użycie: &e/cp <stare_hasło> <nowe_hasło>"
+  changePassCorrectUsage: "&cPoprawne użycie: /cp <stare_hasło> <nowe_hasło>"
   changePassSuccess: "&aPomyślnie zmieniłeś hasło! Nie zapomnij go!"
+
+  # Email
+  emailInfo: "&7Twój obecny email: &e{EMAIL}\n&7 Możesz go zmienić wpisując: /email set <email>"
+  emailCorrectUsage: "&cPoprawne użycie: /email or /email <set> <email>"
+  emailChangeSuccess: "&7Pomyślnie ustawiłeś swój adres email!"
+
+  emailNotSet: "&cNie ustawiłeś swojego adresu email! Zrób to teraz: /email set <email>"
+  emailBadFormat: "&cWpisaleś zły email! Poprawny format: username@example.com!"
 
 
 # Wiadomości dla administratora
@@ -52,6 +61,14 @@ adminMessages:
 
   # Informacje o graczu
   playerInfoCorrectUsage: "&cPoprawne użycie: /sl playerinfo <nick>"
+  playerInfoMessage: |
+    &7___________/ &eINFO {PLAYER} &7\___________
+    &r
+    &eEmail: &7{EMAIL}
+    &eIP rejestracji: &7{REGISTER_IP}
+    &eData rejestracji: &7{REGISTER_DATE}
+    &eIP ostatniego logowania: &7{LASTLOGIN_IP}
+    &eData ostatniego logowania: &7{LASTLOGIN_DATE}
 
   # Zmiana hasła
   changePassAdminCorrectUsage: "&cPoprawne użycie: /sl changepassword <nick> <hasło>"
@@ -73,7 +90,7 @@ adminMessages:
 
 # Za długie logowanie
 loginTimeoutKick: |
-  &6SLogin CAPTCHA
+  &6SLogin TIMEOUT
 
   &cMinął czas logowania
 

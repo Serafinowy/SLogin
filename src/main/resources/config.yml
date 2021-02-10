@@ -41,6 +41,9 @@ Password:
   min-length: 5
   max-length: 20
 
+# Informs every player on login that its email is not set
+EmailNotification: true
+
 # Time to log in (in seconds)
 # 0 -> disabled
 LoginTimeout: 30

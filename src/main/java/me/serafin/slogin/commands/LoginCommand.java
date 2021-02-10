@@ -38,7 +38,6 @@ public class LoginCommand implements CommandExecutor {
             return true;
         }
 
-
         if(!manager.isRegistered(player.getName())){
             player.sendMessage(lang.notRegistered);
             return true;
@@ -49,7 +48,7 @@ public class LoginCommand implements CommandExecutor {
             return true;
         }
 
-        if(manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], false)) {
+        if(manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], true)) {
             if(config.MESSAGES_TITLE_MESSAGES)
                 player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
             if(config.MESSAGES_CHAT_MESSAGES)

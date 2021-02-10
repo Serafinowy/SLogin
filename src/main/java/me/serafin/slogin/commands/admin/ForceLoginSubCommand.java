@@ -59,7 +59,7 @@ public class ForceLoginSubCommand implements SubCommand {
             return;
         }
 
-        if(!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, true)){
+        if(!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, false)){
             sender.sendMessage(lang.forceLoginDeny);
             return;
         }

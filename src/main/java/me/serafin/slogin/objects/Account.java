@@ -11,12 +11,13 @@ import java.util.Optional;
 
 public class Account {
 
-    private final String displayName, hashedPassword, registerIP, lastLoginIP;
+    private final String displayName, hashedPassword, email, registerIP, lastLoginIP;
     private final long registerDate, lastLoginDate;
 
-    public Account(String displayName, String hashedPassword, String registerIP, String lastLoginIP, long registerDate, long lastLoginDate) {
+    public Account(String displayName, String hashedPassword, String email, String registerIP, String lastLoginIP, long registerDate, long lastLoginDate) {
         this.displayName = displayName;
         this.hashedPassword = hashedPassword;
+        this.email = email;
         this.registerIP = registerIP;
         this.lastLoginIP = lastLoginIP;
         this.registerDate = registerDate;
@@ -29,6 +30,10 @@ public class Account {
 
     public String getHashedPassword() {
         return hashedPassword;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getRegisterIP() {
@@ -62,10 +67,10 @@ public class Account {
      * @param lastLoginIP player's last login IP address
      * @param lastLoginDate player's last login date
      */
-    public void update(DataBase dataBase, String hashedPassword, String lastLoginIP, Long lastLoginDate) {
-        String command = "UPDATE `seralogin` SET `password` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
+    public void update(DataBase dataBase, String hashedPassword, String email, String lastLoginIP, Long lastLoginDate) {
+        String command = "UPDATE `slogin_accounts` SET `password` = ?, `email` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
         try {
-            dataBase.update(command, hashedPassword, lastLoginIP, lastLoginDate+"", this.displayName.toLowerCase());
+            dataBase.update(command, hashedPassword, email, lastLoginIP, lastLoginDate+"", this.displayName.toLowerCase());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
@@ -76,7 +81,7 @@ public class Account {
      * Deleting player's account
      */
     public void delete(DataBase dataBase) {
-        String command = "DELETE FROM `seralogin` WHERE `name` = ?";
+        String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
         try {
             dataBase.update(command, this.displayName.toLowerCase());
         } catch (SQLException throwables) {
@@ -93,11 +98,12 @@ public class Account {
      * @return optional player's account
      */
     public static Optional<Account> get(DataBase dataBase, String name) {
-        try (ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `name` = ?", name.toLowerCase())) {
+        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", name.toLowerCase())) {
             if(result.next()) {
                 return Optional.of(new Account(
                         result.getString("name"),
                         result.getString("password"),
+                        result.getString("email"),
                         result.getString("registerIP"),
                         result.getString("lastLoginIP"),
                         result.getLong("registerDate"),
@@ -116,7 +122,7 @@ public class Account {
      * @param IP player's register IP address
      */
     public static void create(DataBase dataBase, String name, String hashedPassword, String IP) {
-        String command = "INSERT INTO `seralogin` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
+        String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis()+"", IP, System.currentTimeMillis()+"");
         } catch (SQLException throwables) {
@@ -132,8 +138,9 @@ public class Account {
      */
     public static int accountIPCount(DataBase dataBase, String address){
         int count = 0;
-        try(ResultSet result = dataBase.query("SELECT * FROM `seralogin` WHERE `registerIP` = ?", address)) {
-            return result.getFetchSize();
+        try(ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
+            while (result.next()) count++;
+            return count;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

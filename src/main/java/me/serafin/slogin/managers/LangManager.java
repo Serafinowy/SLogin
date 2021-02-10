@@ -10,15 +10,13 @@ import java.io.File;
 
 public class LangManager {
 
-    private final String lang_yml;
-    private final FileConfiguration lang;
-
     public LangManager(String language){
 
+        String lang_yml;
         if (language.equals("PL")) {
-            this.lang_yml = "lang_PL.yml";
+            lang_yml = "lang_PL.yml";
         } else {
-            this.lang_yml = "lang_EN.yml";
+            lang_yml = "lang_EN.yml";
         }
 
         // load Defaults
@@ -29,7 +27,8 @@ public class LangManager {
             Bukkit.getLogger().info("Created: " + lang_yml + " file");
         }
         Bukkit.getLogger().info("Loaded: " + lang_yml + " file");
-        this.lang = YamlConfiguration.loadConfiguration(lang_file);
+
+        FileConfiguration lang = YamlConfiguration.loadConfiguration(lang_file);
         Utils.matchConfig(lang, lang_file);
 
         //load Messages
@@ -75,10 +74,20 @@ public class LangManager {
 
         ///////////////////////////////////////////
 
+        this.emailInfo = PREFIX + Utils.format(lang.getString("userMessages.emailInfo"));
+        this.emailCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.emailCorrectUsage"));
+        this.emailChangeSuccess = PREFIX + Utils.format(lang.getString("userMessages.emailChangeSuccess"));
+
+        this.emailNotSet = PREFIX + Utils.format(lang.getString("userMessages.emailNotSet"));
+        this.emailBadFormat = PREFIX + Utils.format(lang.getString("userMessages.emailBadFormat"));
+
+        ///////////////////////////////////////////
+
         this.userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
         this.userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
 
         this.playerInfoCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.playerInfoCorrectUsage"));
+        this.playerInfoMessage = Utils.format(lang.getString("adminMessages.playerInfoMessage"));
 
         this.changePassAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminCorrectUsage"));
         this.changePassAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminSuccess"));
@@ -100,7 +109,6 @@ public class LangManager {
 
         this.captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
         this.captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
-
 
         this.wrongPassword_kickMessage = Utils.format(lang.getString("wrongPassword.kickMessage"));
     }
@@ -151,10 +159,20 @@ public class LangManager {
 
     ///////////////////////////////////////////
 
+    public final String emailInfo;
+    public final String emailCorrectUsage;
+    public final String emailChangeSuccess;
+
+    public final String emailNotSet;
+    public final String emailBadFormat;
+
+    ///////////////////////////////////////////
+
     public final String userNotExists;
     public final String userIsNotOnline;
 
     public final String playerInfoCorrectUsage;
+    public final String playerInfoMessage;
 
     public final String changePassAdminCorrectUsage;
     public final String changePassAdminSuccess;
