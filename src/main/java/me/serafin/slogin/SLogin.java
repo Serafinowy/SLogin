@@ -79,15 +79,7 @@ public final class SLogin extends JavaPlugin {
 
         try {
             dataBase.openConnection();
-            dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
-                    "(`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT, " +
-                    "`name` TEXT NOT NULL, " +
-                    "`password` VARCHAR(255) NOT NULL, " +
-                    "`email` VARCHAR(255) NULL, " +
-                    "`registerIP` TEXT NOT NULL, " +
-                    "`registerDate` BIGINT NOT NULL, " +
-                    "`lastLoginIP` TEXT NOT NULL, " +
-                    "`lastLoginDate` BIGINT NOT NULL)");
+            dataBase.createTableIfNotExist();
             Bukkit.getLogger().info("Connected to the " + configManager.DATATYPE + " database");
             return true;
         } catch (SQLException e) {

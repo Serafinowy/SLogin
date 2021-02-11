@@ -13,4 +13,6 @@ public interface DataBase {
 
     ResultSet query(String command, String... params) throws SQLException;
 
+    void createTableIfNotExist() throws SQLException;
+
 }
