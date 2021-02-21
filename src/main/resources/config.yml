@@ -18,6 +18,7 @@ MySQL:
   User: "root"
   Pass: ""
   DataBase: "slogin"
+  Properties: "useSSL=false"
 
 # One IP address cannot have more than this number of accounts
 MaxAccountsPerIP: 2

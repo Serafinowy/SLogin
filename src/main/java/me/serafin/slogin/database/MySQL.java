@@ -31,7 +31,8 @@ public final class MySQL implements DataBase {
         if (connection == null || connection.isClosed()) {
             String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
                     + config.MYSQL_PORT + "/"
-                    + config.MYSQL_DATABASE;
+                    + config.MYSQL_DATABASE + "?"
+                    + config.MYSQL_PROPERTIES;
             String USER = config.MYSQL_USER;
             String PASS = config.MYSQL_PASS;
             connection = DriverManager.getConnection(URL, USER, PASS);

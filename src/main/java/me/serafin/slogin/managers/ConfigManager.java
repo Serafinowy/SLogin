@@ -33,6 +33,7 @@ public final class ConfigManager {
         this.MYSQL_USER = configuration.getString("MySQL.User");
         this.MYSQL_PASS = configuration.getString("MySQL.Pass");
         this.MYSQL_DATABASE = configuration.getString("MySQL.DataBase");
+        this.MYSQL_PROPERTIES = configuration.getString("MySQL.Properties");
 
         this.MAX_ACCOUNTS_PER_IP = configuration.getInt("MaxAccountsPerIP");
 
@@ -64,6 +65,7 @@ public final class ConfigManager {
     public final String MYSQL_USER;
     public final String MYSQL_PASS;
     public final String MYSQL_DATABASE;
+    public final String MYSQL_PROPERTIES;
 
     public final int MAX_ACCOUNTS_PER_IP;
 
