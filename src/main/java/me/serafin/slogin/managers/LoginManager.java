@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class LoginManager {
+public final class LoginManager {
 
     private final DataBase dataBase;
     private final LangManager lang;
@@ -21,6 +21,8 @@ public class LoginManager {
         this.config = SLogin.getInstance().getConfigManager();
         this.dataBase = dataBase;
     }
+
+    ///////////////////////////////////////
 
     /**
      * List of not logged in players
@@ -52,13 +54,11 @@ public class LoginManager {
      * @param player player
      */
     public void playerJoin(Player player){
-        Optional<Account> account = Account.get(dataBase, player.getName());
-
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
+        Optional<Account> account = Account.get(dataBase, player.getName());
+        tempAccounts.put(player.getName(), account);
         if(account.isPresent()) {
-            tempAccounts.put(player.getName(), account);
-
             if(config.CAPTCHA_ON_LOGIN)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
@@ -74,8 +74,6 @@ public class LoginManager {
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
         } else {
-            tempAccounts.put(player.getName(), Optional.empty());
-
             if(config.CAPTCHA_ON_REGISTER)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
@@ -135,7 +133,6 @@ public class LoginManager {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
         Account.create(dataBase, name, hashedPassword, IP);
-
     }
 
     /**
@@ -145,11 +142,12 @@ public class LoginManager {
     public void playerLogged(Player player) {
         player.setInvulnerable(false);
         SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
-        Optional<Account> account = tempAccounts.get(player.getName());
-        assert account.isPresent();
-        if(config.EMAIL_NOTIFICATION && account.get().getEmail() == null)
-            player.sendMessage(lang.emailNotSet);
 
+        Optional<Account> account = tempAccounts.get(player.getName());
+        account = account.isPresent() ? account : Account.get(dataBase, player.getName());
+        if(account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
+            player.sendMessage(lang.emailNotSet);
+        }
         tempAccounts.remove(player.getName());
     }
 
@@ -160,7 +158,7 @@ public class LoginManager {
      * @param account player's account
      * @param password player's new password
      */
-    public void changePassword(Account account, String password) {
+    public void setPassword(Account account, String password) {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
         account.update(dataBase, hashedPassword, account.getEmail(), account.getLastLoginIP(), account.getLastLoginDate());
@@ -177,11 +175,10 @@ public class LoginManager {
 
     /**
      * Delete player's account
-     * @param name player's name
+     * @param account player's account
      */
-    public void unRegister(String name) {
-        Optional<Account> account = Account.get(dataBase, name);
-        account.ifPresent(value -> value.delete(dataBase));
+    public void unRegister(Account account) {
+        account.delete(dataBase);
     }
 
     ///////////////////////////////////////
@@ -198,7 +195,7 @@ public class LoginManager {
      * @param address account address
      * @return account number
      */
-    public int accountIPCount(String address) {
+    public int getAccountIPCount(String address) {
         return Account.accountIPCount(dataBase, address);
     }
 }

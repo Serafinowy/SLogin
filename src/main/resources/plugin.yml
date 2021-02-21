@@ -3,6 +3,7 @@ version: ${project.version}
 author: _Serafin
 description: Plugin for the login system
 main: me.serafin.slogin.SLogin
+load: STARTUP
 commands:
   register:
     description: Register new player

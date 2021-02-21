@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-public class LangManager {
+public final class LangManager {
 
     public LangManager(String language){
 

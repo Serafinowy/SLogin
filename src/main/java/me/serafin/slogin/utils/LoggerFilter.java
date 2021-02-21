@@ -11,7 +11,7 @@ import org.apache.logging.log4j.message.Message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoggerFilter extends AbstractFilter {
+public final class LoggerFilter extends AbstractFilter {
 
     private final List<String> commands = new ArrayList<>();
 

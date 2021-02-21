@@ -4,11 +4,14 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 
-public class PlayerActionListener implements Listener {
+public final class PlayerActionListener implements Listener {
 
     private final ConfigManager config;
     private final LangManager lang;
@@ -20,15 +23,25 @@ public class PlayerActionListener implements Listener {
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onInteract(PlayerInteractEvent event){
         if(!manager.isLogged(event.getPlayer().getName())){
             event.getPlayer().sendMessage(lang.mustLogin);
+            event.setUseInteractedBlock(Event.Result.DENY);
+            event.setUseItemInHand(Event.Result.DENY);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
+    public void onInventoryClick(InventoryClickEvent event){
+        if(!manager.isLogged(event.getWhoClicked().getName())){
+            event.getWhoClicked().sendMessage(lang.mustLogin);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onChat(AsyncPlayerChatEvent event){
         if(!manager.isLogged(event.getPlayer().getName())){
             event.getPlayer().sendMessage(lang.mustLogin);
@@ -36,14 +49,14 @@ public class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onMove(PlayerMoveEvent event){
         if(!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().teleport(event.getFrom());
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent event){
         String cmd = event.getMessage().split(" ")[0].replace("/", "");
         if(config.ALLOWED_COMMANDS.contains(cmd))
@@ -55,7 +68,7 @@ public class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent event) {
         if(!manager.isLogged(event.getPlayer().getName())){
             event.getPlayer().sendMessage(lang.mustLogin);

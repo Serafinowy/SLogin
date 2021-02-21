@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SLoginCommand implements CommandExecutor, TabCompleter {
+public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
     private final ArrayList<SubCommand> commands = new ArrayList<>();
     private final LangManager lang;

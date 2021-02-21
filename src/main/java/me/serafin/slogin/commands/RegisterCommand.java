@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class RegisterCommand implements CommandExecutor {
+public final class RegisterCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager lang;
@@ -44,7 +44,7 @@ public class RegisterCommand implements CommandExecutor {
         }
 
         String address = Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress();
-        if(!(manager.accountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)){
+        if(!(manager.getAccountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)){
             player.sendMessage(lang.maxAccounts);
             return true;
         }

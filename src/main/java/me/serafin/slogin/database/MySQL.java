@@ -1,10 +1,11 @@
 package me.serafin.slogin.database;
 
 import me.serafin.slogin.managers.ConfigManager;
+import org.bukkit.Bukkit;
 
 import java.sql.*;
 
-public class MySQL implements DataBase {
+public final class MySQL implements DataBase {
 
     private Connection connection;
     private final ConfigManager config;
@@ -15,6 +16,18 @@ public class MySQL implements DataBase {
 
     @Override
     public void openConnection() throws SQLException {
+
+        if(connection == null) Bukkit.getLogger().severe("Connection is null!");
+        else {
+            Bukkit.getLogger().severe("Connection is not null!");
+
+            if(connection.isClosed()) Bukkit.getLogger().severe("Connection is closed!");
+            else Bukkit.getLogger().severe("Connection is not closed!");
+        }
+
+
+
+
         if (connection == null || connection.isClosed()) {
             String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
                     + config.MYSQL_PORT + "/"
@@ -50,18 +63,5 @@ public class MySQL implements DataBase {
             statement.setString(i+1, params[i]);
         }
         return statement.executeQuery();
-    }
-
-    @Override
-    public void createTableIfNotExist() throws SQLException {
-        this.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
-                "(`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT, " +
-                "`name` TEXT NOT NULL, " +
-                "`password` VARCHAR(255) NOT NULL, " +
-                "`email` VARCHAR(255) NULL, " +
-                "`registerIP` TEXT NOT NULL, " +
-                "`registerDate` BIGINT NOT NULL, " +
-                "`lastLoginIP` TEXT NOT NULL, " +
-                "`lastLoginDate` BIGINT NOT NULL)");
     }
 }

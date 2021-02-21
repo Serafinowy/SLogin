@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class PlayerInfoSubCommand implements SubCommand {
+public final class PlayerInfoSubCommand implements SubCommand {
 
     private final LangManager lang;
     private final LoginManager manager;

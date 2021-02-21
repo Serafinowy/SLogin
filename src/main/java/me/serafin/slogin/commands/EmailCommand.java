@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class EmailCommand implements CommandExecutor {
+public final class EmailCommand implements CommandExecutor {
 
     private final LangManager lang;
     private final LoginManager manager;

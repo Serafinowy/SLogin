@@ -3,7 +3,7 @@ package me.serafin.slogin.database;
 import java.io.File;
 import java.sql.*;
 
-public class SQLite implements DataBase {
+public final class SQLite implements DataBase {
 
     private Connection connection;
     private final File file;
@@ -50,18 +50,5 @@ public class SQLite implements DataBase {
             statement.setString(i+1, params[i]);
         }
         return statement.executeQuery();
-    }
-
-    @Override
-    public void createTableIfNotExist() throws SQLException {
-        this.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
-                "(`id` INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "`name` TEXT NOT NULL, " +
-                "`password` VARCHAR(255) NOT NULL, " +
-                "`email` VARCHAR(255) NULL, " +
-                "`registerIP` TEXT NOT NULL, " +
-                "`registerDate` BIGINT NOT NULL, " +
-                "`lastLoginIP` TEXT NOT NULL, " +
-                "`lastLoginDate` BIGINT NOT NULL)");
     }
 }

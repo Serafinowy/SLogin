@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class ChangePasswordSubCommand implements SubCommand {
+public final class ChangePasswordSubCommand implements SubCommand {
 
     private final ConfigManager config;
     private final LangManager lang;
@@ -62,7 +62,7 @@ public class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        manager.changePassword(account.get(), args[2]);
+        manager.setPassword(account.get(), args[2]);
         sender.sendMessage(lang.changePassAdminSuccess);
     }
 }

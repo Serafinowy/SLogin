@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class LoginCommand implements CommandExecutor {
+public final class LoginCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager lang;

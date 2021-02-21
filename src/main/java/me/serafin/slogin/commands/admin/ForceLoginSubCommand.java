@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class ForceLoginSubCommand implements SubCommand {
+public final class ForceLoginSubCommand implements SubCommand {
 
     private final ConfigManager config;
     private final LangManager lang;

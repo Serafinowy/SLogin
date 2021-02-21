@@ -1,5 +1,6 @@
 package me.serafin.slogin.objects;
 
+import lombok.Data;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
@@ -8,49 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-
-public class Account {
+@Data
+public final class Account {
 
     private final String displayName, hashedPassword, email, registerIP, lastLoginIP;
     private final long registerDate, lastLoginDate;
-
-    public Account(String displayName, String hashedPassword, String email, String registerIP, String lastLoginIP, long registerDate, long lastLoginDate) {
-        this.displayName = displayName;
-        this.hashedPassword = hashedPassword;
-        this.email = email;
-        this.registerIP = registerIP;
-        this.lastLoginIP = lastLoginIP;
-        this.registerDate = registerDate;
-        this.lastLoginDate = lastLoginDate;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRegisterIP() {
-        return registerIP;
-    }
-
-    public String getLastLoginIP() {
-        return lastLoginIP;
-    }
-
-    public long getRegisterDate() {
-        return registerDate;
-    }
-
-    public long getLastLoginDate() {
-        return lastLoginDate;
-    }
 
     /**
      * Check if password is correct
@@ -70,7 +33,7 @@ public class Account {
     public void update(DataBase dataBase, String hashedPassword, String email, String lastLoginIP, Long lastLoginDate) {
         String command = "UPDATE `slogin_accounts` SET `password` = ?, `email` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
         try {
-            dataBase.update(command, hashedPassword, email, lastLoginIP, lastLoginDate+"", this.displayName.toLowerCase());
+            dataBase.update(command, hashedPassword, email, lastLoginIP, lastLoginDate + "", this.displayName.toLowerCase());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);

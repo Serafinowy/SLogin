@@ -59,13 +59,12 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (dataBase == null)
-            return;
-
-        try {
-            dataBase.closeConnection();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        if (dataBase != null) {
+            try {
+                dataBase.closeConnection();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -79,7 +78,14 @@ public final class SLogin extends JavaPlugin {
 
         try {
             dataBase.openConnection();
-            dataBase.createTableIfNotExist();
+            dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
+                    "(`name` VARCHAR(255) NOT NULL PRIMARY KEY, " +
+                    "`password` VARCHAR(255) NOT NULL, " +
+                    "`email` VARCHAR(255) NULL, " +
+                    "`registerIP` TEXT NOT NULL, " +
+                    "`registerDate` BIGINT NOT NULL, " +
+                    "`lastLoginIP` TEXT NOT NULL, " +
+                    "`lastLoginDate` BIGINT NOT NULL)");
             Bukkit.getLogger().info("Connected to the " + configManager.DATATYPE + " database");
             return true;
         } catch (SQLException e) {
@@ -93,6 +99,7 @@ public final class SLogin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
+    @SuppressWarnings("all")
     private void setupCommands() {
         getCommand("register").setExecutor(new RegisterCommand());
         getCommand("login").setExecutor(new LoginCommand());

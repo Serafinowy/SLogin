@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class UnRegisterCommand implements SubCommand {
+public final class UnRegisterCommand implements SubCommand {
 
     private final LangManager lang;
     private final LoginManager manager;
@@ -54,7 +54,7 @@ public class UnRegisterCommand implements SubCommand {
             return;
         }
 
-        manager.unRegister(args[1]);
+        manager.unRegister(account.get());
         sender.sendMessage(lang.unRegisterSuccess);
     }
 }

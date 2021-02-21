@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class RegisterSubCommand implements SubCommand {
+public final class RegisterSubCommand implements SubCommand {
 
     private final ConfigManager config;
     private final LangManager lang;

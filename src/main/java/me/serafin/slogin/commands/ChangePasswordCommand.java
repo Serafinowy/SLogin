@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class ChangePasswordCommand implements CommandExecutor {
+public final class ChangePasswordCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager lang;
@@ -52,7 +52,7 @@ public class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        manager.changePassword(account.get(), args[1]);
+        manager.setPassword(account.get(), args[1]);
         player.sendMessage(lang.changePassSuccess);
 
         return true;

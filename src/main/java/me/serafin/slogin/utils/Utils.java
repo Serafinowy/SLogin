@@ -20,7 +20,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Utils {
+public final class Utils {
 
     public static String format(String s){
         return (s==null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);

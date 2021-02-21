@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.List;
 
-public class ConfigManager {
+public final class ConfigManager {
 
     public ConfigManager(){
 

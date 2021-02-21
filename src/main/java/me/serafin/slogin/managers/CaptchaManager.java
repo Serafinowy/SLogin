@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class CaptchaManager {
+public final class CaptchaManager {
 
     private final LangManager lang;
     private final Set<String> tempCaptcha = new HashSet<>();

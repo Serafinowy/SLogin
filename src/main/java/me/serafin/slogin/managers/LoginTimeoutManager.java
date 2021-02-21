@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class LoginTimeoutManager {
+public final class LoginTimeoutManager {
 
     private final HashMap<Player, Integer> loginTimeout = new HashMap<>();
     private final ConfigManager config;
