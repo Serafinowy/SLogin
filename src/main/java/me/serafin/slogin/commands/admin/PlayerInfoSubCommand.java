@@ -57,18 +57,6 @@ public final class PlayerInfoSubCommand implements SubCommand {
             return;
         }
 
-        String pattern = "dd.MM.yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        Date registerDate = new Date(account.get().getRegisterDate());
-        Date lastLoginDate = new Date(account.get().getLastLoginDate());
-
-        sender.sendMessage(lang.playerInfoMessage
-            .replace("{PLAYER}", account.get().getDisplayName().toUpperCase())
-            .replace("{EMAIL}", account.get().getEmail())
-            .replace("{REGISTER_IP}", account.get().getRegisterIP())
-            .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
-            .replace("{LASTLOGIN_IP}", account.get().getLastLoginIP())
-            .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate)));
+        sender.sendMessage(Account.formatData(account.get(), lang.playerInfoMessage));
     }
 }

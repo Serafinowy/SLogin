@@ -1,12 +1,15 @@
 package me.serafin.slogin.objects;
 
 import lombok.Data;
+import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Data
@@ -108,5 +111,28 @@ public final class Account {
             throwables.printStackTrace();
         }
         return count;
+    }
+
+    ///////////////////////////////////////
+
+    /**
+     * Format placeholders in string.
+     * @param account player's account
+     * @param pattern string to format
+     * @return formatted string
+     */
+    public static String formatData(Account account, String pattern) {
+
+        String datePattern = "dd.MM.yyyy HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+        Date registerDate = new Date(account.getRegisterDate());
+        Date lastLoginDate = new Date(account.getLastLoginDate());
+
+        return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
+                .replace("{EMAIL}", account.getEmail() == null ? SLogin.getInstance().getLangManager().nullValue : account.getEmail())
+                .replace("{REGISTER_IP}", account.getRegisterIP())
+                .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
+                .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
+                .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
     }
 }

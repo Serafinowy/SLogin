@@ -56,10 +56,13 @@ userMessages:
 # Wiadomości dla administratora
 adminMessages:
   # Podstawowe wiadomości
+  nullValue: "brak"
   userNotExists: "&cTaki gracz nie istnieje!"
   userIsNotOnline: "&cTen gracz nie jest online!"
 
   # Informacje o graczu
+  # Symbole zastępcze:
+  # {EMAIL} {REGISTER_IP} {REGISTER_DATE} {LASTLOGIN_IP} {LASTLOGIN_DATE}
   playerInfoCorrectUsage: "&cPoprawne użycie: /sl playerinfo <nick>"
   playerInfoMessage: |
     &7___________/ &eINFO {PLAYER} &7\___________

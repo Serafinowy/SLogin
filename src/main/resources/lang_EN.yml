@@ -55,10 +55,13 @@ userMessages:
 # Messages for administrator
 adminMessages:
   # General messages
+  nullValue: "null"
   userNotExists: "&cThis player do not exist!"
   userIsNotOnline: "&cThis player is not online!"
 
   # Info about player
+  # Placeholders:
+  # {EMAIL} {REGISTER_IP} {REGISTER_DATE} {LASTLOGIN_IP} {LASTLOGIN_DATE}
   playerInfoCorrectUsage: "&cCorrect usage: /sl playerinfo <nick>"
   playerInfoMessage: |
     &7___________/ &e{PLAYER} INFO &7\___________

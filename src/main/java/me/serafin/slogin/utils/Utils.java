@@ -1,6 +1,7 @@
 package me.serafin.slogin.utils;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.objects.Account;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -16,6 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +64,8 @@ public final class Utils {
         return component;
     }
 
+    ///////////////////////////////////////
+
     public static String getLatestVersion() {
         try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=87073").openStream();
              Scanner scanner = new Scanner(inputStream)) {
@@ -100,6 +105,8 @@ public final class Utils {
         } catch (Exception ignored) { }
         return false;
     }
+
+    ///////////////////////////////////////
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

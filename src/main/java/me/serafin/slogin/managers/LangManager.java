@@ -83,6 +83,7 @@ public final class LangManager {
 
         ///////////////////////////////////////////
 
+        this.nullValue = Utils.format(lang.getString("adminMessages.nullValue"));
         this.userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
         this.userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
 
@@ -168,6 +169,7 @@ public final class LangManager {
 
     ///////////////////////////////////////////
 
+    public final String nullValue;
     public final String userNotExists;
     public final String userIsNotOnline;
 
