@@ -4,13 +4,10 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
-import me.serafin.slogin.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +49,7 @@ public final class PlayerInfoSubCommand implements SubCommand {
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(!account.isPresent()){
+        if(account.isEmpty()){
             sender.sendMessage(lang.userNotExists);
             return;
         }

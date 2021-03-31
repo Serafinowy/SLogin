@@ -1,6 +1,9 @@
 package me.serafin.slogin;
 
-import me.serafin.slogin.commands.*;
+import me.serafin.slogin.commands.ChangePasswordCommand;
+import me.serafin.slogin.commands.EmailCommand;
+import me.serafin.slogin.commands.LoginCommand;
+import me.serafin.slogin.commands.RegisterCommand;
 import me.serafin.slogin.commands.admin.SLoginCommand;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.database.MySQL;

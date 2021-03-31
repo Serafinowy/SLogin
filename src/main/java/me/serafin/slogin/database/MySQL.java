@@ -1,7 +1,6 @@
 package me.serafin.slogin.database;
 
 import me.serafin.slogin.managers.ConfigManager;
-import org.bukkit.Bukkit;
 
 import java.sql.*;
 
