@@ -16,15 +16,6 @@ public final class MySQL implements DataBase {
 
     @Override
     public void openConnection() throws SQLException {
-
-        if(connection == null) Bukkit.getLogger().severe("Connection is null!");
-        else {
-            Bukkit.getLogger().severe("Connection is not null!");
-
-            if(connection.isClosed()) Bukkit.getLogger().severe("Connection is closed!");
-            else Bukkit.getLogger().severe("Connection is not closed!");
-        }
-
         if (connection == null || connection.isClosed() || !connection.isValid(3)) {
             String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
                     + config.MYSQL_PORT + "/"
