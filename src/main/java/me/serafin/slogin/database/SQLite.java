@@ -14,7 +14,7 @@ public final class SQLite implements DataBase {
 
     @Override
     public void openConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
+        if (connection == null || connection.isClosed() || !connection.isValid(3)) {
             try {
                 Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {

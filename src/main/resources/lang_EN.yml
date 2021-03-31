@@ -58,6 +58,12 @@ adminMessages:
   nullValue: "null"
   userNotExists: "&cThis player do not exist!"
   userIsNotOnline: "&cThis player is not online!"
+  commandList:
+    title: "&7___________/ &eCOMMAND LIST &7\___________"
+    # Placeholders:
+    # {COMMAND} {DESCRIPTION}
+    chatFormat: "&e{COMMAND} &7- {DESCRIPTION}"
+    hoverFormat: "&e{COMMAND}\n&7{DESCRIPTION}"
 
   # Info about player
   # Placeholders:

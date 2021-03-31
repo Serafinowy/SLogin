@@ -59,6 +59,12 @@ adminMessages:
   nullValue: "brak"
   userNotExists: "&cTaki gracz nie istnieje!"
   userIsNotOnline: "&cTen gracz nie jest online!"
+  commandList:
+    title: "&7___________/ &eLISTA KOMEND &7\___________"
+    # Symbole zastępcze:
+    # {COMMAND} {DESCRIPTION}
+    chatFormat: "&e{COMMAND} &7- {DESCRIPTION}"
+    hoverFormat: "&e{COMMAND}\n&7{DESCRIPTION}"
 
   # Informacje o graczu
   # Symbole zastępcze:

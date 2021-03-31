@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public final class UnRegisterCommand implements SubCommand {
+public final class UnRegisterSubCommand implements SubCommand {
 
     private final LangManager lang;
     private final LoginManager manager;
 
-    public UnRegisterCommand() {
+    public UnRegisterSubCommand() {
         this.lang = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }

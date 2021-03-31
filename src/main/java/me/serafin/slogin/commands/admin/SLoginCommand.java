@@ -26,7 +26,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         commands.add(new ForceLoginSubCommand());
         commands.add(new RegisterSubCommand());
         commands.add(new ChangePasswordSubCommand());
-        commands.add(new UnRegisterCommand());
+        commands.add(new UnRegisterSubCommand());
     }
 
     @Override
@@ -48,12 +48,21 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         for(SubCommand subCommand : commands){
             if(Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                        Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
-                        Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
+                        Utils.format(lang.commandListChatFormat
+                                .replace("{COMMAND}", subCommand.getSyntax())
+                                .replace("DESCRIPTION", subCommand.getDescription())),
+                        Utils.format(lang.commandListHoverFormat
+                                .replace("{COMMAND}", subCommand.getName())
+                                .replace("DESCRIPTION", subCommand.getDescription())),
+                        //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
+                        //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));
             }
             else {
-                sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
+                //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
+                sender.sendMessage(Utils.format(lang.commandListChatFormat
+                        .replace("{COMMAND}", subCommand.getSyntax())
+                        .replace("DESCRIPTION", subCommand.getDescription())));
             }
         }
 

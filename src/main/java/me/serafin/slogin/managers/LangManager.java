@@ -87,6 +87,10 @@ public final class LangManager {
         this.userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
         this.userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
 
+        this.commandListTitle = Utils.format(lang.getString("adminMessages.commandList.title"));
+        this.commandListChatFormat = Utils.format(lang.getString("adminMessages.commandList.chatFormat"));
+        this.commandListHoverFormat = Utils.format(lang.getString("adminMessages.commandList.hoverFormat"));
+
         this.playerInfoCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.playerInfoCorrectUsage"));
         this.playerInfoMessage = Utils.format(lang.getString("adminMessages.playerInfoMessage"));
 
@@ -172,6 +176,10 @@ public final class LangManager {
     public final String nullValue;
     public final String userNotExists;
     public final String userIsNotOnline;
+
+    public final String commandListTitle;
+    public final String commandListChatFormat;
+    public final String commandListHoverFormat;
 
     public final String playerInfoCorrectUsage;
     public final String playerInfoMessage;

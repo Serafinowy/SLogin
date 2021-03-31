@@ -25,10 +25,7 @@ public final class MySQL implements DataBase {
             else Bukkit.getLogger().severe("Connection is not closed!");
         }
 
-
-
-
-        if (connection == null || connection.isClosed()) {
+        if (connection == null || connection.isClosed() || !connection.isValid(3)) {
             String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
                     + config.MYSQL_PORT + "/"
                     + config.MYSQL_DATABASE + "?"
@@ -65,4 +62,14 @@ public final class MySQL implements DataBase {
         }
         return statement.executeQuery();
     }
+//
+//    @Override
+//    public boolean isValidConnection() {
+//        try {
+//            connection.createStatement().execute("SELECT 1");
+//            connection.isValid()
+//            return true;
+//        } catch (SQLException ignored) { }
+//        return false;
+//    }
 }
