@@ -4,6 +4,7 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
+import me.serafin.slogin.objects.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,12 +17,12 @@ import java.util.Objects;
 public final class ForceLoginSubCommand implements SubCommand {
 
     private final ConfigManager config;
-    private final LangManager lang;
+    private final LangManager langManager;
     private final LoginManager manager;
 
     public ForceLoginSubCommand(){
         this.config = SLogin.getInstance().getConfigManager();
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
@@ -48,29 +49,35 @@ public final class ForceLoginSubCommand implements SubCommand {
     @Override
     public void perform(@NotNull CommandSender sender, String[] args) {
 
+        Lang lang = langManager.getLang("default");
+        if (sender instanceof Player)
+            lang = langManager.getLang(((Player) sender).getLocale());
+
         if(args.length != 2){
-            sender.sendMessage(lang.forceLoginCorrectUsage);
+            sender.sendMessage(lang.admin_forceLogin_correctUsage);
             return;
         }
 
         Player player = Bukkit.getPlayer(args[1]);
         if(player == null){
-            sender.sendMessage(lang.userIsNotOnline);
+            sender.sendMessage(lang.admin_user_isNotOnline);
             return;
         }
 
         if(!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, false)){
-            sender.sendMessage(lang.forceLoginDeny);
+            sender.sendMessage(lang.admin_forceLogin_deny);
             return;
         }
 
+        Lang playerLang = langManager.getLang(player.getLocale());
+
         if(config.MESSAGES_TITLE_MESSAGES)
-            player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
+            player.sendTitle(playerLang.auth_login_successTitle, playerLang.auth_login_successSubTitle, 0, 4*10, 10);
         if(config.MESSAGES_CHAT_MESSAGES)
-            player.sendMessage(lang.loginSuccess);
+            player.sendMessage(playerLang.auth_login_success);
 
         manager.playerLogged(player);
-        sender.sendMessage(lang.forceLoginSuccess);
+        sender.sendMessage(lang.admin_forceLogin_success);
 
     }
 }

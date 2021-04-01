@@ -18,24 +18,24 @@ import java.util.Set;
 
 public final class CaptchaManager {
 
-    private final LangManager lang;
+    private final LangManager langManager;
     private final Set<String> tempCaptcha = new HashSet<>();
 
     public CaptchaManager() {
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         SLogin.getInstance().getServer().getPluginManager().registerEvents(new Events(), SLogin.getInstance());
     }
 
-    private Inventory inventory() {
+    private Inventory inventory(String locale) {
         Random random = new Random();
 
         Material chose = Material.APPLE;
         int correctSlot = random.nextInt(27);
 
-        Inventory inv = Bukkit.createInventory(null, 54, lang.captcha_guiName);
+        Inventory inv = Bukkit.createInventory(null, 54, langManager.getLang(locale).captcha_guiName);
 
-        for(int i = 0; i < inv.getSize(); i++) {
-            if(i == correctSlot)
+        for (int i = 0; i < inv.getSize(); i++) {
+            if (i == correctSlot)
                 inv.setItem(i, new ItemStack(chose));
             else {
                 inv.setItem(i, new ItemStack(Material.BARRIER));
@@ -50,7 +50,7 @@ public final class CaptchaManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.openInventory(inventory());
+                player.openInventory(inventory(player.getLocale()));
             }
         }.runTaskLater(SLogin.getInstance(), 10);
     }
@@ -59,12 +59,16 @@ public final class CaptchaManager {
 
         @EventHandler
         public void onClick(InventoryClickEvent event) {
-            if(event.getView().getTitle().contains("Captcha")) {
-                if(event.getCurrentItem() == null)
+            if (event.getView().getTitle().contains("Captcha")) {
+
+                if (event.getCurrentItem() == null)
                     return;
 
-                if(!event.getCurrentItem().getType().equals(Material.APPLE))
-                    ((Player) event.getWhoClicked()).kickPlayer(lang.captcha_kickMessage);
+                Player player = (Player) event.getWhoClicked();
+
+                if (!event.getCurrentItem().getType().equals(Material.APPLE)) {
+                    ((Player) event.getWhoClicked()).kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
+                }
 
                 tempCaptcha.remove(event.getWhoClicked().getName());
                 event.getWhoClicked().closeInventory();
@@ -74,9 +78,10 @@ public final class CaptchaManager {
 
         @EventHandler
         public void onClose(InventoryCloseEvent event){
-            if(event.getView().getTitle().contains("Captcha") &&
+            if (event.getView().getTitle().contains("Captcha") &&
                     tempCaptcha.contains(event.getPlayer().getName())) {
-                ((Player) event.getPlayer()).kickPlayer(lang.captcha_kickMessage);
+                Player player = (Player) event.getPlayer();
+                player.kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
             }
         }
 

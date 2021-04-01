@@ -1,38 +1,14 @@
-package me.serafin.slogin.managers;
+package me.serafin.slogin.objects;
 
-import me.serafin.slogin.SLogin;
 import org.bukkit.ChatColor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.HashMap;
 import java.util.Properties;
 
-public final class LangManager2 {
-
-    private final static HashMap<String, LangManager2> TRANSLATIONS = new HashMap<>();
-
-    public static LangManager2 getLang(String locale) {
-        return TRANSLATIONS.getOrDefault(locale, TRANSLATIONS.get("en_UK"));
-    }
-    public static boolean registerLang(String locale) {
-        try {
-            FileInputStream fis = new FileInputStream(new File(SLogin.getInstance().getDataFolder(), locale + ".properties"));
-            Properties properties = new Properties();
-            properties.load(fis);
-            TRANSLATIONS.put(locale, new LangManager2(properties));
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    ///////////////////////////////////////////
+public class Lang {
 
     public final String PREFIX = format("&e[SLogin] &r");
 
-    public LangManager2(Properties properties) {
+    public Lang(Properties properties) {
 
         misc_onlyForPlayers = PREFIX + format(properties.getProperty("slogin.misc.onlyForPlayers"));
         misc_nullValue = PREFIX + format(properties.getProperty("slogin.misc.nullValue"));

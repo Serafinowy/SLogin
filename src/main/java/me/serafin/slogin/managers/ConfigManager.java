@@ -25,7 +25,9 @@ public final class ConfigManager {
         Bukkit.getLogger().info("Loaded: config.yml file");
 
         // load Settings
-        this.LANG = configuration.getString("Language");
+        this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
+        this.LANGUAGE_DEFAULT = configuration.getString("Language.Default");
+
         this.DATATYPE = configuration.getString("DataType");
 
         this.MYSQL_HOST = configuration.getString("MySQL.Host");
@@ -57,7 +59,9 @@ public final class ConfigManager {
 
     ///////////////////////////////////////////
 
-    public final String LANG;
+    public final boolean LANGUAGE_AUTO;
+    public final String LANGUAGE_DEFAULT;
+
     public final String DATATYPE;
 
     public final String MYSQL_HOST;

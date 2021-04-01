@@ -13,11 +13,11 @@ import java.util.Optional;
 public final class LoginManager {
 
     private final DataBase dataBase;
-    private final LangManager lang;
+    private final LangManager langManager;
     private final ConfigManager config;
 
     public LoginManager(DataBase dataBase) {
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.config = SLogin.getInstance().getConfigManager();
         this.dataBase = dataBase;
     }
@@ -67,9 +67,10 @@ public final class LoginManager {
                 public void run() {
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(lang.loginInfo);
+                            player.sendMessage(langManager.getLang(player.getLocale()).auth_login_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4 * 20, 10);
+                            player.sendTitle(langManager.getLang(player.getLocale()).auth_login_title,
+                                    langManager.getLang(player.getLocale()).auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
@@ -82,9 +83,10 @@ public final class LoginManager {
                 public void run() {
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(lang.registerInfo);
+                            player.sendMessage(langManager.getLang(player.getLocale()).auth_register_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4 * 20, 10);
+                            player.sendTitle(langManager.getLang(player.getLocale()).auth_register_title,
+                                    langManager.getLang(player.getLocale()).auth_register_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
@@ -146,7 +148,7 @@ public final class LoginManager {
         Optional<Account> account = tempAccounts.get(player.getName());
         account = account.isPresent() ? account : Account.get(dataBase, player.getName());
         if(account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
-            player.sendMessage(lang.emailNotSet);
+            player.sendMessage(langManager.getLang(player.getLocale()).auth_email_notSet);
         }
         tempAccounts.remove(player.getName());
     }

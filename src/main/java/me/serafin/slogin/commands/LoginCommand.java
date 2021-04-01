@@ -4,6 +4,7 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
+import me.serafin.slogin.objects.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,12 +16,12 @@ import java.util.Objects;
 public final class LoginCommand implements CommandExecutor {
 
     private final ConfigManager config;
-    private final LangManager lang;
+    private final LangManager langManager;
     private final LoginManager manager;
 
     public LoginCommand(){
         this.config = SLogin.getInstance().getConfigManager();
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
@@ -28,36 +29,38 @@ public final class LoginCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
         if(!(sender instanceof Player)){
-            sender.sendMessage(lang.onlyForPlayers);
+            sender.sendMessage(langManager.getLang("default").misc_onlyForPlayers);
             return true;
         }
         Player player = (Player) sender;
 
+        Lang lang = langManager.getLang(player.getLocale());
+
         if(manager.isLogged(player.getName())){
-            player.sendMessage(lang.alreadyLogged);
+            player.sendMessage(lang.system_alreadyLogged);
             return true;
         }
 
         if(!manager.isRegistered(player.getName())){
-            player.sendMessage(lang.notRegistered);
+            player.sendMessage(lang.system_notRegistered);
             return true;
         }
 
         if(args.length != 1){
-            player.sendMessage(lang.loginCorrectUsage);
+            player.sendMessage(lang.auth_login_correctUsage);
             return true;
         }
 
         if(manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], true)) {
             if(config.MESSAGES_TITLE_MESSAGES)
-                player.sendTitle(lang.loginSuccessTitle, lang.loginSuccessSubTitle, 0, 4*10, 10);
+                player.sendTitle(lang.auth_login_successTitle, lang.auth_login_successSubTitle, 0, 4*10, 10);
             if(config.MESSAGES_CHAT_MESSAGES)
-                player.sendMessage(lang.loginSuccess);
+                player.sendMessage(lang.auth_login_success);
             manager.playerLogged(player);
         } else {
-            player.sendMessage(lang.wrongPassword);
+            player.sendMessage(lang.system_wrongPassword_chatMessage);
             if(config.KICK_ON_WRONG_PASSWORD)
-                player.kickPlayer(lang.wrongPassword_kickMessage);
+                player.kickPlayer(lang.system_wrongPassword_kickMessage);
         }
 
         return true;

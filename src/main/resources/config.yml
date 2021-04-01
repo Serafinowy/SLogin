@@ -4,8 +4,12 @@
 #################################
 
 # The language settings file contains in-game messages
-# Languages available: EN (English), PL (Polish)
-Language: EN
+# Languages available: en_US (English), pl_PL (Polish)
+Language:
+  # Player see the message in his language
+  Auto: true
+  # Console messages and player messages if Auto is disabled
+  Default: en_US
 
 # The place where the data will be saved
 # Choose between FLAT and MYSQL

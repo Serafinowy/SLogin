@@ -35,9 +35,7 @@ public final class SLogin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.configManager = new ConfigManager();
-
-        assert configManager.LANG != null;
-        this.langManager = new LangManager(configManager.LANG);
+        this.langManager = new LangManager(configManager);
 
         if (!setupDatabase()) {
             Bukkit.getLogger().severe("Failed to connect database. Disabling plugin...");
