@@ -54,12 +54,9 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
                         lang.commandListHoverFormat
                                 .replace("{COMMAND}", subCommand.getName())
                                 .replace("DESCRIPTION", subCommand.getDescription()),
-                        //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
-                        //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));
             }
             else {
-                //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
                 sender.sendMessage(lang.commandListChatFormat
                         .replace("{COMMAND}", subCommand.getSyntax())
                         .replace("DESCRIPTION", subCommand.getDescription()));
