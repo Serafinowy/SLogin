@@ -59,7 +59,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(account.isEmpty()){
+        if(!account.isPresent()){
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }

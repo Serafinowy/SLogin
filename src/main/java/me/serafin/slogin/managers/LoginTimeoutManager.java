@@ -29,7 +29,8 @@ public final class LoginTimeoutManager {
 
                         if (entry.getValue() <= 0) {
                             iterator.remove();
-                            entry.getKey().kickPlayer(SLogin.getInstance().getLangManager().loginTimeoutKick);
+                            Player player = entry.getKey();
+                            player.kickPlayer(SLogin.getInstance().getLangManager().getLang(player.getLocale()).auth_login_timeoutKick);
                         }
                     }
                 }

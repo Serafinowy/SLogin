@@ -36,9 +36,10 @@ public final class SLogin extends JavaPlugin {
         instance = this;
         this.configManager = new ConfigManager();
         this.langManager = new LangManager(configManager);
+        this.langManager.loadLanguages();
 
         if (!setupDatabase()) {
-            Bukkit.getLogger().severe("Failed to connect database. Disabling plugin...");
+            getLogger().severe("Failed to connect database. Disabling plugin...");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -87,7 +88,7 @@ public final class SLogin extends JavaPlugin {
                     "`registerDate` BIGINT NOT NULL, " +
                     "`lastLoginIP` TEXT NOT NULL, " +
                     "`lastLoginDate` BIGINT NOT NULL)");
-            Bukkit.getLogger().info("Connected to the " + configManager.DATATYPE + " database");
+            getLogger().info("Connected to the " + configManager.DATATYPE + " database");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -56,7 +56,7 @@ public final class UnRegisterSubCommand implements SubCommand {
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(account.isEmpty()){
+        if(!account.isPresent()){
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }

@@ -56,11 +56,11 @@ public final class PlayerInfoSubCommand implements SubCommand {
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(account.isEmpty()){
+        if(!account.isPresent()){
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }
 
-        sender.sendMessage(Account.formatData(account.get(), lang.admin_playerInfo_message));
+        sender.sendMessage(Account.formatData(account.get(), lang.admin_playerInfo_message, lang));
     }
 }

@@ -31,10 +31,10 @@ public class Lang {
         auth_login_info = PREFIX + format(properties.getProperty("slogin.auth.login.info"));
         auth_login_correctUsage = PREFIX + format(properties.getProperty("slogin.auth.login.correctUsage"));
         auth_login_success = PREFIX + format(properties.getProperty("slogin.auth.login.success"));
-        auth_login_title = PREFIX + format(properties.getProperty("slogin.auth.login.title"));
-        auth_login_subTitle = PREFIX + format(properties.getProperty("slogin.auth.login.subTitle"));
-        auth_login_successTitle = PREFIX + format(properties.getProperty("slogin.auth.login.successTitle"));
-        auth_login_successSubTitle = PREFIX + format(properties.getProperty("slogin.auth.login.successSubTitle"));
+        auth_login_title = format(properties.getProperty("slogin.auth.login.title"));
+        auth_login_subTitle = format(properties.getProperty("slogin.auth.login.subTitle"));
+        auth_login_successTitle = format(properties.getProperty("slogin.auth.login.successTitle"));
+        auth_login_successSubTitle = format(properties.getProperty("slogin.auth.login.successSubTitle"));
         auth_login_timeoutKick = PREFIX + format(properties.getProperty("slogin.auth.login.timeoutKick"));
 
         ///////////////////////////////////////////
@@ -42,10 +42,10 @@ public class Lang {
         auth_register_info = PREFIX + format(properties.getProperty("slogin.auth.register.info"));
         auth_register_correctUsage = PREFIX + format(properties.getProperty("slogin.auth.register.correctUsage"));
         auth_register_success = PREFIX + format(properties.getProperty("slogin.auth.register.success"));
-        auth_register_title = PREFIX + format(properties.getProperty("slogin.auth.register.title"));
-        auth_register_subTitle = PREFIX + format(properties.getProperty("slogin.auth.register.subTitle"));
-        auth_register_successTitle = PREFIX + format(properties.getProperty("slogin.auth.register.successTitle"));
-        auth_register_successSubTitle = PREFIX + format(properties.getProperty("slogin.auth.register.successSubTitle"));
+        auth_register_title = format(properties.getProperty("slogin.auth.register.title"));
+        auth_register_subTitle = format(properties.getProperty("slogin.auth.register.subTitle"));
+        auth_register_successTitle = format(properties.getProperty("slogin.auth.register.successTitle"));
+        auth_register_successSubTitle = format(properties.getProperty("slogin.auth.register.successSubTitle"));
 
         ///////////////////////////////////////////
 
@@ -74,7 +74,7 @@ public class Lang {
         admin_commandList_chatFormat = PREFIX + format(properties.getProperty("slogin.admin.commandList.chatFormat"));
         admin_commandList_hoverFormat = PREFIX + format(properties.getProperty("slogin.admin.commandList.hoverFormat"));
 
-        admin_playerInfo_correctUsage = PREFIX + format(properties.getProperty("slogin.admin_playerInfo.correctUsage"));
+        admin_playerInfo_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.correctUsage"));
         admin_playerInfo_message = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.message"));
 
         admin_changePass_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.changePass.correctUsage"));

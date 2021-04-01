@@ -26,7 +26,7 @@ public final class ConfigManager {
 
         // load Settings
         this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
-        this.LANGUAGE_DEFAULT = configuration.getString("Language.Default");
+        this.LANGUAGE_DEFAULT = configuration.getString("Language.Default").toLowerCase();
 
         this.DATATYPE = configuration.getString("DataType");
 

@@ -1,5 +1,5 @@
 name: SLogin
-version: ${project.version}
+version: 1.5
 author: _Serafin
 description: Plugin for the login system
 main: me.serafin.slogin.SLogin

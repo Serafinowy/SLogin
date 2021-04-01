@@ -121,7 +121,7 @@ public final class Account {
      * @param pattern string to format
      * @return formatted string
      */
-    public static String formatData(Account account, String pattern) {
+    public static String formatData(Account account, String pattern, Lang lang) {
 
         String datePattern = "dd.MM.yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
@@ -129,7 +129,7 @@ public final class Account {
         Date lastLoginDate = new Date(account.getLastLoginDate());
 
         return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
-                .replace("{EMAIL}", account.getEmail() == null ? SLogin.getInstance().getLangManager().nullValue : account.getEmail())
+                .replace("{EMAIL}", account.getEmail() == null ? lang.misc_nullValue : account.getEmail())
                 .replace("{REGISTER_IP}", account.getRegisterIP())
                 .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
                 .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
