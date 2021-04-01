@@ -23,6 +23,7 @@ public final class LangManager {
 
     /**
      * Gets lang from plugin settings
+     *
      * @param locale lang locale
      * @return Lang object with messages
      */
@@ -37,6 +38,7 @@ public final class LangManager {
 
     /**
      * Add lang file into plugin setting
+     *
      * @param locale lang locale
      */
     private void registerLang(String locale) {
@@ -77,6 +79,7 @@ public final class LangManager {
      * Copy default lang files from plugin to the plugin folder
      */
     private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_UK", "pl_PL"));
+
     private void loadDefaults(File translationsFolder) {
         for (String lang : defaultLangSet) {
             try (InputStream is = SLogin.getInstance().getResource(lang + ".properties")) {

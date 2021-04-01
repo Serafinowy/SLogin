@@ -53,7 +53,7 @@ public final class LoggerFilter extends AbstractFilter {
     private Result isLoggable(String msg) {
         if (msg != null) {
             if (msg.contains("issued server command:")) {
-                if(commands.stream().anyMatch(msg::contains))
+                if (commands.stream().anyMatch(msg::contains))
                     return Result.DENY;
             }
         }

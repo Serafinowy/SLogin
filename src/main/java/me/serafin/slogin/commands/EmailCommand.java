@@ -27,7 +27,7 @@ public final class EmailCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(langManager.getLang("default").misc_onlyForPlayers);
             return true;
         }
@@ -38,23 +38,19 @@ public final class EmailCommand implements CommandExecutor {
         Optional<Account> account = manager.getAccount(player.getName());
         assert account.isPresent();
 
-        if(args.length == 0){
-            if(account.get().getEmail() == null) {
+        if (args.length == 0) {
+            if (account.get().getEmail() == null) {
                 player.sendMessage(lang.auth_email_notSet);
             } else {
                 player.sendMessage(lang.auth_email_info.replace("{EMAIL}", account.get().getEmail()));
             }
-        }
-
-        else {
-            if(args.length == 2 && args[0].equalsIgnoreCase("set")) {
-                if(Utils.validateEmail(args[1])) {
+        } else {
+            if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
+                if (Utils.validateEmail(args[1])) {
                     manager.setEmail(account.get(), args[1]);
                     player.sendMessage(lang.auth_email_changeSuccess);
-                }
-                else player.sendMessage(lang.auth_email_badFormat);
-            }
-            else player.sendMessage(lang.auth_email_correctUsage);
+                } else player.sendMessage(lang.auth_email_badFormat);
+            } else player.sendMessage(lang.auth_email_correctUsage);
         }
 
         return true;

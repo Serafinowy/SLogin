@@ -18,7 +18,7 @@ public final class PlayerInfoSubCommand implements SubCommand {
     private final LangManager langManager;
     private final LoginManager manager;
 
-    public PlayerInfoSubCommand(){
+    public PlayerInfoSubCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
@@ -34,12 +34,12 @@ public final class PlayerInfoSubCommand implements SubCommand {
     }
 
     @Override
-    public String getSyntax(){
+    public String getSyntax() {
         return "/sl playerinfo <nick>";
     }
 
     @Override
-    public List<String> getAliases(){
+    public List<String> getAliases() {
         return Arrays.asList("playerinfo", "pinfo", "p");
     }
 
@@ -50,13 +50,13 @@ public final class PlayerInfoSubCommand implements SubCommand {
         if (sender instanceof Player)
             lang = langManager.getLang(((Player) sender).getLocale());
 
-        if(args.length != 2){
+        if (args.length != 2) {
             sender.sendMessage(lang.admin_playerInfo_correctUsage);
             return;
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(!account.isPresent()){
+        if (!account.isPresent()) {
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }

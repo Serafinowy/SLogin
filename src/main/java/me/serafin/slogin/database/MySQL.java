@@ -9,7 +9,7 @@ public final class MySQL implements DataBase {
     private Connection connection;
     private final ConfigManager config;
 
-    public MySQL(ConfigManager config){
+    public MySQL(ConfigManager config) {
         this.config = config;
     }
 
@@ -37,8 +37,8 @@ public final class MySQL implements DataBase {
     public void update(String command, String... params) throws SQLException {
         openConnection();
         PreparedStatement statement = connection.prepareStatement(command);
-        for(int i = 0; i<params.length; i++) {
-            statement.setString(i+1, params[i]);
+        for (int i = 0; i < params.length; i++) {
+            statement.setString(i + 1, params[i]);
         }
         statement.executeUpdate();
     }
@@ -47,8 +47,8 @@ public final class MySQL implements DataBase {
     public ResultSet query(String command, String... params) throws SQLException {
         openConnection();
         PreparedStatement statement = connection.prepareStatement(command);
-        for(int i = 0; i<params.length; i++) {
-            statement.setString(i+1, params[i]);
+        for (int i = 0; i < params.length; i++) {
+            statement.setString(i + 1, params[i]);
         }
         return statement.executeQuery();
     }

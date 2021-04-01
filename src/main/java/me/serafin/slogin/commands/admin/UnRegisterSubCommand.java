@@ -50,13 +50,13 @@ public final class UnRegisterSubCommand implements SubCommand {
         if (sender instanceof Player)
             lang = langManager.getLang(((Player) sender).getLocale());
 
-        if(args.length != 2) {
+        if (args.length != 2) {
             sender.sendMessage(lang.admin_unRegister_correctUsage);
             return;
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(!account.isPresent()){
+        if (!account.isPresent()) {
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }

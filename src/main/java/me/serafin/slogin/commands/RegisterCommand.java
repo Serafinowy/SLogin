@@ -19,16 +19,16 @@ public final class RegisterCommand implements CommandExecutor {
     private final LangManager langManager;
     private final LoginManager manager;
 
-    public RegisterCommand(){
+    public RegisterCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender,@NotNull  Command command,@NotNull  String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
-        if(!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage(langManager.getLang("default").misc_onlyForPlayers);
             return true;
         }
@@ -36,42 +36,42 @@ public final class RegisterCommand implements CommandExecutor {
 
         Lang lang = langManager.getLang(player.getLocale());
 
-        if(manager.isLogged(player.getName())){
+        if (manager.isLogged(player.getName())) {
             player.sendMessage(lang.system_alreadyLogged);
             return true;
         }
 
-        if(manager.isRegistered(player.getName())){
+        if (manager.isRegistered(player.getName())) {
             player.sendMessage(lang.system_alreadyRegistered);
             return true;
         }
 
         String address = Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress();
-        if(!(manager.getAccountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)){
+        if (!(manager.getAccountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)) {
             player.sendMessage(lang.system_maxAccounts);
             return true;
         }
 
-        if(args.length != 2){
+        if (args.length != 2) {
             player.sendMessage(lang.auth_register_correctUsage);
             return true;
         }
 
-        if(args[0].length() < config.PASSWORD_MIN_LENGTH || args[0].length() > config.PASSWORD_MAX_LENGTH){
+        if (args[0].length() < config.PASSWORD_MIN_LENGTH || args[0].length() > config.PASSWORD_MAX_LENGTH) {
             player.sendMessage(lang.system_notAllowedPasswordLength);
             return true;
         }
 
-        if(!args[0].equals(args[1])){
+        if (!args[0].equals(args[1])) {
             player.sendMessage(lang.system_differentPasswords);
             return true;
         }
 
         manager.register(player.getName(), args[0], player.getAddress().getAddress().getHostAddress());
 
-        if(config.MESSAGES_TITLE_MESSAGES)
-            player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4*10, 10);
-        if(config.MESSAGES_CHAT_MESSAGES) {
+        if (config.MESSAGES_TITLE_MESSAGES)
+            player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4 * 10, 10);
+        if (config.MESSAGES_CHAT_MESSAGES) {
             player.sendMessage(lang.auth_register_success);
         }
         manager.playerLogged(player);

@@ -50,7 +50,7 @@ public final class Utils {
         }
     }
 
-    public static TextComponent sendCommandSuggest(String text, String hover, String cmd){
+    public static TextComponent sendCommandSuggest(String text, String hover, String cmd) {
         TextComponent component = new TextComponent(text);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, cmd));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hover)));
@@ -75,14 +75,14 @@ public final class Utils {
         String bukkitVersion = Bukkit.getBukkitVersion();
         String serverVersion = "1.8";
 
-        if(bukkitVersion.contains("1.9")) serverVersion = "1.9";
-        else if(bukkitVersion.contains("1.10")) serverVersion = "1.10";
-        else if(bukkitVersion.contains("1.11")) serverVersion = "1.11";
-        else if(bukkitVersion.contains("1.12")) serverVersion = "1.12";
-        else if(bukkitVersion.contains("1.13")) serverVersion = "1.13";
-        else if(bukkitVersion.contains("1.14")) serverVersion = "1.14";
-        else if(bukkitVersion.contains("1.15")) serverVersion = "1.15";
-        else if(bukkitVersion.contains("1.16")) serverVersion = "1.16";
+        if (bukkitVersion.contains("1.9")) serverVersion = "1.9";
+        else if (bukkitVersion.contains("1.10")) serverVersion = "1.10";
+        else if (bukkitVersion.contains("1.11")) serverVersion = "1.11";
+        else if (bukkitVersion.contains("1.12")) serverVersion = "1.12";
+        else if (bukkitVersion.contains("1.13")) serverVersion = "1.13";
+        else if (bukkitVersion.contains("1.14")) serverVersion = "1.14";
+        else if (bukkitVersion.contains("1.15")) serverVersion = "1.15";
+        else if (bukkitVersion.contains("1.16")) serverVersion = "1.16";
 
         return serverVersion;
     }
@@ -92,10 +92,11 @@ public final class Utils {
         String[] minVersionT = minVersion.split("\\.");
 
         try {
-            if( Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]) )
+            if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]))
                 return true;
             return Integer.parseInt(curVersionT[1]) >= Integer.parseInt(minVersionT[1]);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return false;
     }
 

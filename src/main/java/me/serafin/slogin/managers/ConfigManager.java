@@ -11,12 +11,12 @@ import java.util.List;
 
 public final class ConfigManager {
 
-    public ConfigManager(){
+    public ConfigManager() {
 
         // load Defaults
         File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
-        if(!file.exists()){
+        if (!file.exists()) {
             SLogin.getInstance().saveResource("config.yml", false);
         }
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);

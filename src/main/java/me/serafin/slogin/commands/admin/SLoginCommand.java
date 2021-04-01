@@ -20,7 +20,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
     private final ArrayList<SubCommand> commands = new ArrayList<>();
     private final LangManager langManager;
 
-    public SLoginCommand(){
+    public SLoginCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
 
         commands.add(new PlayerInfoSubCommand());
@@ -50,8 +50,8 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(lang.admin_commandList_title);
         sender.sendMessage("");
 
-        for(SubCommand subCommand : commands){
-            if(Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
+        for (SubCommand subCommand : commands) {
+            if (Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
                         lang.admin_commandList_chatFormat
                                 .replace("{COMMAND}", subCommand.getSyntax())
@@ -62,8 +62,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
                         //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
                         //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));
-            }
-            else {
+            } else {
                 //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
                 sender.sendMessage(lang.admin_commandList_chatFormat
                         .replace("{COMMAND}", subCommand.getSyntax())
@@ -80,11 +79,11 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> sub = new ArrayList<>();
 
-        if(args.length == 1)
-            for(SubCommand subCommand : commands)
+        if (args.length == 1)
+            for (SubCommand subCommand : commands)
                 sub.add(subCommand.getName());
         else
-            for(Player online : Bukkit.getOnlinePlayers())
+            for (Player online : Bukkit.getOnlinePlayers())
                 sub.add(online.getName());
 
         return sub;

@@ -20,7 +20,7 @@ public final class ForceLoginSubCommand implements SubCommand {
     private final LangManager langManager;
     private final LoginManager manager;
 
-    public ForceLoginSubCommand(){
+    public ForceLoginSubCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
@@ -53,27 +53,27 @@ public final class ForceLoginSubCommand implements SubCommand {
         if (sender instanceof Player)
             lang = langManager.getLang(((Player) sender).getLocale());
 
-        if(args.length != 2){
+        if (args.length != 2) {
             sender.sendMessage(lang.admin_forceLogin_correctUsage);
             return;
         }
 
         Player player = Bukkit.getPlayer(args[1]);
-        if(player == null){
+        if (player == null) {
             sender.sendMessage(lang.admin_user_isNotOnline);
             return;
         }
 
-        if(!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, false)){
+        if (!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, false)) {
             sender.sendMessage(lang.admin_forceLogin_deny);
             return;
         }
 
         Lang playerLang = langManager.getLang(player.getLocale());
 
-        if(config.MESSAGES_TITLE_MESSAGES)
-            player.sendTitle(playerLang.auth_login_successTitle, playerLang.auth_login_successSubTitle, 0, 4*10, 10);
-        if(config.MESSAGES_CHAT_MESSAGES)
+        if (config.MESSAGES_TITLE_MESSAGES)
+            player.sendTitle(playerLang.auth_login_successTitle, playerLang.auth_login_successSubTitle, 0, 4 * 10, 10);
+        if (config.MESSAGES_CHAT_MESSAGES)
             player.sendMessage(playerLang.auth_login_success);
 
         manager.playerLogged(player);

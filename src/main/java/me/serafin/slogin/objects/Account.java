@@ -20,6 +20,7 @@ public final class Account {
 
     /**
      * Check if password is correct
+     *
      * @param password player's password
      * @return password is correct
      */
@@ -29,9 +30,10 @@ public final class Account {
 
     /**
      * Updating player's account
+     *
      * @param hashedPassword player's hashed password
-     * @param lastLoginIP player's last login IP address
-     * @param lastLoginDate player's last login date
+     * @param lastLoginIP    player's last login IP address
+     * @param lastLoginDate  player's last login date
      */
     public void update(DataBase dataBase, String hashedPassword, String email, String lastLoginIP, Long lastLoginDate) {
         String command = "UPDATE `slogin_accounts` SET `password` = ?, `email` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
@@ -60,12 +62,13 @@ public final class Account {
 
     /**
      * Get player account if exists or get empty optional
+     *
      * @param name player's name
      * @return optional player's account
      */
     public static Optional<Account> get(DataBase dataBase, String name) {
         try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", name.toLowerCase())) {
-            if(result.next()) {
+            if (result.next()) {
                 return Optional.of(new Account(
                         result.getString("name"),
                         result.getString("password"),
@@ -83,14 +86,15 @@ public final class Account {
 
     /**
      * Creating new account
-     * @param name player's name
+     *
+     * @param name           player's name
      * @param hashedPassword player's hashed password
-     * @param IP player's register IP address
+     * @param IP             player's register IP address
      */
     public static void create(DataBase dataBase, String name, String hashedPassword, String IP) {
         String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis()+"", IP, System.currentTimeMillis()+"");
+            dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
@@ -99,12 +103,13 @@ public final class Account {
 
     /**
      * Get account registered from the same IP address
+     *
      * @param address account's IP address
      * @return number of accounts
      */
-    public static int accountIPCount(DataBase dataBase, String address){
+    public static int accountIPCount(DataBase dataBase, String address) {
         int count = 0;
-        try(ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
+        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
             while (result.next()) count++;
             return count;
         } catch (SQLException throwables) {
@@ -117,6 +122,7 @@ public final class Account {
 
     /**
      * Format placeholders in string.
+     *
      * @param account player's account
      * @param pattern string to format
      * @return formatted string

@@ -31,19 +31,21 @@ public final class LoginManager {
 
     /**
      * Check if players is logged in
+     *
      * @param name player's name
      * @return boolean - of player is logged in
      */
-    public boolean isLogged(String name){
+    public boolean isLogged(String name) {
         return !tempAccounts.containsKey(name);
     }
 
     /**
      * Check if player has account
+     *
      * @param name player's name
      * @return player has account
      */
-    public boolean isRegistered(String name){
+    public boolean isRegistered(String name) {
         return tempAccounts.get(name).isPresent();
     }
 
@@ -51,15 +53,16 @@ public final class LoginManager {
 
     /**
      * Execute when player joined to the server
+     *
      * @param player player
      */
-    public void playerJoin(Player player){
+    public void playerJoin(Player player) {
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
         Optional<Account> account = Account.get(dataBase, player.getName());
         tempAccounts.put(player.getName(), account);
-        if(account.isPresent()) {
-            if(config.CAPTCHA_ON_LOGIN)
+        if (account.isPresent()) {
+            if (config.CAPTCHA_ON_LOGIN)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
@@ -75,7 +78,7 @@ public final class LoginManager {
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
         } else {
-            if(config.CAPTCHA_ON_REGISTER)
+            if (config.CAPTCHA_ON_REGISTER)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
@@ -95,6 +98,7 @@ public final class LoginManager {
 
     /**
      * Execute when player leaves from the server
+     *
      * @param name player's name
      */
     public void playerQuit(String name) {
@@ -105,19 +109,20 @@ public final class LoginManager {
 
     /**
      * Login in player
-     * @param name player's name
-     * @param loginIP player's login IP
-     * @param password player's password
+     *
+     * @param name            player's name
+     * @param loginIP         player's login IP
+     * @param password        player's password
      * @param requirePassword login even if password is incorrect
      * @return login success
      */
     public boolean login(String name, String loginIP, String password, boolean requirePassword) {
-        if(!tempAccounts.containsKey(name))
+        if (!tempAccounts.containsKey(name))
             return false;
 
         Optional<Account> account = tempAccounts.get(name);
-        if(account.isPresent()) {
-            if(!requirePassword || account.get().comparePassword(password)) {
+        if (account.isPresent()) {
+            if (!requirePassword || account.get().comparePassword(password)) {
                 account.get().update(dataBase, account.get().getHashedPassword(), account.get().getEmail(), loginIP, System.currentTimeMillis());
                 return true;
             }
@@ -127,9 +132,10 @@ public final class LoginManager {
 
     /**
      * Register player
-     * @param name player's name
+     *
+     * @param name     player's name
      * @param password player's password
-     * @param IP player's register IP
+     * @param IP       player's register IP
      */
     public void register(String name, String password, String IP) {
         String salt = BCrypt.gensalt();
@@ -139,6 +145,7 @@ public final class LoginManager {
 
     /**
      * Execute when player successfully logged in
+     *
      * @param player player
      */
     public void playerLogged(Player player) {
@@ -147,7 +154,7 @@ public final class LoginManager {
 
         Optional<Account> account = tempAccounts.get(player.getName());
         account = account.isPresent() ? account : Account.get(dataBase, player.getName());
-        if(account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
+        if (account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
             player.sendMessage(langManager.getLang(player.getLocale()).auth_email_notSet);
         }
         tempAccounts.remove(player.getName());
@@ -157,7 +164,8 @@ public final class LoginManager {
 
     /**
      * Password change
-     * @param account player's account
+     *
+     * @param account  player's account
      * @param password player's new password
      */
     public void setPassword(Account account, String password) {
@@ -168,8 +176,9 @@ public final class LoginManager {
 
     /**
      * Password change
+     *
      * @param account player's account
-     * @param email player's new email
+     * @param email   player's new email
      */
     public void setEmail(Account account, String email) {
         account.update(dataBase, account.getHashedPassword(), email, account.getLastLoginIP(), account.getLastLoginDate());
@@ -177,6 +186,7 @@ public final class LoginManager {
 
     /**
      * Delete player's account
+     *
      * @param account player's account
      */
     public void unRegister(Account account) {
@@ -194,6 +204,7 @@ public final class LoginManager {
 
     /**
      * Get accounts number from one IP address
+     *
      * @param address account address
      * @return account number
      */

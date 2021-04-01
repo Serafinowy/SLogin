@@ -18,15 +18,15 @@ public final class PlayerActionListener implements Listener {
     private final LangManager langManager;
     private final LoginManager manager;
 
-    public PlayerActionListener(){
+    public PlayerActionListener() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onInteract(PlayerInteractEvent event){
-        if(!manager.isLogged(event.getPlayer().getName())){
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInteract(PlayerInteractEvent event) {
+        if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
@@ -34,44 +34,44 @@ public final class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onInventoryClick(InventoryClickEvent event){
-        if(!manager.isLogged(event.getWhoClicked().getName())){
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!manager.isLogged(event.getWhoClicked().getName())) {
             event.getWhoClicked().sendMessage(langManager.getLang(((Player) event.getWhoClicked()).getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onChat(AsyncPlayerChatEvent event){
-        if(!manager.isLogged(event.getPlayer().getName())){
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onChat(AsyncPlayerChatEvent event) {
+        if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onMove(PlayerMoveEvent event){
-        if(!manager.isLogged(event.getPlayer().getName())) {
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onMove(PlayerMoveEvent event) {
+        if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().teleport(event.getFrom());
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onCommand(PlayerCommandPreprocessEvent event){
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
         String cmd = event.getMessage().split(" ")[0].replace("/", "");
-        if(config.ALLOWED_COMMANDS.contains(cmd))
+        if (config.ALLOWED_COMMANDS.contains(cmd))
             return;
 
-        if(!manager.isLogged(event.getPlayer().getName())){
+        if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDrop(PlayerDropItemEvent event) {
-        if(!manager.isLogged(event.getPlayer().getName())){
+        if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }

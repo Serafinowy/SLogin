@@ -181,8 +181,8 @@ public class Lang {
 
     ///////////////////////////////////////////
 
-    public static String format(String s){
-        return (s==null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);
+    public static String format(String s) {
+        return (s == null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);
     }
 
 }

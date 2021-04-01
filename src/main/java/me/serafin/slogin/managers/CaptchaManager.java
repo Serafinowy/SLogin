@@ -77,7 +77,7 @@ public final class CaptchaManager {
         }
 
         @EventHandler
-        public void onClose(InventoryCloseEvent event){
+        public void onClose(InventoryCloseEvent event) {
             if (event.getView().getTitle().contains("Captcha") &&
                     tempCaptcha.contains(event.getPlayer().getName())) {
                 Player player = (Player) event.getPlayer();
