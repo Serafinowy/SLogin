@@ -42,27 +42,27 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         }
 
         sender.sendMessage("");
-        sender.sendMessage(Utils.format("&7___________/ &eCOMMAND LIST &7\\___________"));
+        sender.sendMessage(lang.commandListTitle);
         sender.sendMessage("");
 
         for(SubCommand subCommand : commands){
             if(Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                        Utils.format(lang.commandListChatFormat
+                        lang.commandListChatFormat
                                 .replace("{COMMAND}", subCommand.getSyntax())
-                                .replace("DESCRIPTION", subCommand.getDescription())),
-                        Utils.format(lang.commandListHoverFormat
+                                .replace("DESCRIPTION", subCommand.getDescription()),
+                        lang.commandListHoverFormat
                                 .replace("{COMMAND}", subCommand.getName())
-                                .replace("DESCRIPTION", subCommand.getDescription())),
+                                .replace("DESCRIPTION", subCommand.getDescription()),
                         //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
                         //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));
             }
             else {
                 //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
-                sender.sendMessage(Utils.format(lang.commandListChatFormat
+                sender.sendMessage(lang.commandListChatFormat
                         .replace("{COMMAND}", subCommand.getSyntax())
-                        .replace("DESCRIPTION", subCommand.getDescription())));
+                        .replace("DESCRIPTION", subCommand.getDescription()));
             }
         }
 

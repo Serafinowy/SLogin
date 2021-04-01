@@ -3,6 +3,7 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -32,95 +33,95 @@ public final class LangManager {
         Utils.matchConfig(lang, lang_file);
 
         //load Messages
-        this.onlyForPlayers = PREFIX + Utils.format(lang.getString("userMessages.onlyForPlayers"));
-        this.wrongPassword = PREFIX + Utils.format(lang.getString("userMessages.wrongPassword"));
-        this.alreadyLogged = PREFIX + Utils.format(lang.getString("userMessages.alreadyLogged"));
-        this.mustLogin = PREFIX + Utils.format(lang.getString("userMessages.mustLogin"));
-        this.maxAccounts = PREFIX + Utils.format(lang.getString("userMessages.maxAccounts"));
+        this.onlyForPlayers = PREFIX + format(lang.getString("userMessages.onlyForPlayers"));
+        this.wrongPassword = PREFIX + format(lang.getString("userMessages.wrongPassword"));
+        this.alreadyLogged = PREFIX + format(lang.getString("userMessages.alreadyLogged"));
+        this.mustLogin = PREFIX + format(lang.getString("userMessages.mustLogin"));
+        this.maxAccounts = PREFIX + format(lang.getString("userMessages.maxAccounts"));
 
         ///////////////////////////////////////////
 
-        this.loginInfo = PREFIX + Utils.format(lang.getString("userMessages.loginInfo"));
-        this.loginCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.loginCorrectUsage"));
-        this.loginSuccess = PREFIX + Utils.format(lang.getString("userMessages.loginSuccess"));
+        this.loginInfo = PREFIX + format(lang.getString("userMessages.loginInfo"));
+        this.loginCorrectUsage = PREFIX + format(lang.getString("userMessages.loginCorrectUsage"));
+        this.loginSuccess = PREFIX + format(lang.getString("userMessages.loginSuccess"));
 
-        this.loginTitle = Utils.format(lang.getString("userMessages.loginTitle"));
-        this.loginSubTitle = Utils.format(lang.getString("userMessages.loginSubTitle"));
+        this.loginTitle = format(lang.getString("userMessages.loginTitle"));
+        this.loginSubTitle = format(lang.getString("userMessages.loginSubTitle"));
 
-        this.loginSuccessTitle = Utils.format(lang.getString("userMessages.loginSuccessTitle"));
-        this.loginSuccessSubTitle = Utils.format(lang.getString("userMessages.loginSuccessSubTitle"));
-
-        ///////////////////////////////////////////
-
-        this.notAllowedPasswordLength = PREFIX + Utils.format(lang.getString("userMessages.notAllowedPasswordLength"));
-        this.differentPasswords = PREFIX + Utils.format(lang.getString("userMessages.differentPasswords"));
-        this.alreadyRegistered = PREFIX + Utils.format(lang.getString("userMessages.alreadyRegistered"));
-        this.notRegistered = PREFIX + Utils.format(lang.getString("userMessages.notRegistered"));
-
-        this.registerInfo = PREFIX + Utils.format(lang.getString("userMessages.registerInfo"));
-        this.registerCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.registerCorrectUsage"));
-        this.registerSuccess = PREFIX + Utils.format(lang.getString("userMessages.registerSuccess"));
-
-        this.registerTitle = Utils.format(lang.getString("userMessages.registerTitle"));
-        this.registerSubTitle = Utils.format(lang.getString("userMessages.registerSubTitle"));
-
-        this.registerSuccessTitle = Utils.format(lang.getString("userMessages.registerSuccessTitle"));
-        this.registerSuccessSubTitle = Utils.format(lang.getString("userMessages.registerSuccessSubTitle"));
+        this.loginSuccessTitle = format(lang.getString("userMessages.loginSuccessTitle"));
+        this.loginSuccessSubTitle = format(lang.getString("userMessages.loginSuccessSubTitle"));
 
         ///////////////////////////////////////////
 
-        this.changePassCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.changePassCorrectUsage"));
-        this.changePassSuccess = PREFIX + Utils.format(lang.getString("userMessages.changePassSuccess"));
+        this.notAllowedPasswordLength = PREFIX + format(lang.getString("userMessages.notAllowedPasswordLength"));
+        this.differentPasswords = PREFIX + format(lang.getString("userMessages.differentPasswords"));
+        this.alreadyRegistered = PREFIX + format(lang.getString("userMessages.alreadyRegistered"));
+        this.notRegistered = PREFIX + format(lang.getString("userMessages.notRegistered"));
+
+        this.registerInfo = PREFIX + format(lang.getString("userMessages.registerInfo"));
+        this.registerCorrectUsage = PREFIX + format(lang.getString("userMessages.registerCorrectUsage"));
+        this.registerSuccess = PREFIX + format(lang.getString("userMessages.registerSuccess"));
+
+        this.registerTitle = format(lang.getString("userMessages.registerTitle"));
+        this.registerSubTitle = format(lang.getString("userMessages.registerSubTitle"));
+
+        this.registerSuccessTitle = format(lang.getString("userMessages.registerSuccessTitle"));
+        this.registerSuccessSubTitle = format(lang.getString("userMessages.registerSuccessSubTitle"));
 
         ///////////////////////////////////////////
 
-        this.emailInfo = PREFIX + Utils.format(lang.getString("userMessages.emailInfo"));
-        this.emailCorrectUsage = PREFIX + Utils.format(lang.getString("userMessages.emailCorrectUsage"));
-        this.emailChangeSuccess = PREFIX + Utils.format(lang.getString("userMessages.emailChangeSuccess"));
-
-        this.emailNotSet = PREFIX + Utils.format(lang.getString("userMessages.emailNotSet"));
-        this.emailBadFormat = PREFIX + Utils.format(lang.getString("userMessages.emailBadFormat"));
+        this.changePassCorrectUsage = PREFIX + format(lang.getString("userMessages.changePassCorrectUsage"));
+        this.changePassSuccess = PREFIX + format(lang.getString("userMessages.changePassSuccess"));
 
         ///////////////////////////////////////////
 
-        this.nullValue = Utils.format(lang.getString("adminMessages.nullValue"));
-        this.userNotExists = PREFIX + Utils.format(lang.getString("adminMessages.userNotExists"));
-        this.userIsNotOnline = PREFIX + Utils.format(lang.getString("adminMessages.userIsNotOnline"));
+        this.emailInfo = PREFIX + format(lang.getString("userMessages.emailInfo"));
+        this.emailCorrectUsage = PREFIX + format(lang.getString("userMessages.emailCorrectUsage"));
+        this.emailChangeSuccess = PREFIX + format(lang.getString("userMessages.emailChangeSuccess"));
 
-        this.commandListTitle = Utils.format(lang.getString("adminMessages.commandList.title"));
-        this.commandListChatFormat = Utils.format(lang.getString("adminMessages.commandList.chatFormat"));
-        this.commandListHoverFormat = Utils.format(lang.getString("adminMessages.commandList.hoverFormat"));
-
-        this.playerInfoCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.playerInfoCorrectUsage"));
-        this.playerInfoMessage = Utils.format(lang.getString("adminMessages.playerInfoMessage"));
-
-        this.changePassAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminCorrectUsage"));
-        this.changePassAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.changePassAdminSuccess"));
-
-        this.forceLoginCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginCorrectUsage"));
-        this.forceLoginSuccess = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginSuccess"));
-        this.forceLoginDeny = PREFIX + Utils.format(lang.getString("adminMessages.forceLoginDeny"));
-
-        this.registerAdminCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminCorrectUsage"));
-        this.registerAdminSuccess = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminSuccess"));
-        this.registerAdminDeny = PREFIX + Utils.format(lang.getString("adminMessages.registerAdminDeny"));
-
-        this.unRegisterCorrectUsage = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterCorrectUsage"));
-        this.unRegisterSuccess = PREFIX + Utils.format(lang.getString("adminMessages.unRegisterSuccess"));
+        this.emailNotSet = PREFIX + format(lang.getString("userMessages.emailNotSet"));
+        this.emailBadFormat = PREFIX + format(lang.getString("userMessages.emailBadFormat"));
 
         ///////////////////////////////////////////
 
-        this.loginTimeoutKick = Utils.format(lang.getString("loginTimeoutKick"));
+        this.nullValue = format(lang.getString("adminMessages.nullValue"));
+        this.userNotExists = PREFIX + format(lang.getString("adminMessages.userNotExists"));
+        this.userIsNotOnline = PREFIX + format(lang.getString("adminMessages.userIsNotOnline"));
 
-        this.captcha_guiName = Utils.format(lang.getString("captchaMessages.guiName"));
-        this.captcha_kickMessage = Utils.format(lang.getString("captchaMessages.kickMessage"));
+        this.commandListTitle = format(lang.getString("adminMessages.commandList.title"));
+        this.commandListChatFormat = format(lang.getString("adminMessages.commandList.chatFormat"));
+        this.commandListHoverFormat = format(lang.getString("adminMessages.commandList.hoverFormat"));
 
-        this.wrongPassword_kickMessage = Utils.format(lang.getString("wrongPassword.kickMessage"));
+        this.playerInfoCorrectUsage = PREFIX + format(lang.getString("adminMessages.playerInfoCorrectUsage"));
+        this.playerInfoMessage = format(lang.getString("adminMessages.playerInfoMessage"));
+
+        this.changePassAdminCorrectUsage = PREFIX + format(lang.getString("adminMessages.changePassAdminCorrectUsage"));
+        this.changePassAdminSuccess = PREFIX + format(lang.getString("adminMessages.changePassAdminSuccess"));
+
+        this.forceLoginCorrectUsage = PREFIX + format(lang.getString("adminMessages.forceLoginCorrectUsage"));
+        this.forceLoginSuccess = PREFIX + format(lang.getString("adminMessages.forceLoginSuccess"));
+        this.forceLoginDeny = PREFIX + format(lang.getString("adminMessages.forceLoginDeny"));
+
+        this.registerAdminCorrectUsage = PREFIX + format(lang.getString("adminMessages.registerAdminCorrectUsage"));
+        this.registerAdminSuccess = PREFIX + format(lang.getString("adminMessages.registerAdminSuccess"));
+        this.registerAdminDeny = PREFIX + format(lang.getString("adminMessages.registerAdminDeny"));
+
+        this.unRegisterCorrectUsage = PREFIX + format(lang.getString("adminMessages.unRegisterCorrectUsage"));
+        this.unRegisterSuccess = PREFIX + format(lang.getString("adminMessages.unRegisterSuccess"));
+
+        ///////////////////////////////////////////
+
+        this.loginTimeoutKick = format(lang.getString("loginTimeoutKick"));
+
+        this.captcha_guiName = format(lang.getString("captchaMessages.guiName"));
+        this.captcha_kickMessage = format(lang.getString("captchaMessages.kickMessage"));
+
+        this.wrongPassword_kickMessage = format(lang.getString("wrongPassword.kickMessage"));
     }
 
     ///////////////////////////////////////////
 
-    public final String PREFIX = Utils.format("&e[SLogin] &r");
+    public final String PREFIX = format("&e[SLogin] &r");
 
     public final String onlyForPlayers;
     public final String wrongPassword;
@@ -208,5 +209,9 @@ public final class LangManager {
     ///////////////////////////////////////////
 
     public final String wrongPassword_kickMessage;
+
+    private static String format(String s){
+        return (s==null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);
+    }
 
 }

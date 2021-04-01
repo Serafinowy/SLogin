@@ -22,10 +22,6 @@ import java.util.regex.Pattern;
 
 public final class Utils {
 
-    public static String format(String s){
-        return (s==null) ? "<null>" : ChatColor.translateAlternateColorCodes('&', s);
-    }
-
     // Used to update config
     @SuppressWarnings("ConstantConditions")
     public static void matchConfig(FileConfiguration config, File file) {
