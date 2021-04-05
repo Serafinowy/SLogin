@@ -3,8 +3,11 @@
 #         Author _Serafin       #
 #################################
 
-# The language settings file contains in-game messages
-# Languages available: en_US (English), pl_PL (Polish)
+# Language settings file contains in-game messages
+# Available languages: en_US (English), pl_PL (Polish)
+# You can add your own language in SLogin/translations
+# or you can help me translate in other languages
+# https://poeditor.com/join/project?hash=Ti7QHfbKNZ
 Language:
   # Player see the message in his language
   Auto: true

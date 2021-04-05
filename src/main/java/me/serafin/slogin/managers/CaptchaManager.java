@@ -35,12 +35,10 @@ public final class CaptchaManager {
         Inventory inv = Bukkit.createInventory(null, 54, langManager.getLang(locale).captcha_guiName);
 
         for (int i = 0; i < inv.getSize(); i++) {
-            if (i == correctSlot)
-                inv.setItem(i, new ItemStack(chose));
-            else {
-                inv.setItem(i, new ItemStack(Material.BARRIER));
-            }
+            inv.setItem(i, new ItemStack(Material.BARRIER));
         }
+
+        inv.setItem(correctSlot, new ItemStack(chose));
 
         return inv;
     }
@@ -52,7 +50,7 @@ public final class CaptchaManager {
             public void run() {
                 player.openInventory(inventory(player.getLocale()));
             }
-        }.runTaskLater(SLogin.getInstance(), 10);
+        }.runTaskLaterAsynchronously(SLogin.getInstance(), 10);
     }
 
     private class Events implements Listener {

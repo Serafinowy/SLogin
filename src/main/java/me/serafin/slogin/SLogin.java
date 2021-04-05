@@ -1,5 +1,6 @@
 package me.serafin.slogin;
 
+import lombok.Getter;
 import me.serafin.slogin.commands.ChangePasswordCommand;
 import me.serafin.slogin.commands.EmailCommand;
 import me.serafin.slogin.commands.LoginCommand;
@@ -22,13 +23,21 @@ import java.sql.SQLException;
 
 public final class SLogin extends JavaPlugin {
 
+    @Getter
     private static SLogin instance;
+
     private DataBase dataBase;
+
+    @Getter
     private ConfigManager configManager;
+    @Getter
     private LangManager langManager;
+    @Getter
     private LoginManager loginManager;
 
+    @Getter
     private LoginTimeoutManager loginTimeoutManager;
+    @Getter
     private CaptchaManager captchaManager;
 
     @Override
@@ -39,7 +48,7 @@ public final class SLogin extends JavaPlugin {
         this.langManager.loadLanguages();
 
         if (!setupDatabase()) {
-            getLogger().severe("Failed to connect database. Disabling plugin...");
+            getLogger().severe("Error connecting to database. The plugin has been disabled");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -119,29 +128,5 @@ public final class SLogin extends JavaPlugin {
                 getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
             }
         }
-    }
-
-    public static SLogin getInstance() {
-        return instance;
-    }
-
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    public LangManager getLangManager() {
-        return langManager;
-    }
-
-    public LoginManager getLoginManager() {
-        return loginManager;
-    }
-
-    public LoginTimeoutManager getLoginTimeoutManager() {
-        return loginTimeoutManager;
-    }
-
-    public CaptchaManager getCaptchaManager() {
-        return captchaManager;
     }
 }

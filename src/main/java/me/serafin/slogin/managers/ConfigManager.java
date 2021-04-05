@@ -12,8 +12,7 @@ import java.util.List;
 public final class ConfigManager {
 
     public ConfigManager() {
-
-        // load Defaults
+        // Load defaults
         File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
         if (!file.exists()) {
@@ -24,7 +23,7 @@ public final class ConfigManager {
         Utils.matchConfig(configuration, file);
         Bukkit.getLogger().info("Loaded: config.yml file");
 
-        // load Settings
+        // Load settings
         this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
         this.LANGUAGE_DEFAULT = configuration.getString("Language.Default").toLowerCase();
 
