@@ -61,7 +61,7 @@ public final class UnRegisterSubCommand implements SubCommand {
             return;
         }
 
-        manager.unRegister(account.get());
+        account.get().delete();
         sender.sendMessage(lang.admin_unRegister_success);
     }
 }

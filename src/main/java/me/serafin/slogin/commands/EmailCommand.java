@@ -47,7 +47,7 @@ public final class EmailCommand implements CommandExecutor {
         } else {
             if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
                 if (Utils.validateEmail(args[1])) {
-                    manager.setEmail(account.get(), args[1]);
+                    account.get().update(Account.DataType.EMAIL, args[1].toLowerCase());
                     player.sendMessage(lang.auth_email_changeSuccess);
                 } else player.sendMessage(lang.auth_email_badFormat);
             } else player.sendMessage(lang.auth_email_correctUsage);

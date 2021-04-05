@@ -15,6 +15,8 @@ import java.util.Optional;
 @Data
 public final class Account {
 
+    private final DataBase dataBase;
+
     private final String displayName, hashedPassword, email, registerIP, lastLoginIP;
     private final long registerDate, lastLoginDate;
 
@@ -29,31 +31,46 @@ public final class Account {
     }
 
     /**
-     * Updating player's account
-     *
-     * @param hashedPassword player's hashed password
-     * @param lastLoginIP    player's last login IP address
-     * @param lastLoginDate  player's last login date
+     * Update player's account
+     * @param dataType type of data to change
+     * @param value    new value
      */
-    public void update(DataBase dataBase, String hashedPassword, String email, String lastLoginIP, Long lastLoginDate) {
-        String command = "UPDATE `slogin_accounts` SET `password` = ?, `email` = ?, `lastLoginIP` = ?, `lastLoginDate` = ? WHERE `name` = ?";
+    public <T> void update(DataType dataType, String value) {
+        String set = "";
+        switch (dataType) {
+            case PASSWORD:
+                set = "`password` = ?";
+                String salt = BCrypt.gensalt();
+                value = BCrypt.hashpw(value, salt);
+                break;
+            case EMAIL:
+                set = "`email` = ?";
+                break;
+            case LAST_LOGIN_IP:
+                set = "`lastLoginIP` = ?";
+                break;
+            case LAST_LOGIN_DATE:
+                set = "`lastLoginDate` = ?";
+                break;
+        }
+        String command = "UPDATE `slogin_accounts` SET " + set + " WHERE `name` = ?";
         try {
-            dataBase.update(command, hashedPassword, email, lastLoginIP, lastLoginDate + "", this.displayName.toLowerCase());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            dataBase.update(command, value, this.displayName.toLowerCase());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
         }
     }
 
     /**
-     * Deleting player's account
+     * Delete player's account from database
      */
-    public void delete(DataBase dataBase) {
+    public void delete() {
         String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
         try {
             dataBase.update(command, this.displayName.toLowerCase());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
         }
     }
@@ -70,6 +87,7 @@ public final class Account {
         try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", name.toLowerCase())) {
             if (result.next()) {
                 return Optional.of(new Account(
+                        dataBase,
                         result.getString("name"),
                         result.getString("password"),
                         result.getString("email"),
@@ -78,8 +96,8 @@ public final class Account {
                         result.getLong("registerDate"),
                         result.getLong("lastLoginDate")));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
         return Optional.empty();
     }
@@ -95,8 +113,8 @@ public final class Account {
         String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
         }
     }
@@ -112,8 +130,8 @@ public final class Account {
         try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
             while (result.next()) count++;
             return count;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
         return count;
     }
@@ -140,5 +158,9 @@ public final class Account {
                 .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
                 .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
                 .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
+    }
+
+    public enum DataType {
+        PASSWORD, EMAIL, LAST_LOGIN_IP, LAST_LOGIN_DATE
     }
 }

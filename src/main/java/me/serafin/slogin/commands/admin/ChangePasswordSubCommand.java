@@ -69,7 +69,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        manager.setPassword(account.get(), args[2]);
+        account.get().update(Account.DataType.PASSWORD, args[2]);
         sender.sendMessage(lang.admin_changePass_success);
     }
 }

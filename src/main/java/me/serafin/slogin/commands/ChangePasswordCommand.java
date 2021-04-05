@@ -55,7 +55,7 @@ public final class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        manager.setPassword(account.get(), args[1]);
+        account.get().update(Account.DataType.PASSWORD, args[1]);
         player.sendMessage(lang.auth_changePass_success);
 
         return true;

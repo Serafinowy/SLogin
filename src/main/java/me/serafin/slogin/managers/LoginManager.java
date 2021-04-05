@@ -3,6 +3,7 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.objects.Account;
+import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -123,7 +124,8 @@ public final class LoginManager {
         Optional<Account> account = tempAccounts.get(name);
         if (account.isPresent()) {
             if (!requirePassword || account.get().comparePassword(password)) {
-                account.get().update(dataBase, account.get().getHashedPassword(), account.get().getEmail(), loginIP, System.currentTimeMillis());
+                account.get().update(Account.DataType.LAST_LOGIN_IP, loginIP);
+                account.get().update(Account.DataType.LAST_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
                 return true;
             }
         }
@@ -148,49 +150,35 @@ public final class LoginManager {
      *
      * @param player player
      */
-    public void playerLogged(Player player) {
+    public void playerLogged(Player player, LoginType loginType) {
         player.setInvulnerable(false);
         SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
+
+        Lang lang = langManager.getLang(player.getLocale());
+
+        if (loginType == LoginType.LOGIN) {
+            if (config.MESSAGES_TITLE_MESSAGES)
+                player.sendTitle(lang.auth_login_successTitle, lang.auth_login_successSubTitle, 0, 4 * 10, 10);
+            if (config.MESSAGES_CHAT_MESSAGES)
+                player.sendMessage(lang.auth_login_success);
+        }
+        if (loginType == LoginType.REGISTER) {
+            if (config.MESSAGES_TITLE_MESSAGES)
+                player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4 * 10, 10);
+            if (config.MESSAGES_CHAT_MESSAGES) {
+                player.sendMessage(lang.auth_register_success);
+            }
+        }
 
         Optional<Account> account = tempAccounts.get(player.getName());
         account = account.isPresent() ? account : Account.get(dataBase, player.getName());
         if (account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
-            player.sendMessage(langManager.getLang(player.getLocale()).auth_email_notSet);
+            player.sendMessage(lang.auth_email_notSet);
         }
         tempAccounts.remove(player.getName());
     }
-
-    ///////////////////////////////////////
-
-    /**
-     * Password change
-     *
-     * @param account  player's account
-     * @param password player's new password
-     */
-    public void setPassword(Account account, String password) {
-        String salt = BCrypt.gensalt();
-        String hashedPassword = BCrypt.hashpw(password, salt);
-        account.update(dataBase, hashedPassword, account.getEmail(), account.getLastLoginIP(), account.getLastLoginDate());
-    }
-
-    /**
-     * Password change
-     *
-     * @param account player's account
-     * @param email   player's new email
-     */
-    public void setEmail(Account account, String email) {
-        account.update(dataBase, account.getHashedPassword(), email, account.getLastLoginIP(), account.getLastLoginDate());
-    }
-
-    /**
-     * Delete player's account
-     *
-     * @param account player's account
-     */
-    public void unRegister(Account account) {
-        account.delete(dataBase);
+    public enum LoginType {
+        LOGIN, REGISTER
     }
 
     ///////////////////////////////////////

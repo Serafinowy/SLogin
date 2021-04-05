@@ -64,20 +64,13 @@ public final class ForceLoginSubCommand implements SubCommand {
             return;
         }
 
-        if (!manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), null, false)) {
+        assert player.getAddress() != null;
+        if (!manager.login(player.getName(), player.getAddress().getAddress().getHostAddress(), null, false)) {
             sender.sendMessage(lang.admin_forceLogin_deny);
             return;
         }
 
-        Lang playerLang = langManager.getLang(player.getLocale());
-
-        if (config.MESSAGES_TITLE_MESSAGES)
-            player.sendTitle(playerLang.auth_login_successTitle, playerLang.auth_login_successSubTitle, 0, 4 * 10, 10);
-        if (config.MESSAGES_CHAT_MESSAGES)
-            player.sendMessage(playerLang.auth_login_success);
-
-        manager.playerLogged(player);
+        manager.playerLogged(player, LoginManager.LoginType.LOGIN);
         sender.sendMessage(lang.admin_forceLogin_success);
-
     }
 }

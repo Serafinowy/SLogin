@@ -68,13 +68,7 @@ public final class RegisterCommand implements CommandExecutor {
         }
 
         manager.register(player.getName(), args[0], player.getAddress().getAddress().getHostAddress());
-
-        if (config.MESSAGES_TITLE_MESSAGES)
-            player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4 * 10, 10);
-        if (config.MESSAGES_CHAT_MESSAGES) {
-            player.sendMessage(lang.auth_register_success);
-        }
-        manager.playerLogged(player);
+        manager.playerLogged(player, LoginManager.LoginType.REGISTER);
 
         return true;
     }
