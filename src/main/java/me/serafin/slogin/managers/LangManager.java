@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 
 public final class LangManager {
 
-    private final ConfigManager configManager;
+    private final ConfigManager config;
     private final Logger logger;
 
     private final HashMap<String, Lang> TRANSLATIONS = new HashMap<>();
 
-    public LangManager(ConfigManager configManager) {
-        this.configManager = configManager;
+    public LangManager(ConfigManager config) {
+        this.config = config;
         this.logger = SLogin.getInstance().getLogger();
         loadLanguages();
     }
@@ -28,12 +28,9 @@ public final class LangManager {
      * @return Lang object with messages
      */
     public Lang getLang(String locale) {
-        if (!configManager.LANGUAGE_AUTO) locale = configManager.LANGUAGE_DEFAULT;
-
-        assert locale != null;
-        if (locale.equalsIgnoreCase("default")) locale = configManager.LANGUAGE_DEFAULT;
-
-        return TRANSLATIONS.getOrDefault(locale.toLowerCase(), TRANSLATIONS.get("en_uk"));
+        if (!config.LANGUAGE_AUTO) locale = config.LANGUAGE_DEFAULT;
+        if (TRANSLATIONS.get(locale) == null) locale = config.LANGUAGE_DEFAULT;
+        return TRANSLATIONS.get(locale);
     }
 
     /**
@@ -57,6 +54,20 @@ public final class LangManager {
     }
 
     /**
+     * Check lang files
+     */
+    private void checkLangs() {
+        if (TRANSLATIONS.size() == 0) {
+            logger.severe("Cannot load any translations! SLogin has been disabled!");
+            SLogin.getInstance().getPluginLoader().disablePlugin(SLogin.getInstance());
+        }
+        if (TRANSLATIONS.get(config.LANGUAGE_DEFAULT.toLowerCase()) == null) {
+            logger.severe("Cannot load default translation! SLogin has been disabled!");
+            SLogin.getInstance().getPluginLoader().disablePlugin(SLogin.getInstance());
+        }
+    }
+
+    /**
      * Load all languages file from plugin folder
      */
     public void loadLanguages() {
@@ -73,6 +84,8 @@ public final class LangManager {
                 registerLang(file.getName().replace(".properties", ""));
             }
         }
+
+        checkLangs();
     }
 
     /**

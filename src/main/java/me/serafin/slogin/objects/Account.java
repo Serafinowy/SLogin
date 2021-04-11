@@ -1,7 +1,6 @@
 package me.serafin.slogin.objects;
 
 import lombok.Data;
-import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
@@ -35,7 +34,7 @@ public final class Account {
      * @param dataType type of data to change
      * @param value    new value
      */
-    public <T> void update(DataType dataType, String value) {
+    public void update(DataType dataType, String value) {
         String set = "";
         switch (dataType) {
             case PASSWORD:

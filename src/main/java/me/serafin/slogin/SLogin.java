@@ -48,7 +48,7 @@ public final class SLogin extends JavaPlugin {
         this.langManager.loadLanguages();
 
         if (!setupDatabase()) {
-            getLogger().severe("Error connecting to database. The plugin has been disabled");
+            getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
