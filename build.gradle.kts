@@ -19,3 +19,15 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.16")
     annotationProcessor("org.projectlombok:lombok:1.18.16")
 }
+
+sourceSets {
+    main {
+        java.srcDir("src/main/java")
+        resources.srcDir("src/main/resources")
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
