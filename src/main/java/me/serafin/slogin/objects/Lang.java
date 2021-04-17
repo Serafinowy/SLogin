@@ -11,7 +11,7 @@ public class Lang {
     public Lang(Properties properties) {
 
         misc_onlyForPlayers = PREFIX + format(properties.getProperty("slogin.misc.onlyForPlayers"));
-        misc_nullValue = PREFIX + format(properties.getProperty("slogin.misc.nullValue"));
+        misc_nullValue = format(properties.getProperty("slogin.misc.nullValue"));
 
         ///////////////////////////////////////////
 
@@ -35,7 +35,7 @@ public class Lang {
         auth_login_subTitle = format(properties.getProperty("slogin.auth.login.subTitle"));
         auth_login_successTitle = format(properties.getProperty("slogin.auth.login.successTitle"));
         auth_login_successSubTitle = format(properties.getProperty("slogin.auth.login.successSubTitle"));
-        auth_login_timeoutKick = PREFIX + format(properties.getProperty("slogin.auth.login.timeoutKick"));
+        auth_login_timeoutKick = format(properties.getProperty("slogin.auth.login.timeoutKick"));
 
         ///////////////////////////////////////////
 
@@ -62,20 +62,20 @@ public class Lang {
 
         ///////////////////////////////////////////
 
-        captcha_guiName = PREFIX + format(properties.getProperty("slogin.captcha.guiName"));
-        captcha_kickMessage = PREFIX + format(properties.getProperty("slogin.captcha.kickMessage"));
+        captcha_guiName = format(properties.getProperty("slogin.captcha.guiName"));
+        captcha_kickMessage = format(properties.getProperty("slogin.captcha.kickMessage"));
 
         ///////////////////////////////////////////
 
         admin_user_notExists = PREFIX + format(properties.getProperty("slogin.admin.user.notExists"));
         admin_user_isNotOnline = PREFIX + format(properties.getProperty("slogin.admin.user.isNotOnline"));
 
-        admin_commandList_title = PREFIX + format(properties.getProperty("slogin.admin.commandList.title"));
-        admin_commandList_chatFormat = PREFIX + format(properties.getProperty("slogin.admin.commandList.chatFormat"));
-        admin_commandList_hoverFormat = PREFIX + format(properties.getProperty("slogin.admin.commandList.hoverFormat"));
+        admin_commandList_title = format(properties.getProperty("slogin.admin.commandList.title"));
+        admin_commandList_chatFormat = format(properties.getProperty("slogin.admin.commandList.chatFormat"));
+        admin_commandList_hoverFormat = format(properties.getProperty("slogin.admin.commandList.hoverFormat"));
 
         admin_playerInfo_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.correctUsage"));
-        admin_playerInfo_message = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.message"));
+        admin_playerInfo_message = format(properties.getProperty("slogin.admin.playerInfo.message"));
 
         admin_changePass_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.changePass.correctUsage"));
         admin_changePass_success = PREFIX + format(properties.getProperty("slogin.admin.changePass.success"));

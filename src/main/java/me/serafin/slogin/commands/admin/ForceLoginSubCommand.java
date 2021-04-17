@@ -1,7 +1,6 @@
 package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Lang;
@@ -12,16 +11,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public final class ForceLoginSubCommand implements SubCommand {
 
-    private final ConfigManager config;
     private final LangManager langManager;
     private final LoginManager manager;
 
     public ForceLoginSubCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }

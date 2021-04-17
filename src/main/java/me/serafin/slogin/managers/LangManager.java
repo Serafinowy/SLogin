@@ -3,7 +3,10 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Logger;
@@ -18,7 +21,6 @@ public final class LangManager {
     public LangManager(ConfigManager config) {
         this.config = config;
         this.logger = SLogin.getInstance().getLogger();
-        loadLanguages();
     }
 
     /**
@@ -29,8 +31,8 @@ public final class LangManager {
      */
     public Lang getLang(String locale) {
         if (!config.LANGUAGE_AUTO) locale = config.LANGUAGE_DEFAULT;
-        if (TRANSLATIONS.get(locale) == null) locale = config.LANGUAGE_DEFAULT;
-        return TRANSLATIONS.get(locale);
+        if (TRANSLATIONS.get(locale.toLowerCase()) == null) locale = config.LANGUAGE_DEFAULT;
+        return TRANSLATIONS.get(locale.toLowerCase());
     }
 
     /**
@@ -91,7 +93,7 @@ public final class LangManager {
     /**
      * Copy default lang files from plugin to the plugin folder
      */
-    private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_UK", "pl_PL"));
+    private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_US", "pl_PL"));
 
     private void loadDefaults(File translationsFolder) {
         for (String lang : defaultLangSet) {

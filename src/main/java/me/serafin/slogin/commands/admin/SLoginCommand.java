@@ -55,10 +55,10 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
                         lang.admin_commandList_chatFormat
                                 .replace("{COMMAND}", subCommand.getSyntax())
-                                .replace("DESCRIPTION", subCommand.getDescription()),
+                                .replace("{DESCRIPTION}", subCommand.getDescription()),
                         lang.admin_commandList_hoverFormat
                                 .replace("{COMMAND}", subCommand.getName())
-                                .replace("DESCRIPTION", subCommand.getDescription()),
+                                .replace("{DESCRIPTION}", subCommand.getDescription()),
                         //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
                         //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));

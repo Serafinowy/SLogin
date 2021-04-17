@@ -31,6 +31,7 @@ public final class Account {
 
     /**
      * Update player's account
+     *
      * @param dataType type of data to change
      * @param value    new value
      */

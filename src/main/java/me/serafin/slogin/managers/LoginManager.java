@@ -177,6 +177,7 @@ public final class LoginManager {
         }
         tempAccounts.remove(player.getName());
     }
+
     public enum LoginType {
         LOGIN, REGISTER
     }
