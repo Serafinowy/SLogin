@@ -75,15 +75,14 @@ public final class LangManager {
     public void loadLanguages() {
         File dataFolder = SLogin.getInstance().getDataFolder();
         File translationsFolder = new File(dataFolder, "translations");
-        File[] files = translationsFolder.listFiles();
 
+        File[] files = translationsFolder.listFiles();
         if (!translationsFolder.exists() || files == null || files.length == 0) {
             translationsFolder.mkdir();
             loadDefaults(translationsFolder);
         }
 
-        assert files != null;
-        for (File file : files) {
+        for (File file : Objects.requireNonNull(translationsFolder.listFiles())) {
             if (file.getName().endsWith(".properties") && file.isFile()) {
                 registerLang(file.getName().replace(".properties", ""));
             }
@@ -99,7 +98,7 @@ public final class LangManager {
 
     private void loadDefaults(File translationsFolder) {
         for (String lang : defaultLangSet) {
-            try (InputStream is = SLogin.getInstance().getResource(lang + ".properties")) {
+            try (InputStream is = SLogin.getInstance().getResource( "translations/" + lang + ".properties")) {
                 File langFile = new File(translationsFolder, lang + ".properties");
                 assert is != null;
                 Files.copy(is, langFile.toPath());
