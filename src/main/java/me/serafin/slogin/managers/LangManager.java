@@ -58,7 +58,7 @@ public final class LangManager {
     /**
      * Check lang files
      */
-    private void checkLangs() {
+    private void checkLanguages() {
         if (TRANSLATIONS.size() == 0) {
             logger.severe("Cannot load any translations! SLogin has been disabled!");
             SLogin.getInstance().getPluginLoader().disablePlugin(SLogin.getInstance());
@@ -75,19 +75,21 @@ public final class LangManager {
     public void loadLanguages() {
         File dataFolder = SLogin.getInstance().getDataFolder();
         File translationsFolder = new File(dataFolder, "translations");
+        File[] files = translationsFolder.listFiles();
 
-        if (!translationsFolder.exists() || translationsFolder.listFiles().length == 0) {
+        if (!translationsFolder.exists() || files == null || files.length == 0) {
             translationsFolder.mkdir();
             loadDefaults(translationsFolder);
         }
 
-        for (File file : translationsFolder.listFiles()) {
+        assert files != null;
+        for (File file : files) {
             if (file.getName().endsWith(".properties") && file.isFile()) {
                 registerLang(file.getName().replace(".properties", ""));
             }
         }
 
-        checkLangs();
+        checkLanguages();
     }
 
     /**

@@ -82,6 +82,7 @@ public final class Utils {
         else if (bukkitVersion.contains("1.14")) serverVersion = "1.14";
         else if (bukkitVersion.contains("1.15")) serverVersion = "1.15";
         else if (bukkitVersion.contains("1.16")) serverVersion = "1.16";
+        else if (bukkitVersion.contains("1.17")) serverVersion = "1.17";
 
         return serverVersion;
     }
