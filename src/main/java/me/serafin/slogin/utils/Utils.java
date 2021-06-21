@@ -6,16 +6,14 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,7 +48,7 @@ public final class Utils {
         }
     }
 
-    public static TextComponent sendCommandSuggest(String text, String hover, String cmd){
+    public static TextComponent sendCommandSuggest(String text, String hover, String cmd) {
         TextComponent component = new TextComponent(text);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, cmd));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hover)));
@@ -75,14 +73,15 @@ public final class Utils {
         String bukkitVersion = Bukkit.getBukkitVersion();
         String serverVersion = "1.8";
 
-        if(bukkitVersion.contains("1.9")) serverVersion = "1.9";
-        else if(bukkitVersion.contains("1.10")) serverVersion = "1.10";
-        else if(bukkitVersion.contains("1.11")) serverVersion = "1.11";
-        else if(bukkitVersion.contains("1.12")) serverVersion = "1.12";
-        else if(bukkitVersion.contains("1.13")) serverVersion = "1.13";
-        else if(bukkitVersion.contains("1.14")) serverVersion = "1.14";
-        else if(bukkitVersion.contains("1.15")) serverVersion = "1.15";
-        else if(bukkitVersion.contains("1.16")) serverVersion = "1.16";
+        if (bukkitVersion.contains("1.9")) serverVersion = "1.9";
+        else if (bukkitVersion.contains("1.10")) serverVersion = "1.10";
+        else if (bukkitVersion.contains("1.11")) serverVersion = "1.11";
+        else if (bukkitVersion.contains("1.12")) serverVersion = "1.12";
+        else if (bukkitVersion.contains("1.13")) serverVersion = "1.13";
+        else if (bukkitVersion.contains("1.14")) serverVersion = "1.14";
+        else if (bukkitVersion.contains("1.15")) serverVersion = "1.15";
+        else if (bukkitVersion.contains("1.16")) serverVersion = "1.16";
+        else if (bukkitVersion.contains("1.17")) serverVersion = "1.17";
 
         return serverVersion;
     }
@@ -92,10 +91,11 @@ public final class Utils {
         String[] minVersionT = minVersion.split("\\.");
 
         try {
-            if( Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]) )
+            if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]))
                 return true;
             return Integer.parseInt(curVersionT[1]) >= Integer.parseInt(minVersionT[1]);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return false;
     }
 
@@ -107,5 +107,25 @@ public final class Utils {
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
+    }
+
+    public static List<File> getAllFilesInResources(String path) {
+        List<File> files = new ArrayList<>();
+
+        try (InputStream is = SLogin.getInstance().getResource(path);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+
+            //File file;
+            String name;
+            while((name = br.readLine()) != null) {
+                SLogin.getInstance().getLogger().info(name);
+            }
+            //while ((file = br.readLine()))
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return files;
     }
 }

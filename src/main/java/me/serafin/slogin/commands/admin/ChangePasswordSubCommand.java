@@ -5,7 +5,9 @@ import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
+import me.serafin.slogin.objects.Lang;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -15,12 +17,12 @@ import java.util.Optional;
 public final class ChangePasswordSubCommand implements SubCommand {
 
     private final ConfigManager config;
-    private final LangManager lang;
+    private final LangManager langManager;
     private final LoginManager manager;
 
-    public ChangePasswordSubCommand(){
+    public ChangePasswordSubCommand() {
         this.config = SLogin.getInstance().getConfigManager();
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
@@ -46,23 +48,28 @@ public final class ChangePasswordSubCommand implements SubCommand {
 
     @Override
     public void perform(@NotNull CommandSender sender, String[] args) {
-        if(args.length != 3){
-            sender.sendMessage(lang.changePassAdminCorrectUsage);
+
+        Lang lang = langManager.getLang("default");
+        if (sender instanceof Player)
+            lang = langManager.getLang(((Player) sender).getLocale());
+
+        if (args.length != 3) {
+            sender.sendMessage(lang.admin_changePass_correctUsage);
             return;
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(!account.isPresent()){
-            sender.sendMessage(lang.userNotExists);
+        if (!account.isPresent()) {
+            sender.sendMessage(lang.admin_user_notExists);
             return;
         }
 
-        if(args[2].length() < config.PASSWORD_MIN_LENGTH || args[2].length() > config.PASSWORD_MAX_LENGTH){
-            sender.sendMessage(lang.notAllowedPasswordLength);
+        if (args[2].length() < config.PASSWORD_MIN_LENGTH || args[2].length() > config.PASSWORD_MAX_LENGTH) {
+            sender.sendMessage(lang.system_notAllowedPasswordLength);
             return;
         }
 
-        manager.setPassword(account.get(), args[2]);
-        sender.sendMessage(lang.changePassAdminSuccess);
+        account.get().update(Account.DataType.PASSWORD, args[2]);
+        sender.sendMessage(lang.admin_changePass_success);
     }
 }

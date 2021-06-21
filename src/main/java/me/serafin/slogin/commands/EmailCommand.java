@@ -4,6 +4,7 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
+import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,43 +16,41 @@ import java.util.Optional;
 
 public final class EmailCommand implements CommandExecutor {
 
-    private final LangManager lang;
+    private final LangManager langManager;
     private final LoginManager manager;
 
     public EmailCommand() {
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if(!(sender instanceof Player)) {
-            sender.sendMessage(lang.onlyForPlayers);
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(langManager.getLang("default").misc_onlyForPlayers);
             return true;
         }
         Player player = (Player) sender;
 
+        Lang lang = langManager.getLang(player.getLocale());
+
         Optional<Account> account = manager.getAccount(player.getName());
         assert account.isPresent();
 
-        if(args.length == 0){
-            if(account.get().getEmail() == null) {
-                player.sendMessage(lang.emailNotSet);
+        if (args.length == 0) {
+            if (account.get().getEmail() == null) {
+                player.sendMessage(lang.auth_email_notSet);
             } else {
-                player.sendMessage(lang.emailInfo.replace("{EMAIL}", account.get().getEmail()));
+                player.sendMessage(lang.auth_email_info.replace("{EMAIL}", account.get().getEmail()));
             }
-        }
-
-        else {
-            if(args.length == 2 && args[0].equalsIgnoreCase("set")) {
-                if(Utils.validateEmail(args[1])) {
-                    manager.setEmail(account.get(), args[1]);
-                    player.sendMessage(lang.emailChangeSuccess);
-                }
-                else player.sendMessage(lang.emailBadFormat);
-            }
-            else player.sendMessage(lang.emailCorrectUsage);
+        } else {
+            if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
+                if (Utils.validateEmail(args[1])) {
+                    account.get().update(Account.DataType.EMAIL, args[1].toLowerCase());
+                    player.sendMessage(lang.auth_email_changeSuccess);
+                } else player.sendMessage(lang.auth_email_badFormat);
+            } else player.sendMessage(lang.auth_email_correctUsage);
         }
 
         return true;

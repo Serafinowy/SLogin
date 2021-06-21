@@ -12,18 +12,18 @@ public final class PlayerJoinListener implements Listener {
 
     private final LoginManager manager;
 
-    public PlayerJoinListener(){
+    public PlayerJoinListener() {
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent event){
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onJoin(PlayerJoinEvent event) {
         event.getPlayer().setInvulnerable(true);
         manager.playerJoin(event.getPlayer());
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
-    public void onQuit(PlayerQuitEvent event){
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onQuit(PlayerQuitEvent event) {
         manager.playerQuit(event.getPlayer().getName());
     }
 

@@ -3,6 +3,7 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.objects.Account;
+import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,11 +14,11 @@ import java.util.Optional;
 public final class LoginManager {
 
     private final DataBase dataBase;
-    private final LangManager lang;
+    private final LangManager langManager;
     private final ConfigManager config;
 
     public LoginManager(DataBase dataBase) {
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.config = SLogin.getInstance().getConfigManager();
         this.dataBase = dataBase;
     }
@@ -31,19 +32,21 @@ public final class LoginManager {
 
     /**
      * Check if players is logged in
+     *
      * @param name player's name
      * @return boolean - of player is logged in
      */
-    public boolean isLogged(String name){
+    public boolean isLogged(String name) {
         return !tempAccounts.containsKey(name);
     }
 
     /**
      * Check if player has account
+     *
      * @param name player's name
      * @return player has account
      */
-    public boolean isRegistered(String name){
+    public boolean isRegistered(String name) {
         return tempAccounts.get(name).isPresent();
     }
 
@@ -51,15 +54,16 @@ public final class LoginManager {
 
     /**
      * Execute when player joined to the server
+     *
      * @param player player
      */
-    public void playerJoin(Player player){
+    public void playerJoin(Player player) {
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
         Optional<Account> account = Account.get(dataBase, player.getName());
         tempAccounts.put(player.getName(), account);
-        if(account.isPresent()) {
-            if(config.CAPTCHA_ON_LOGIN)
+        if (account.isPresent()) {
+            if (config.CAPTCHA_ON_LOGIN)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
@@ -67,14 +71,15 @@ public final class LoginManager {
                 public void run() {
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(lang.loginInfo);
+                            player.sendMessage(langManager.getLang(player.getLocale()).auth_login_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.loginTitle, lang.loginSubTitle, 0, 4 * 20, 10);
+                            player.sendTitle(langManager.getLang(player.getLocale()).auth_login_title,
+                                    langManager.getLang(player.getLocale()).auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
         } else {
-            if(config.CAPTCHA_ON_REGISTER)
+            if (config.CAPTCHA_ON_REGISTER)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
@@ -82,9 +87,10 @@ public final class LoginManager {
                 public void run() {
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(lang.registerInfo);
+                            player.sendMessage(langManager.getLang(player.getLocale()).auth_register_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(lang.registerTitle, lang.registerSubTitle, 0, 4 * 20, 10);
+                            player.sendTitle(langManager.getLang(player.getLocale()).auth_register_title,
+                                    langManager.getLang(player.getLocale()).auth_register_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 20);
@@ -93,6 +99,7 @@ public final class LoginManager {
 
     /**
      * Execute when player leaves from the server
+     *
      * @param name player's name
      */
     public void playerQuit(String name) {
@@ -103,20 +110,22 @@ public final class LoginManager {
 
     /**
      * Login in player
-     * @param name player's name
-     * @param loginIP player's login IP
-     * @param password player's password
+     *
+     * @param name            player's name
+     * @param loginIP         player's login IP
+     * @param password        player's password
      * @param requirePassword login even if password is incorrect
      * @return login success
      */
     public boolean login(String name, String loginIP, String password, boolean requirePassword) {
-        if(!tempAccounts.containsKey(name))
+        if (!tempAccounts.containsKey(name))
             return false;
 
         Optional<Account> account = tempAccounts.get(name);
-        if(account.isPresent()) {
-            if(!requirePassword || account.get().comparePassword(password)) {
-                account.get().update(dataBase, account.get().getHashedPassword(), account.get().getEmail(), loginIP, System.currentTimeMillis());
+        if (account.isPresent()) {
+            if (!requirePassword || account.get().comparePassword(password)) {
+                account.get().update(Account.DataType.LAST_LOGIN_IP, loginIP);
+                account.get().update(Account.DataType.LAST_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
                 return true;
             }
         }
@@ -125,9 +134,10 @@ public final class LoginManager {
 
     /**
      * Register player
-     * @param name player's name
+     *
+     * @param name     player's name
      * @param password player's password
-     * @param IP player's register IP
+     * @param IP       player's register IP
      */
     public void register(String name, String password, String IP) {
         String salt = BCrypt.gensalt();
@@ -137,48 +147,39 @@ public final class LoginManager {
 
     /**
      * Execute when player successfully logged in
+     *
      * @param player player
      */
-    public void playerLogged(Player player) {
+    public void playerLogged(Player player, LoginType loginType) {
         player.setInvulnerable(false);
         SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
 
+        Lang lang = langManager.getLang(player.getLocale());
+
+        if (loginType == LoginType.LOGIN) {
+            if (config.MESSAGES_TITLE_MESSAGES)
+                player.sendTitle(lang.auth_login_successTitle, lang.auth_login_successSubTitle, 0, 4 * 10, 10);
+            if (config.MESSAGES_CHAT_MESSAGES)
+                player.sendMessage(lang.auth_login_success);
+        }
+        if (loginType == LoginType.REGISTER) {
+            if (config.MESSAGES_TITLE_MESSAGES)
+                player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4 * 10, 10);
+            if (config.MESSAGES_CHAT_MESSAGES) {
+                player.sendMessage(lang.auth_register_success);
+            }
+        }
+
         Optional<Account> account = tempAccounts.get(player.getName());
         account = account.isPresent() ? account : Account.get(dataBase, player.getName());
-        if(account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
-            player.sendMessage(lang.emailNotSet);
+        if (account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
+            player.sendMessage(lang.auth_email_notSet);
         }
         tempAccounts.remove(player.getName());
     }
 
-    ///////////////////////////////////////
-
-    /**
-     * Password change
-     * @param account player's account
-     * @param password player's new password
-     */
-    public void setPassword(Account account, String password) {
-        String salt = BCrypt.gensalt();
-        String hashedPassword = BCrypt.hashpw(password, salt);
-        account.update(dataBase, hashedPassword, account.getEmail(), account.getLastLoginIP(), account.getLastLoginDate());
-    }
-
-    /**
-     * Password change
-     * @param account player's account
-     * @param email player's new email
-     */
-    public void setEmail(Account account, String email) {
-        account.update(dataBase, account.getHashedPassword(), email, account.getLastLoginIP(), account.getLastLoginDate());
-    }
-
-    /**
-     * Delete player's account
-     * @param account player's account
-     */
-    public void unRegister(Account account) {
-        account.delete(dataBase);
+    public enum LoginType {
+        LOGIN, REGISTER
     }
 
     ///////////////////////////////////////
@@ -192,6 +193,7 @@ public final class LoginManager {
 
     /**
      * Get accounts number from one IP address
+     *
      * @param address account address
      * @return account number
      */

@@ -2,7 +2,6 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -11,21 +10,22 @@ import java.util.List;
 
 public final class ConfigManager {
 
-    public ConfigManager(){
-
-        // load Defaults
+    public ConfigManager() {
+        // Load defaults
         File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
-        if(!file.exists()){
+        if (!file.exists()) {
             SLogin.getInstance().saveResource("config.yml", false);
         }
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         Utils.matchConfig(configuration, file);
-        Bukkit.getLogger().info("Loaded: config.yml file");
+        SLogin.getInstance().getLogger().info("Loaded config file");
 
-        // load Settings
-        this.LANG = configuration.getString("Language");
+        // Load settings
+        this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
+        this.LANGUAGE_DEFAULT = configuration.getString("Language.Default");
+
         this.DATATYPE = configuration.getString("DataType");
 
         this.MYSQL_HOST = configuration.getString("MySQL.Host");
@@ -57,7 +57,9 @@ public final class ConfigManager {
 
     ///////////////////////////////////////////
 
-    public final String LANG;
+    public final boolean LANGUAGE_AUTO;
+    public final String LANGUAGE_DEFAULT;
+
     public final String DATATYPE;
 
     public final String MYSQL_HOST;

@@ -119,3 +119,7 @@ gradlew.bat
 
 # Ignore Gradle build output directory
 build
+
+# Formatted languages file in resources
+/src/main/resources/devonly-en_US.properties
+/src/main/resources/devonly-pl_PL.properties

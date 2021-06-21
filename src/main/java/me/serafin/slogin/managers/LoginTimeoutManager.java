@@ -16,7 +16,7 @@ public final class LoginTimeoutManager {
     public LoginTimeoutManager() {
         this.config = SLogin.getInstance().getConfigManager();
 
-        if(config.LOGIN_TIMEOUT > 0) {
+        if (config.LOGIN_TIMEOUT > 0) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -29,7 +29,8 @@ public final class LoginTimeoutManager {
 
                         if (entry.getValue() <= 0) {
                             iterator.remove();
-                            entry.getKey().kickPlayer(SLogin.getInstance().getLangManager().loginTimeoutKick);
+                            Player player = entry.getKey();
+                            player.kickPlayer(SLogin.getInstance().getLangManager().getLang(player.getLocale()).auth_login_timeoutKick);
                         }
                     }
                 }
@@ -38,12 +39,12 @@ public final class LoginTimeoutManager {
     }
 
     public void addTimeout(Player player) {
-        if(config.LOGIN_TIMEOUT > 0)
+        if (config.LOGIN_TIMEOUT > 0)
             loginTimeout.put(player, config.LOGIN_TIMEOUT);
     }
 
     public void removeTimeout(Player player) {
-        if(config.LOGIN_TIMEOUT > 0)
+        if (config.LOGIN_TIMEOUT > 0)
             loginTimeout.remove(player);
     }
 

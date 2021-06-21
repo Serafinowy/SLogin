@@ -4,7 +4,9 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
+import me.serafin.slogin.objects.Lang;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -13,11 +15,11 @@ import java.util.Optional;
 
 public final class UnRegisterSubCommand implements SubCommand {
 
-    private final LangManager lang;
+    private final LangManager langManager;
     private final LoginManager manager;
 
     public UnRegisterSubCommand() {
-        this.lang = SLogin.getInstance().getLangManager();
+        this.langManager = SLogin.getInstance().getLangManager();
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
@@ -43,18 +45,23 @@ public final class UnRegisterSubCommand implements SubCommand {
 
     @Override
     public void perform(@NotNull CommandSender sender, String[] args) {
-        if(args.length != 2) {
-            sender.sendMessage(lang.unRegisterCorrectUsage);
+
+        Lang lang = langManager.getLang("default");
+        if (sender instanceof Player)
+            lang = langManager.getLang(((Player) sender).getLocale());
+
+        if (args.length != 2) {
+            sender.sendMessage(lang.admin_unRegister_correctUsage);
             return;
         }
 
         Optional<Account> account = manager.getAccount(args[1]);
-        if(!account.isPresent()){
-            sender.sendMessage(lang.userNotExists);
+        if (!account.isPresent()) {
+            sender.sendMessage(lang.admin_user_notExists);
             return;
         }
 
-        manager.unRegister(account.get());
-        sender.sendMessage(lang.unRegisterSuccess);
+        account.get().delete();
+        sender.sendMessage(lang.admin_unRegister_success);
     }
 }

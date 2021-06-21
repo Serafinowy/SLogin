@@ -2,6 +2,7 @@ package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
+import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,10 +18,10 @@ import java.util.List;
 public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
     private final ArrayList<SubCommand> commands = new ArrayList<>();
-    private final LangManager lang;
+    private final LangManager langManager;
 
-    public SLoginCommand(){
-        this.lang = SLogin.getInstance().getLangManager();
+    public SLoginCommand() {
+        this.langManager = SLogin.getInstance().getLangManager();
 
         commands.add(new PlayerInfoSubCommand());
         commands.add(new ForceLoginSubCommand());
@@ -32,6 +33,10 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
+        Lang lang = langManager.getLang("default");
+        if (sender instanceof Player)
+            lang = langManager.getLang(((Player) sender).getLocale());
+
         if (args.length != 0) {
             for (SubCommand subCommand : commands) {
                 if (subCommand.getAliases().contains(args[0].toLowerCase())) {
@@ -42,22 +47,24 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         }
 
         sender.sendMessage("");
-        sender.sendMessage(lang.commandListTitle);
+        sender.sendMessage(lang.admin_commandList_title);
         sender.sendMessage("");
 
-        for(SubCommand subCommand : commands){
-            if(Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
+        for (SubCommand subCommand : commands) {
+            if (Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                        lang.commandListChatFormat
+                        lang.admin_commandList_chatFormat
                                 .replace("{COMMAND}", subCommand.getSyntax())
-                                .replace("DESCRIPTION", subCommand.getDescription()),
-                        lang.commandListHoverFormat
+                                .replace("{DESCRIPTION}", subCommand.getDescription()),
+                        lang.admin_commandList_hoverFormat
                                 .replace("{COMMAND}", subCommand.getName())
-                                .replace("DESCRIPTION", subCommand.getDescription()),
+                                .replace("{DESCRIPTION}", subCommand.getDescription()),
+                        //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
+                        //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
                         "/sl " + subCommand.getName() + " "));
-            }
-            else {
-                sender.sendMessage(lang.commandListChatFormat
+            } else {
+                //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
+                sender.sendMessage(lang.admin_commandList_chatFormat
                         .replace("{COMMAND}", subCommand.getSyntax())
                         .replace("DESCRIPTION", subCommand.getDescription()));
             }
@@ -72,11 +79,11 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> sub = new ArrayList<>();
 
-        if(args.length == 1)
-            for(SubCommand subCommand : commands)
+        if (args.length == 1)
+            for (SubCommand subCommand : commands)
                 sub.add(subCommand.getName());
         else
-            for(Player online : Bukkit.getOnlinePlayers())
+            for (Player online : Bukkit.getOnlinePlayers())
                 sub.add(online.getName());
 
         return sub;
