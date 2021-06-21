@@ -3,10 +3,7 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Logger;
@@ -102,7 +99,7 @@ public final class LangManager {
                 File langFile = new File(translationsFolder, lang + ".properties");
                 assert is != null;
                 Files.copy(is, langFile.toPath());
-                logger.warning("Created " + lang + " lang file!");
+                logger.warning("Created " + lang + " lang file");
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.severe("Cannot create " + lang + " lang file!");

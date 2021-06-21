@@ -9,12 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,5 +107,25 @@ public final class Utils {
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
+    }
+
+    public static List<File> getAllFilesInResources(String path) {
+        List<File> files = new ArrayList<>();
+
+        try (InputStream is = SLogin.getInstance().getResource(path);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+
+            //File file;
+            String name;
+            while((name = br.readLine()) != null) {
+                SLogin.getInstance().getLogger().info(name);
+            }
+            //while ((file = br.readLine()))
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return files;
     }
 }

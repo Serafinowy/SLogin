@@ -2,7 +2,6 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -21,7 +20,7 @@ public final class ConfigManager {
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         Utils.matchConfig(configuration, file);
-        Bukkit.getLogger().info("Loaded: config.yml file");
+        SLogin.getInstance().getLogger().info("Loaded config file");
 
         // Load settings
         this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
