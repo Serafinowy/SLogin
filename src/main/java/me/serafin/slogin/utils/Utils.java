@@ -13,6 +13,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -91,11 +92,27 @@ public final class Utils {
         String[] minVersionT = minVersion.split("\\.");
 
         try {
-            if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]))
-                return true;
-            return Integer.parseInt(curVersionT[1]) >= Integer.parseInt(minVersionT[1]);
-        } catch (Exception ignored) {
-        }
+            // Check first number
+            if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0])) return true;
+            else if (Integer.parseInt(curVersionT[0]) < Integer.parseInt(minVersionT[0])) return false;
+            else {
+
+                // Check second number
+                if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0])) return true;
+                else if (Integer.parseInt(curVersionT[0]) < Integer.parseInt(minVersionT[0])) return false;
+                else {
+
+                    // Check third number
+                    if (curVersionT.length == 2 && minVersionT.length == 2) return true;
+                    else if (curVersionT.length > minVersionT.length) return true;
+                    else if (curVersionT.length < minVersionT.length) return false;
+                    else return Integer.parseInt(curVersionT[2]) >= Integer.parseInt(minVersionT[2]);
+
+                }
+
+            }
+        } catch (Exception ignored) { }
+
         return false;
     }
 
