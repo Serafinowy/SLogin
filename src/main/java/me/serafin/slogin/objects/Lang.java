@@ -6,10 +6,9 @@ import java.util.Properties;
 
 public class Lang {
 
-    public final String PREFIX = format("&e[SLogin] &r");
-
     public Lang(Properties properties) {
 
+        PREFIX = format(properties.getProperty("slogin.misc.prefix"));
         misc_onlyForPlayers = PREFIX + format(properties.getProperty("slogin.misc.onlyForPlayers"));
         misc_nullValue = format(properties.getProperty("slogin.misc.nullValue"));
 
@@ -93,6 +92,8 @@ public class Lang {
     }
 
     ///////////////////////////////////////////
+
+    public final String PREFIX;
 
     public final String misc_onlyForPlayers;
     public final String misc_nullValue;

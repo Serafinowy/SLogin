@@ -77,7 +77,7 @@ public final class LoginManager {
                                     langManager.getLang(player.getLocale()).auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
-            }.runTaskLater(SLogin.getInstance(), 20);
+            }.runTaskLater(SLogin.getInstance(), 2 * 20);
         } else {
             if (config.CAPTCHA_ON_REGISTER)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
@@ -93,7 +93,7 @@ public final class LoginManager {
                                     langManager.getLang(player.getLocale()).auth_register_subTitle, 0, 4 * 20, 10);
                     }
                 }
-            }.runTaskLater(SLogin.getInstance(), 20);
+            }.runTaskLater(SLogin.getInstance(), 2 * 20);
         }
     }
 
