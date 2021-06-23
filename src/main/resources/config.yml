@@ -5,13 +5,14 @@
 
 # Language settings file contains in-game messages
 # Available languages: en_US (English), pl_PL (Polish)
+# es_ES (Spanish), ru_RU (Russian)
 # You can add your own language in SLogin/translations
 # or you can help me translate in other languages
 # https://poeditor.com/join/project?hash=Ti7QHfbKNZ
 Language:
   # Player see the message in his language
   Auto: true
-  # Console messages and player messages if Auto is disabled
+  # Console messages and player messages if Auto is disabled or player language does not exists!
   Default: en_US
 
 # The place where the data will be saved

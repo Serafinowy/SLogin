@@ -3,10 +3,10 @@ plugins {
 }
 
 group = "me.serafin.slogin"
-version = "1.6"
+version = "1.6.1"
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
 }
@@ -16,15 +16,8 @@ dependencies {
     compileOnly("org.apache.logging.log4j:log4j-core:2.14.0")
 
     implementation("org.jetbrains:annotations:20.1.0")
-    compileOnly("org.projectlombok:lombok:1.18.16")
-    annotationProcessor("org.projectlombok:lombok:1.18.16")
-}
-
-sourceSets {
-    main {
-        java.srcDir("src/main/java")
-        resources.srcDir("src/main/resources")
-    }
+    compileOnly("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
 }
 
 java {

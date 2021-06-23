@@ -80,14 +80,14 @@ public final class SLogin extends JavaPlugin {
     }
 
     private boolean setupDatabase() {
-        assert configManager.DATATYPE != null;
-        if (configManager.DATATYPE.equals("MYSQL")) {
-            this.dataBase = new MySQL(configManager);
-        } else {
-            this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
-        }
-
         try {
+            assert configManager.DATATYPE != null;
+            if (configManager.DATATYPE.equals("MYSQL")) {
+                this.dataBase = new MySQL(configManager);
+            } else {
+                this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
+            }
+
             dataBase.openConnection();
             dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
                     "(`name` VARCHAR(255) NOT NULL PRIMARY KEY, " +
@@ -123,7 +123,7 @@ public final class SLogin extends JavaPlugin {
     private void checkVersion() {
         String latestVersion = Utils.getLatestVersion();
         if (latestVersion != null) {
-            if (!Utils.isCorrectVersion(getDescription().getVersion(), latestVersion)) {
+            if (!Utils.isCompatible(getDescription().getVersion(), latestVersion)) {
                 getLogger().warning("New plugin version is available " + latestVersion);
                 getLogger().warning("Download from https://www.spigotmc.org/resources/slogin.87073/");
             }

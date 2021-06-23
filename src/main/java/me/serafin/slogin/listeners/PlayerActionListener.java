@@ -58,11 +58,7 @@ public final class PlayerActionListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onCommand(PlayerCommandPreprocessEvent event) {
-        String cmd = event.getMessage().split(" ")[0].replace("/", "");
-        if (config.ALLOWED_COMMANDS.contains(cmd))
-            return;
-
+    public void onDrop(PlayerDropItemEvent event) {
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
@@ -70,7 +66,11 @@ public final class PlayerActionListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onDrop(PlayerDropItemEvent event) {
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        String cmd = event.getMessage().split(" ")[0].replace("/", "");
+        if (config.ALLOWED_COMMANDS.contains(cmd))
+            return;
+
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);

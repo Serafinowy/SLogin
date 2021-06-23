@@ -51,7 +51,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for (SubCommand subCommand : commands) {
-            if (Utils.isCorrectVersion(Utils.getServerVersion(), "1.12")) {
+            if (Utils.isCompatible(Utils.getServerVersion(), "1.12")) {
                 sender.spigot().sendMessage(Utils.sendCommandSuggest(
                         lang.admin_commandList_chatFormat
                                 .replace("{COMMAND}", subCommand.getSyntax())

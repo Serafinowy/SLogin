@@ -18,7 +18,6 @@ public final class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
-        event.getPlayer().setInvulnerable(true);
         manager.playerJoin(event.getPlayer());
     }
 

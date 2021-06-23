@@ -1,5 +1,5 @@
 name: SLogin
-version: 1.6
+version: 1.6.1
 author: _Serafin
 description: Plugin for the login system
 main: me.serafin.slogin.SLogin
