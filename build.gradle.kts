@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "me.serafin.slogin"
-version = "1.6"
+version = "1.6.1"
 
 repositories {
     mavenCentral()
@@ -18,13 +18,6 @@ dependencies {
     implementation("org.jetbrains:annotations:20.1.0")
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
-}
-
-sourceSets {
-    main {
-        java.srcDir("src/main/java")
-        resources.srcDir("src/main/resources")
-    }
 }
 
 java {
