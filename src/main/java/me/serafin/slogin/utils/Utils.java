@@ -92,31 +92,31 @@ public final class Utils {
         return serverVersion;
     }
 
-    public static boolean isCorrectVersion(String curVersion, String minVersion) {
+    public static boolean isCompatible(String curVersion, String minVersion) {
         String[] curVersionT = curVersion.split("\\.");
         String[] minVersionT = minVersion.split("\\.");
 
         try {
             // Check first number
-            if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0])) return true;
-            else if (Integer.parseInt(curVersionT[0]) < Integer.parseInt(minVersionT[0])) return false;
-            else {
-
+            if (Integer.parseInt(curVersionT[0]) == Integer.parseInt(minVersionT[0])) {
                 // Check second number
-                if (Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0])) return true;
-                else if (Integer.parseInt(curVersionT[0]) < Integer.parseInt(minVersionT[0])) return false;
-                else {
-
+                if (Integer.parseInt(curVersionT[1]) == Integer.parseInt(minVersionT[1])) {
                     // Check third number
-                    if (curVersionT.length == 2 && minVersionT.length == 2) return true;
-                    else if (curVersionT.length > minVersionT.length) return true;
-                    else if (curVersionT.length < minVersionT.length) return false;
-                    else return Integer.parseInt(curVersionT[2]) >= Integer.parseInt(minVersionT[2]);
-
+                    if (curVersionT.length == minVersionT.length) {
+                        return curVersionT.length == 2 || Integer.parseInt(curVersionT[2]) >= Integer.parseInt(minVersionT[2]);
+                    } else {
+                        return curVersionT.length > minVersionT.length;
+                    }
+                } else {
+                    return Integer.parseInt(curVersionT[1]) > Integer.parseInt(minVersionT[1]);
                 }
-
+            } else {
+                return Integer.parseInt(curVersionT[0]) > Integer.parseInt(minVersionT[0]);
             }
-        } catch (Exception ignored) { }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
