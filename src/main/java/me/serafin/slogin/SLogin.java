@@ -80,14 +80,14 @@ public final class SLogin extends JavaPlugin {
     }
 
     private boolean setupDatabase() {
-        assert configManager.DATATYPE != null;
-        if (configManager.DATATYPE.equals("MYSQL")) {
-            this.dataBase = new MySQL(configManager);
-        } else {
-            this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
-        }
-
         try {
+            assert configManager.DATATYPE != null;
+            if (configManager.DATATYPE.equals("MYSQL")) {
+                this.dataBase = new MySQL(configManager);
+            } else {
+                this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
+            }
+
             dataBase.openConnection();
             dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
                     "(`name` VARCHAR(255) NOT NULL PRIMARY KEY, " +

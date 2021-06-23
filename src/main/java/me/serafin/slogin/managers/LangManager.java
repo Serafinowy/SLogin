@@ -2,16 +2,19 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.utils.Utils;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.logging.Logger;
 
 public final class LangManager {
 
+    private final SLogin plugin = SLogin.getInstance();
     private final ConfigManager config;
     private final Logger logger;
+
+    private final File translationsFolder = new File(plugin.getDataFolder(), "translations");
 
     private final HashMap<String, Lang> TRANSLATIONS = new HashMap<>();
 
@@ -39,7 +42,7 @@ public final class LangManager {
      */
     private void registerLang(String locale) {
         try {
-            File file = new File(SLogin.getInstance().getDataFolder(), "translations/" + locale + ".properties");
+            File file = new File(plugin.getDataFolder(), "translations/" + locale + ".properties");
 
             Properties properties = new Properties();
             properties.load(new FileReader(file));
@@ -58,11 +61,11 @@ public final class LangManager {
     private void checkLanguages() {
         if (TRANSLATIONS.size() == 0) {
             logger.severe("Cannot load any translations! SLogin has been disabled!");
-            SLogin.getInstance().getPluginLoader().disablePlugin(SLogin.getInstance());
+            plugin.getPluginLoader().disablePlugin(plugin);
         }
         if (TRANSLATIONS.get(config.LANGUAGE_DEFAULT.toLowerCase()) == null) {
             logger.severe("Cannot load default translation! SLogin has been disabled!");
-            SLogin.getInstance().getPluginLoader().disablePlugin(SLogin.getInstance());
+            plugin.getPluginLoader().disablePlugin(plugin);
         }
     }
 
@@ -70,13 +73,10 @@ public final class LangManager {
      * Load all languages file from plugin folder
      */
     public void loadLanguages() {
-        File dataFolder = SLogin.getInstance().getDataFolder();
-        File translationsFolder = new File(dataFolder, "translations");
-
         File[] files = translationsFolder.listFiles();
         if (!translationsFolder.exists() || files == null || files.length == 0) {
             translationsFolder.mkdir();
-            loadDefaults(translationsFolder);
+            loadDefaults();
         }
 
         for (File file : Objects.requireNonNull(translationsFolder.listFiles())) {
@@ -88,23 +88,18 @@ public final class LangManager {
         checkLanguages();
     }
 
-    /**
-     * Copy default lang files from plugin to the plugin folder
-     */
-    private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_US", "pl_PL", "es_ES", "ru_RU"));
+    private void loadDefaults() {
+        List<String> defaultLanguagesFiles = Utils.getAllResourcesIn("translations");
 
-    private void loadDefaults(File translationsFolder) {
-        for (String lang : defaultLangSet) {
-            try (InputStream is = SLogin.getInstance().getResource( "translations/" + lang + ".properties")) {
-                File langFile = new File(translationsFolder, lang + ".properties");
-                assert is != null;
-                Files.copy(is, langFile.toPath());
-                logger.warning("Created " + lang + " lang file");
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.severe("Cannot create " + lang + " lang file!");
-            }
+        if (defaultLanguagesFiles == null) {
+            logger.severe("Cannot create copy language files from jar!");
+            return;
         }
+
+        defaultLanguagesFiles.forEach(name -> {
+            plugin.saveResource(name, false);
+            logger.warning("Created " + name + " language file");
+        });
     }
 
 }

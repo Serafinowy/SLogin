@@ -12,12 +12,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public final class Utils {
 
@@ -126,23 +128,28 @@ public final class Utils {
         return matcher.find();
     }
 
-    public static List<File> getAllFilesInResources(String path) {
-        List<File> files = new ArrayList<>();
+    public static List<String> getAllResourcesIn(String path) {
+        List<String> names = new ArrayList<>();
 
-        try (InputStream is = SLogin.getInstance().getResource(path);
-             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-
-            //File file;
-            String name;
-            while((name = br.readLine()) != null) {
-                SLogin.getInstance().getLogger().info(name);
+        try {
+            CodeSource source = Utils.class.getProtectionDomain().getCodeSource();
+            if (source != null) {
+                URL jar = source.getLocation();
+                ZipInputStream zis = new ZipInputStream(jar.openStream());
+                ZipEntry entry;
+                while ((entry = zis.getNextEntry()) != null) {
+                    String name = entry.getName();
+                    if (name.startsWith(path) && !name.equals(path + "/")) {
+                        names.add(name);
+                    }
+                }
+            } else {
+                throw new IOException("Utils.class#getProtectionDomain()#getCodeSource() is null");
             }
-            //while ((file = br.readLine()))
-
+            return names;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return files;
     }
 }
