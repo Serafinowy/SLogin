@@ -91,7 +91,7 @@ public final class LangManager {
     /**
      * Copy default lang files from plugin to the plugin folder
      */
-    private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_US", "pl_PL"));
+    private final Set<String> defaultLangSet = new HashSet<>(Arrays.asList("en_US", "pl_PL", "es_ES", "ru_RU"));
 
     private void loadDefaults(File translationsFolder) {
         for (String lang : defaultLangSet) {
