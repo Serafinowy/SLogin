@@ -5,7 +5,9 @@ import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.Utils;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -48,8 +50,11 @@ public final class LangManager {
         try {
             File file = new File(plugin.getDataFolder(), "translations/" + locale + ".properties");
 
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+
             Properties properties = new Properties();
-            properties.load(new FileReader(file));
+            properties.load(isr);
             TRANSLATIONS.put(locale.toLowerCase(), new Lang(properties));
 
             logger.info("Loaded " + locale + " lang file!");
