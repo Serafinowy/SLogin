@@ -104,13 +104,18 @@ public final class LangManager {
         List<String> defaultLanguagesFiles = Utils.getAllResourcesIn("translations");
 
         if (defaultLanguagesFiles == null) {
-            logger.severe("Cannot create copy language files from jar!");
+            logger.severe("Cannot copy languages files from jar!");
             return;
         }
 
         defaultLanguagesFiles.forEach(name -> {
-            plugin.saveResource(name, false);
-            logger.warning("Created " + name + " language file");
+            try {
+                plugin.saveResource(name, false);
+                logger.warning("Created " + name + " language file");
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.severe("Error while copying " + name + " language file!");
+            }
         });
     }
 

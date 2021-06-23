@@ -58,6 +58,7 @@ public final class LoginManager {
      * @param player player
      */
     public void playerJoin(Player player) {
+        player.setInvulnerable(true);
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
         Optional<Account> account = Account.get(dataBase, player.getName());
