@@ -4,8 +4,12 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.Utils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class LangManager {
@@ -88,6 +92,9 @@ public final class LangManager {
         checkLanguages();
     }
 
+    /**
+     * Load all languages from plugin JAR
+     */
     private void loadDefaults() {
         List<String> defaultLanguagesFiles = Utils.getAllResourcesIn("translations");
 
