@@ -28,6 +28,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         commands.add(new RegisterSubCommand());
         commands.add(new ChangePasswordSubCommand());
         commands.add(new UnRegisterSubCommand());
+        commands.add(new ReloadSubCommand());
     }
 
     @Override
@@ -39,7 +40,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
         if (args.length != 0) {
             for (SubCommand subCommand : commands) {
-                if (subCommand.getAliases().contains(args[0].toLowerCase())) {
+                if (subCommand.getName().equals(args[0].toLowerCase()) || subCommand.getAliases().contains(args[0].toLowerCase())) {
                     subCommand.perform(sender, args);
                     return true;
                 }

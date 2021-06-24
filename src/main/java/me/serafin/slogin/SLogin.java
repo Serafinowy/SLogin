@@ -42,6 +42,22 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if(!setup())
+            getLogger().severe("An error occurred while loading the plugin.");
+    }
+
+    @Override
+    public void onDisable() {
+        if (dataBase != null) {
+            try {
+                dataBase.closeConnection();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public boolean setup() {
         instance = this;
         this.configManager = new ConfigManager();
         this.langManager = new LangManager(configManager);
@@ -50,7 +66,7 @@ public final class SLogin extends JavaPlugin {
         if (!setupDatabase()) {
             getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
-            return;
+            return false;
         }
 
         this.loginManager = new LoginManager(dataBase);
@@ -66,17 +82,8 @@ public final class SLogin extends JavaPlugin {
         checkVersion();
         for (Player online : Bukkit.getOnlinePlayers())
             loginManager.playerJoin(online);
-    }
 
-    @Override
-    public void onDisable() {
-        if (dataBase != null) {
-            try {
-                dataBase.closeConnection();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+        return true;
     }
 
     private boolean setupDatabase() {

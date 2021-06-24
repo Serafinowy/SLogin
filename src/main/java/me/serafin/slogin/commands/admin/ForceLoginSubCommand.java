@@ -39,7 +39,7 @@ public final class ForceLoginSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("forcelogin", "fl", "force", "f");
+        return Arrays.asList("fl", "force", "f");
     }
 
     @Override

@@ -89,6 +89,9 @@ public class Lang {
 
         admin_unRegister_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.unRegister.correctUsage"));
         admin_unRegister_success = PREFIX + format(properties.getProperty("slogin.admin.unRegister.success"));
+
+        admin_reload_success = PREFIX + format(properties.getProperty("slogin.admin.reload.success"));
+        admin_reload_error = PREFIX + format(properties.getProperty("slogin.admin.reload.error"));
     }
 
     ///////////////////////////////////////////
@@ -179,6 +182,9 @@ public class Lang {
 
     public final String admin_unRegister_correctUsage;
     public final String admin_unRegister_success;
+
+    public final String admin_reload_success;
+    public final String admin_reload_error;
 
     ///////////////////////////////////////////
 

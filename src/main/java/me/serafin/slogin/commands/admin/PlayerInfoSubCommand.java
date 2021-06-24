@@ -40,7 +40,7 @@ public final class PlayerInfoSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("playerinfo", "pinfo", "p");
+        return Arrays.asList("pinfo", "p");
     }
 
     @Override

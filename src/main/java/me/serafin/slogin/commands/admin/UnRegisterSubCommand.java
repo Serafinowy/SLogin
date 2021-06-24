@@ -40,7 +40,7 @@ public final class UnRegisterSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("unregister", "unreg", "ur", "u");
+        return Arrays.asList("unreg", "ur", "u");
     }
 
     @Override

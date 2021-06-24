@@ -43,7 +43,7 @@ public final class RegisterSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("register", "reg", "r");
+        return Arrays.asList("reg", "r");
     }
 
     @Override
