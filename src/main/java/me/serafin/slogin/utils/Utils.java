@@ -28,9 +28,8 @@ public final class Utils {
     // Used to update config
     @SuppressWarnings("ConstantConditions")
     public static void matchConfig(FileConfiguration config, File file) {
-        try {
+        try (InputStream is = SLogin.getPlugin(SLogin.class).getResource(file.getName())) {
             boolean hasUpdated = false;
-            InputStream is = SLogin.getPlugin(SLogin.class).getResource(file.getName());
             assert is != null;
             InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(isr);
