@@ -29,8 +29,8 @@ public final class PlayerInfoSubCommand implements SubCommand {
     }
 
     @Override
-    public String getDescription() {
-        return "Get player info";
+    public String getDescription(Lang lang) {
+        return lang.admin_playerInfo_description;
     }
 
     @Override

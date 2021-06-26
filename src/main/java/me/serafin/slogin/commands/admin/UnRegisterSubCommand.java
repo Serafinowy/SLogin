@@ -29,8 +29,8 @@ public final class UnRegisterSubCommand implements SubCommand {
     }
 
     @Override
-    public String getDescription() {
-        return "Delete player's account";
+    public String getDescription(Lang lang) {
+        return lang.admin_unRegister_description;
     }
 
     @Override
