@@ -10,6 +10,31 @@ import java.util.List;
 
 public final class ConfigManager {
 
+    public final boolean LANGUAGE_AUTO;
+
+    ///////////////////////////////////////////
+    public final String LANGUAGE_DEFAULT;
+    public final String DATATYPE;
+    public final String MYSQL_HOST;
+    public final String MYSQL_PORT;
+    public final String MYSQL_USER;
+    public final String MYSQL_PASS;
+    public final String MYSQL_DATABASE;
+    public final String MYSQL_PROPERTIES;
+    public final int MAX_ACCOUNTS_PER_IP;
+    public final boolean MESSAGES_CHAT_MESSAGES;
+    public final boolean MESSAGES_TITLE_MESSAGES;
+    public final List<String> ALLOWED_COMMANDS;
+    public final int PASSWORD_MIN_LENGTH;
+    public final int PASSWORD_MAX_LENGTH;
+    public final boolean EMAIL_NOTIFICATION;
+    public final int LOGIN_TIMEOUT;
+
+    ///////////////////////////////////////////
+    public final boolean CAPTCHA_ON_REGISTER;
+    public final boolean CAPTCHA_ON_LOGIN;
+    public final boolean KICK_ON_WRONG_PASSWORD;
+
     public ConfigManager() {
         // Load defaults
         File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
@@ -54,39 +79,4 @@ public final class ConfigManager {
 
         this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
-
-    ///////////////////////////////////////////
-
-    public final boolean LANGUAGE_AUTO;
-    public final String LANGUAGE_DEFAULT;
-
-    public final String DATATYPE;
-
-    public final String MYSQL_HOST;
-    public final String MYSQL_PORT;
-    public final String MYSQL_USER;
-    public final String MYSQL_PASS;
-    public final String MYSQL_DATABASE;
-    public final String MYSQL_PROPERTIES;
-
-    public final int MAX_ACCOUNTS_PER_IP;
-
-    public final boolean MESSAGES_CHAT_MESSAGES;
-    public final boolean MESSAGES_TITLE_MESSAGES;
-
-    public final List<String> ALLOWED_COMMANDS;
-
-    public final int PASSWORD_MIN_LENGTH;
-    public final int PASSWORD_MAX_LENGTH;
-
-    public final boolean EMAIL_NOTIFICATION;
-
-    ///////////////////////////////////////////
-
-    public final int LOGIN_TIMEOUT;
-
-    public final boolean CAPTCHA_ON_REGISTER;
-    public final boolean CAPTCHA_ON_LOGIN;
-
-    public final boolean KICK_ON_WRONG_PASSWORD;
 }

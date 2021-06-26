@@ -16,19 +16,18 @@ public final class LoginManager {
     private final DataBase dataBase;
     private final LangManager langManager;
     private final ConfigManager config;
+    /**
+     * List of not logged in players
+     */
+    private final HashMap<String, Optional<Account>> tempAccounts = new HashMap<>();
+
+    ///////////////////////////////////////
 
     public LoginManager(DataBase dataBase) {
         this.langManager = SLogin.getInstance().getLangManager();
         this.config = SLogin.getInstance().getConfigManager();
         this.dataBase = dataBase;
     }
-
-    ///////////////////////////////////////
-
-    /**
-     * List of not logged in players
-     */
-    private final HashMap<String, Optional<Account>> tempAccounts = new HashMap<>();
 
     /**
      * Check if players is logged in
@@ -179,18 +178,14 @@ public final class LoginManager {
         tempAccounts.remove(player.getName());
     }
 
-    public enum LoginType {
-        LOGIN, REGISTER
-    }
-
-    ///////////////////////////////////////
-
     /**
      * Gets player's account
      */
     public Optional<Account> getAccount(String name) {
         return Account.get(dataBase, name);
     }
+
+    ///////////////////////////////////////
 
     /**
      * Get accounts number from one IP address
@@ -200,5 +195,9 @@ public final class LoginManager {
      */
     public int getAccountIPCount(String address) {
         return Account.accountIPCount(dataBase, address);
+    }
+
+    public enum LoginType {
+        LOGIN, REGISTER
     }
 }

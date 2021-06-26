@@ -42,7 +42,7 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if(!setup())
+        if (!setup())
             getLogger().severe("An error occurred while loading the plugin.");
     }
 

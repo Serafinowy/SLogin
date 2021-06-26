@@ -20,64 +20,6 @@ public final class Account {
     private final long registerDate, lastLoginDate;
 
     /**
-     * Check if password is correct
-     *
-     * @param password player's password
-     * @return password is correct
-     */
-    public boolean comparePassword(String password) {
-        return BCrypt.checkpw(password, this.hashedPassword);
-    }
-
-    /**
-     * Update player's account
-     *
-     * @param dataType type of data to change
-     * @param value    new value
-     */
-    public void update(DataType dataType, String value) {
-        String set = "";
-        switch (dataType) {
-            case PASSWORD:
-                set = "`password` = ?";
-                String salt = BCrypt.gensalt();
-                value = BCrypt.hashpw(value, salt);
-                break;
-            case EMAIL:
-                set = "`email` = ?";
-                break;
-            case LAST_LOGIN_IP:
-                set = "`lastLoginIP` = ?";
-                break;
-            case LAST_LOGIN_DATE:
-                set = "`lastLoginDate` = ?";
-                break;
-        }
-        String command = "UPDATE `slogin_accounts` SET " + set + " WHERE `name` = ?";
-        try {
-            dataBase.update(command, value, this.displayName.toLowerCase());
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    /**
-     * Delete player's account from database
-     */
-    public void delete() {
-        String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
-        try {
-            dataBase.update(command, this.displayName.toLowerCase());
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    ///////////////////////////////////////
-
-    /**
      * Get player account if exists or get empty optional
      *
      * @param name player's name
@@ -158,6 +100,64 @@ public final class Account {
                 .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
                 .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
                 .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
+    }
+
+    /**
+     * Check if password is correct
+     *
+     * @param password player's password
+     * @return password is correct
+     */
+    public boolean comparePassword(String password) {
+        return BCrypt.checkpw(password, this.hashedPassword);
+    }
+
+    /**
+     * Update player's account
+     *
+     * @param dataType type of data to change
+     * @param value    new value
+     */
+    public void update(DataType dataType, String value) {
+        String set = "";
+        switch (dataType) {
+            case PASSWORD:
+                set = "`password` = ?";
+                String salt = BCrypt.gensalt();
+                value = BCrypt.hashpw(value, salt);
+                break;
+            case EMAIL:
+                set = "`email` = ?";
+                break;
+            case LAST_LOGIN_IP:
+                set = "`lastLoginIP` = ?";
+                break;
+            case LAST_LOGIN_DATE:
+                set = "`lastLoginDate` = ?";
+                break;
+        }
+        String command = "UPDATE `slogin_accounts` SET " + set + " WHERE `name` = ?";
+        try {
+            dataBase.update(command, value, this.displayName.toLowerCase());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
+    }
+
+    ///////////////////////////////////////
+
+    /**
+     * Delete player's account from database
+     */
+    public void delete() {
+        String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
+        try {
+            dataBase.update(command, this.displayName.toLowerCase());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
     }
 
     public enum DataType {

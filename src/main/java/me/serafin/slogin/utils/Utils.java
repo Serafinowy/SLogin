@@ -25,6 +25,9 @@ import java.util.zip.ZipInputStream;
 
 public final class Utils {
 
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     // Used to update config
     @SuppressWarnings("ConstantConditions")
     public static void matchConfig(FileConfiguration config, File file) {
@@ -52,6 +55,8 @@ public final class Utils {
         }
     }
 
+    ///////////////////////////////////////
+
     @SuppressWarnings("deprecation")
     public static TextComponent sendCommandSuggest(String text, String hover, String cmd) {
         TextComponent component = new TextComponent(text);
@@ -59,8 +64,6 @@ public final class Utils {
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(hover)}));
         return component;
     }
-
-    ///////////////////////////////////////
 
     public static String getLatestVersion() {
         try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=87073").openStream();
@@ -91,6 +94,8 @@ public final class Utils {
         return serverVersion;
     }
 
+    ///////////////////////////////////////
+
     public static boolean isCompatible(String curVersion, String minVersion) {
         String[] curVersionT = curVersion.split("\\.");
         String[] minVersionT = minVersion.split("\\.");
@@ -119,11 +124,6 @@ public final class Utils {
 
         return false;
     }
-
-    ///////////////////////////////////////
-
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
