@@ -47,12 +47,11 @@ public final class LangManager {
      * @param locale lang locale
      */
     private void registerLang(String locale) {
-        try {
-            File file = new File(plugin.getDataFolder(), "translations/" + locale + ".properties");
+        File file = new File(plugin.getDataFolder(), "translations/" + locale + ".properties");
 
-            FileInputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-
+        try (FileInputStream fis = new FileInputStream(file);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)
+        ) {
             Properties properties = new Properties();
             properties.load(isr);
             TRANSLATIONS.put(locale.toLowerCase(), new Lang(properties));
