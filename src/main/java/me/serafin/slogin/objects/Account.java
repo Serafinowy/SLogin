@@ -4,6 +4,8 @@ import lombok.Data;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -119,24 +121,10 @@ public final class Account {
      * @param value    new value
      */
     public void update(DataType dataType, String value) {
-        String set = "";
-        switch (dataType) {
-            case PASSWORD:
-                set = "`password` = ?";
-                String salt = BCrypt.gensalt();
-                value = BCrypt.hashpw(value, salt);
-                break;
-            case EMAIL:
-                set = "`email` = ?";
-                break;
-            case LAST_LOGIN_IP:
-                set = "`lastLoginIP` = ?";
-                break;
-            case LAST_LOGIN_DATE:
-                set = "`lastLoginDate` = ?";
-                break;
+        if (dataType == DataType.PASSWORD) {
+            value = BCrypt.hashpw(value, BCrypt.gensalt());
         }
-        String command = "UPDATE `slogin_accounts` SET " + set + " WHERE `name` = ?";
+        String command = "UPDATE `slogin_accounts` SET `" + dataType.name + "` = ? WHERE `name` = ?";
         try {
             dataBase.update(command, value, this.displayName.toLowerCase());
         } catch (SQLException exception) {
@@ -161,6 +149,15 @@ public final class Account {
     }
 
     public enum DataType {
-        PASSWORD, EMAIL, LAST_LOGIN_IP, LAST_LOGIN_DATE
+        PASSWORD("password"),
+        EMAIL("email"),
+        LAST_LOGIN_IP("lastLoginIP"),
+        LAST_LOGIN_DATE("lastLoginDate");
+
+        private final String name;
+
+        DataType(String name) {
+            this.name = name;
+        }
     }
 }
