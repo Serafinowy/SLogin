@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -50,14 +51,14 @@ public final class CaptchaManager {
             public void run() {
                 player.openInventory(inventory(player.getLocale()));
             }
-        }.runTaskLaterAsynchronously(SLogin.getInstance(), 10);
+        }.runTaskLater(SLogin.getInstance(), 10);
     }
 
     private class Events implements Listener {
 
-        @EventHandler
+        @EventHandler(priority = EventPriority.LOW)
         public void onClick(InventoryClickEvent event) {
-            if (event.getView().getTitle().contains("Captcha")) {
+            if (tempCaptcha.contains(event.getWhoClicked().getName())) {
 
                 if (event.getCurrentItem() == null)
                     return;
@@ -74,7 +75,7 @@ public final class CaptchaManager {
             }
         }
 
-        @EventHandler
+        @EventHandler(priority = EventPriority.LOWEST)
         public void onClose(InventoryCloseEvent event) {
             if (event.getView().getTitle().contains("Captcha") &&
                     tempCaptcha.contains(event.getPlayer().getName())) {

@@ -36,7 +36,7 @@ public final class PlayerActionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!manager.isLogged(event.getWhoClicked().getName())) {
+        if (!manager.isLogged(event.getWhoClicked().getName()) && event.isCancelled()) {
             event.getWhoClicked().sendMessage(langManager.getLang(((Player) event.getWhoClicked()).getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
