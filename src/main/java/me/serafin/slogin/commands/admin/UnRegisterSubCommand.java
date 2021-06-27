@@ -1,6 +1,7 @@
 package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
@@ -16,11 +17,11 @@ import java.util.Optional;
 public final class UnRegisterSubCommand implements SubCommand {
 
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final AccountManager accountManager;
 
     public UnRegisterSubCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -55,13 +56,13 @@ public final class UnRegisterSubCommand implements SubCommand {
             return;
         }
 
-        Optional<Account> account = manager.getAccount(args[1]);
+        Optional<Account> account = accountManager.getAccount(args[1]);
         if (!account.isPresent()) {
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }
 
-        account.get().delete();
+        accountManager.deleteAccount(account.get());
         sender.sendMessage(lang.admin_unRegister_success);
     }
 }

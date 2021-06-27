@@ -1,6 +1,7 @@
 package me.serafin.slogin.commands;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
@@ -18,12 +19,12 @@ public final class ChangePasswordCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final AccountManager accountManager;
 
     public ChangePasswordCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -42,7 +43,7 @@ public final class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        Optional<Account> account = manager.getAccount(player.getName());
+        Optional<Account> account = accountManager.getAccount(player.getName());
         assert account.isPresent();
 
         if (!account.get().comparePassword(args[0])) {
@@ -55,7 +56,7 @@ public final class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        account.get().update(Account.DataType.PASSWORD, args[1]);
+        accountManager.updateAccount(account.get(), AccountManager.DataType.PASSWORD, args[1]);
         player.sendMessage(lang.auth_changePass_success);
 
         return true;

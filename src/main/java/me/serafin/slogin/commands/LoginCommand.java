@@ -17,12 +17,12 @@ public final class LoginCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final LoginManager loginManager;
 
     public LoginCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.loginManager = SLogin.getInstance().getLoginManager();
     }
 
     @Override
@@ -36,12 +36,12 @@ public final class LoginCommand implements CommandExecutor {
 
         Lang lang = langManager.getLang(player.getLocale());
 
-        if (manager.isLogged(player.getName())) {
+        if (loginManager.isLogged(player.getName())) {
             player.sendMessage(lang.system_alreadyLogged);
             return true;
         }
 
-        if (!manager.isRegistered(player.getName())) {
+        if (!loginManager.isRegistered(player.getName())) {
             player.sendMessage(lang.system_notRegistered);
             return true;
         }
@@ -51,8 +51,8 @@ public final class LoginCommand implements CommandExecutor {
             return true;
         }
 
-        if (manager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], true)) {
-            manager.playerLogged(player, LoginManager.LoginType.LOGIN);
+        if (loginManager.login(player.getName(), Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress(), args[0], true)) {
+            loginManager.playerLogged(player, LoginManager.LoginType.LOGIN);
         } else {
             player.sendMessage(lang.system_wrongPassword_chatMessage);
             if (config.KICK_ON_WRONG_PASSWORD)

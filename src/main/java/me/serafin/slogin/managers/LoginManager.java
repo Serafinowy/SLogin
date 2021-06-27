@@ -1,7 +1,6 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.objects.Account;
 import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.BCrypt;
@@ -13,20 +12,20 @@ import java.util.Optional;
 
 public final class LoginManager {
 
-    private final DataBase dataBase;
+    private final AccountManager accountManager;
     private final LangManager langManager;
     private final ConfigManager config;
     /**
      * List of not logged in players
      */
-    private final HashMap<String, Optional<Account>> tempAccounts = new HashMap<>();
+    private final HashMap<String, Optional<Account>> notLoggedPlayers = new HashMap<>();
 
     ///////////////////////////////////////
 
-    public LoginManager(DataBase dataBase) {
+    public LoginManager() {
         this.langManager = SLogin.getInstance().getLangManager();
         this.config = SLogin.getInstance().getConfigManager();
-        this.dataBase = dataBase;
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     /**
@@ -36,7 +35,7 @@ public final class LoginManager {
      * @return boolean - of player is logged in
      */
     public boolean isLogged(String name) {
-        return !tempAccounts.containsKey(name);
+        return !notLoggedPlayers.containsKey(name);
     }
 
     /**
@@ -46,7 +45,7 @@ public final class LoginManager {
      * @return player has account
      */
     public boolean isRegistered(String name) {
-        return tempAccounts.get(name).isPresent();
+        return accountManager.getAccount(name).isPresent();
     }
 
     ///////////////////////////////////////
@@ -60,8 +59,8 @@ public final class LoginManager {
         player.setInvulnerable(true);
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
-        Optional<Account> account = Account.get(dataBase, player.getName());
-        tempAccounts.put(player.getName(), account);
+        Optional<Account> account = accountManager.getAccount(player.getName());
+        notLoggedPlayers.put(player.getName(), account);
         if (account.isPresent()) {
             if (config.CAPTCHA_ON_LOGIN)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
@@ -103,7 +102,7 @@ public final class LoginManager {
      * @param name player's name
      */
     public void playerQuit(String name) {
-        tempAccounts.remove(name);
+        notLoggedPlayers.remove(name);
     }
 
     ///////////////////////////////////////
@@ -118,14 +117,14 @@ public final class LoginManager {
      * @return login success
      */
     public boolean login(String name, String loginIP, String password, boolean requirePassword) {
-        if (!tempAccounts.containsKey(name))
+        if (!notLoggedPlayers.containsKey(name))
             return false;
 
-        Optional<Account> account = tempAccounts.get(name);
+        Optional<Account> account = notLoggedPlayers.get(name);
         if (account.isPresent()) {
             if (!requirePassword || account.get().comparePassword(password)) {
-                account.get().update(Account.DataType.LAST_LOGIN_IP, loginIP);
-                account.get().update(Account.DataType.LAST_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
+                accountManager.updateAccount(account.get(), AccountManager.DataType.LAST_LOGIN_IP, loginIP);
+                accountManager.updateAccount(account.get(), AccountManager.DataType.LAST_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
                 return true;
             }
         }
@@ -142,7 +141,7 @@ public final class LoginManager {
     public void register(String name, String password, String IP) {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
-        Account.create(dataBase, name, hashedPassword, IP);
+        accountManager.createAccount(name, hashedPassword, IP);
     }
 
     /**
@@ -170,32 +169,15 @@ public final class LoginManager {
             }
         }
 
-        Optional<Account> account = tempAccounts.get(player.getName());
-        account = account.isPresent() ? account : Account.get(dataBase, player.getName());
+        Optional<Account> account = notLoggedPlayers.get(player.getName());
+        account = account.isPresent() ? account : accountManager.getAccount(player.getName());
         if (account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
             player.sendMessage(lang.auth_email_notSet);
         }
-        tempAccounts.remove(player.getName());
-    }
-
-    /**
-     * Gets player's account
-     */
-    public Optional<Account> getAccount(String name) {
-        return Account.get(dataBase, name);
+        notLoggedPlayers.remove(player.getName());
     }
 
     ///////////////////////////////////////
-
-    /**
-     * Get accounts number from one IP address
-     *
-     * @param address account address
-     * @return account number
-     */
-    public int getAccountIPCount(String address) {
-        return Account.accountIPCount(dataBase, address);
-    }
 
     public enum LoginType {
         LOGIN, REGISTER

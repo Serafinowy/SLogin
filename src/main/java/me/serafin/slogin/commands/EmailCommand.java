@@ -1,6 +1,7 @@
 package me.serafin.slogin.commands;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
@@ -17,11 +18,11 @@ import java.util.Optional;
 public final class EmailCommand implements CommandExecutor {
 
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final AccountManager accountManager;
 
     public EmailCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -35,7 +36,7 @@ public final class EmailCommand implements CommandExecutor {
 
         Lang lang = langManager.getLang(player.getLocale());
 
-        Optional<Account> account = manager.getAccount(player.getName());
+        Optional<Account> account = accountManager.getAccount(player.getName());
         assert account.isPresent();
 
         if (args.length == 0) {
@@ -47,7 +48,7 @@ public final class EmailCommand implements CommandExecutor {
         } else {
             if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
                 if (Utils.validateEmail(args[1])) {
-                    account.get().update(Account.DataType.EMAIL, args[1].toLowerCase());
+                    accountManager.updateAccount(account.get(), AccountManager.DataType.EMAIL, args[1].toLowerCase());
                     player.sendMessage(lang.auth_email_changeSuccess);
                 } else player.sendMessage(lang.auth_email_badFormat);
             } else player.sendMessage(lang.auth_email_correctUsage);

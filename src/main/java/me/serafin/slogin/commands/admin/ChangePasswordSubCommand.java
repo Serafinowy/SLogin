@@ -1,6 +1,7 @@
 package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
@@ -18,12 +19,12 @@ public final class ChangePasswordSubCommand implements SubCommand {
 
     private final ConfigManager config;
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final AccountManager accountManager;
 
     public ChangePasswordSubCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -58,7 +59,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        Optional<Account> account = manager.getAccount(args[1]);
+        Optional<Account> account = accountManager.getAccount(args[1]);
         if (!account.isPresent()) {
             sender.sendMessage(lang.admin_user_notExists);
             return;
@@ -69,7 +70,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        account.get().update(Account.DataType.PASSWORD, args[2]);
+        accountManager.updateAccount(account.get(), AccountManager.DataType.PASSWORD, args[2]);
         sender.sendMessage(lang.admin_changePass_success);
     }
 }

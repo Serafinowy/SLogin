@@ -1,19 +1,20 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.utils.FileLoader;
 import me.serafin.slogin.utils.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public final class ConfigManager {
 
     public final boolean LANGUAGE_AUTO;
-
-    ///////////////////////////////////////////
     public final String LANGUAGE_DEFAULT;
+
     public final String DATATYPE;
     public final String MYSQL_HOST;
     public final String MYSQL_PORT;
@@ -21,6 +22,7 @@ public final class ConfigManager {
     public final String MYSQL_PASS;
     public final String MYSQL_DATABASE;
     public final String MYSQL_PROPERTIES;
+
     public final int MAX_ACCOUNTS_PER_IP;
     public final boolean MESSAGES_CHAT_MESSAGES;
     public final boolean MESSAGES_TITLE_MESSAGES;
@@ -42,9 +44,10 @@ public final class ConfigManager {
         if (!file.exists()) {
             SLogin.getInstance().saveResource("config.yml", false);
         }
+        FileLoader.matchConfig(file);
+
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
-        Utils.matchConfig(configuration, file);
         SLogin.getInstance().getLogger().info("Loaded config file");
 
         // Load settings
@@ -52,7 +55,6 @@ public final class ConfigManager {
         this.LANGUAGE_DEFAULT = configuration.getString("Language.Default");
 
         this.DATATYPE = configuration.getString("DataType");
-
         this.MYSQL_HOST = configuration.getString("MySQL.Host");
         this.MYSQL_PORT = configuration.getString("MySQL.Port");
         this.MYSQL_USER = configuration.getString("MySQL.User");

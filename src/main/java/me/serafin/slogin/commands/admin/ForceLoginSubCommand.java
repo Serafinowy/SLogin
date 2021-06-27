@@ -15,11 +15,11 @@ import java.util.List;
 public final class ForceLoginSubCommand implements SubCommand {
 
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final LoginManager loginManager;
 
     public ForceLoginSubCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.loginManager = SLogin.getInstance().getLoginManager();
     }
 
     @Override
@@ -61,12 +61,12 @@ public final class ForceLoginSubCommand implements SubCommand {
         }
 
         assert player.getAddress() != null;
-        if (!manager.login(player.getName(), player.getAddress().getAddress().getHostAddress(), null, false)) {
+        if (!loginManager.login(player.getName(), player.getAddress().getAddress().getHostAddress(), null, false)) {
             sender.sendMessage(lang.admin_forceLogin_deny);
             return;
         }
 
-        manager.playerLogged(player, LoginManager.LoginType.LOGIN);
+        loginManager.playerLogged(player, LoginManager.LoginType.LOGIN);
         sender.sendMessage(lang.admin_forceLogin_success);
     }
 }
