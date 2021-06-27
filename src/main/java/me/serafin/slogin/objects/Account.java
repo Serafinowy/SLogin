@@ -14,6 +14,7 @@ public final class Account {
 
     /**
      * Checking if the password is correct
+     *
      * @param password player's password
      * @return password is correct
      */

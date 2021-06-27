@@ -2,11 +2,7 @@ package me.serafin.slogin.database;
 
 import me.serafin.slogin.managers.ConfigManager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public final class MySQL implements DataBase {
 

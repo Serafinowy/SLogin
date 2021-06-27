@@ -3,7 +3,6 @@ package me.serafin.slogin.managers;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.FileLoader;
-import me.serafin.slogin.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +30,7 @@ public final class LangManager {
 
     /**
      * Getting specified Lang
+     *
      * @param locale locale to get
      * @return Lang object with messages if locale is in translations map and
      * auto language is disabled, otherwise the default language.
@@ -42,6 +42,7 @@ public final class LangManager {
 
     /**
      * Loading translation file to translations map
+     *
      * @param locale locale to load
      */
     private void registerLang(String locale) {

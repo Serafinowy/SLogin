@@ -22,7 +22,30 @@ public class AccountManager {
     }
 
     /**
+     * Format placeholders in string.
+     *
+     * @param account player's account
+     * @param pattern string to format
+     * @return formatted string
+     */
+    public static String formatData(Account account, String pattern, Lang lang) {
+
+        String datePattern = "dd.MM.yyyy HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+        Date registerDate = new Date(account.getRegisterDate());
+        Date lastLoginDate = new Date(account.getLastLoginDate());
+
+        return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
+                .replace("{EMAIL}", account.getEmail() == null ? lang.misc_nullValue : account.getEmail())
+                .replace("{REGISTER_IP}", account.getRegisterIP())
+                .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
+                .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
+                .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
+    }
+
+    /**
      * Getting player account if exists, otherwise getting empty optional
+     *
      * @param name player's name
      * @return optional player's account
      */
@@ -47,6 +70,7 @@ public class AccountManager {
 
     /**
      * Creating new account
+     *
      * @param name           player's name
      * @param hashedPassword player's hashed password
      * @param IP             player's register IP address
@@ -63,6 +87,7 @@ public class AccountManager {
 
     /**
      * Getting accounts registered from the same IP address
+     *
      * @param address account's IP address
      * @return number of accounts
      */
@@ -79,6 +104,7 @@ public class AccountManager {
 
     /**
      * Updating player's account
+     *
      * @param dataType type of data to change
      * @param value    new value
      */
@@ -101,6 +127,7 @@ public class AccountManager {
 
     /**
      * Deleting player's account from database
+     *
      * @param displayName player's name
      */
     public void deleteAccount(String displayName) {
@@ -116,6 +143,7 @@ public class AccountManager {
     public void deleteAccount(Account account) {
         deleteAccount(account.getDisplayName());
     }
+    ///////////////////////////////////////
 
     public enum DataType {
         PASSWORD("password"),
@@ -128,29 +156,6 @@ public class AccountManager {
         DataType(String name) {
             this.name = name;
         }
-    }
-    ///////////////////////////////////////
-
-    /**
-     * Format placeholders in string.
-     *
-     * @param account player's account
-     * @param pattern string to format
-     * @return formatted string
-     */
-    public static String formatData(Account account, String pattern, Lang lang) {
-
-        String datePattern = "dd.MM.yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
-        Date registerDate = new Date(account.getRegisterDate());
-        Date lastLoginDate = new Date(account.getLastLoginDate());
-
-        return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
-                .replace("{EMAIL}", account.getEmail() == null ? lang.misc_nullValue : account.getEmail())
-                .replace("{REGISTER_IP}", account.getRegisterIP())
-                .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
-                .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
-                .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
     }
 
 }

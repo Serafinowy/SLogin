@@ -1,6 +1,5 @@
 package me.serafin.slogin;
 
-import lombok.Data;
 import lombok.Getter;
 import me.serafin.slogin.commands.ChangePasswordCommand;
 import me.serafin.slogin.commands.EmailCommand;

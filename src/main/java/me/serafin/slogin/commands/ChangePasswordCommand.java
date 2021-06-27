@@ -4,7 +4,6 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
-import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
 import me.serafin.slogin.objects.Lang;
 import org.bukkit.command.Command;
