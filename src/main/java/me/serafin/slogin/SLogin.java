@@ -45,22 +45,6 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!setup())
-            getLogger().severe("An error occurred while loading the plugin.");
-    }
-
-    @Override
-    public void onDisable() {
-        if (dataBase != null) {
-            try {
-                dataBase.closeConnection();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public boolean setup() {
         instance = this;
         this.configManager = new ConfigManager();
         this.langManager = new LangManager();
@@ -70,7 +54,7 @@ public final class SLogin extends JavaPlugin {
         if (dataBase == null) {
             getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
-            return false;
+            getLogger().severe("An error occurred while loading the plugin.");
         }
 
         this.accountManager = new AccountManager();
@@ -87,16 +71,25 @@ public final class SLogin extends JavaPlugin {
         checkVersion();
         for (Player online : Bukkit.getOnlinePlayers())
             loginManager.playerJoin(online);
+    }
 
-        return true;
+    @Override
+    public void onDisable() {
+        if (dataBase != null) {
+            try {
+                dataBase.closeConnection();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private DataBase setupDatabase() {
         DataBase dataBase = null;
         try {
             assert configManager.DATATYPE != null;
-            if (configManager.DATATYPE.equals("MYSQL")) {
-                dataBase = new MySQL(configManager);
+            if (configManager.DATATYPE.equalsIgnoreCase("MYSQL")) {
+                this.dataBase = new MySQL(configManager);
             } else {
                 dataBase = new SQLite(new File(getDataFolder(), "database.db"));
             }
@@ -118,6 +111,7 @@ public final class SLogin extends JavaPlugin {
     }
 
     private void setupListeners() {
+        getServer().getPluginManager().getPlugin("SLogin").
         getServer().getPluginManager().registerEvents(new PlayerActionListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }

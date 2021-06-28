@@ -36,23 +36,6 @@ public final class Utils {
         return null;
     }
 
-    public static String getServerVersion() {
-        String bukkitVersion = Bukkit.getBukkitVersion();
-        String serverVersion = "1.8";
-
-        if (bukkitVersion.contains("1.9")) serverVersion = "1.9";
-        else if (bukkitVersion.contains("1.10")) serverVersion = "1.10";
-        else if (bukkitVersion.contains("1.11")) serverVersion = "1.11";
-        else if (bukkitVersion.contains("1.12")) serverVersion = "1.12";
-        else if (bukkitVersion.contains("1.13")) serverVersion = "1.13";
-        else if (bukkitVersion.contains("1.14")) serverVersion = "1.14";
-        else if (bukkitVersion.contains("1.15")) serverVersion = "1.15";
-        else if (bukkitVersion.contains("1.16")) serverVersion = "1.16";
-        else if (bukkitVersion.contains("1.17")) serverVersion = "1.17";
-
-        return serverVersion;
-    }
-
     public static boolean isCompatible(String curVersion, String minVersion) {
         String[] curVersionT = curVersion.split("\\.");
         String[] minVersionT = minVersion.split("\\.");
