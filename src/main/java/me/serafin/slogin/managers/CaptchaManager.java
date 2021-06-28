@@ -51,14 +51,16 @@ public final class CaptchaManager {
             public void run() {
                 player.openInventory(inventory(player.getLocale()));
             }
-        }.runTaskLater(SLogin.getInstance(), 10);
+        }.runTaskLater(SLogin.getInstance(), 20);
     }
 
     private class Events implements Listener {
 
-        @EventHandler(priority = EventPriority.LOW)
+        @EventHandler(priority = EventPriority.LOWEST)
         public void onClick(InventoryClickEvent event) {
+            System.out.println(2);
             if (tempCaptcha.contains(event.getWhoClicked().getName())) {
+                event.setCancelled(true);
 
                 if (event.getCurrentItem() == null)
                     return;
@@ -71,7 +73,6 @@ public final class CaptchaManager {
 
                 tempCaptcha.remove(event.getWhoClicked().getName());
                 event.getWhoClicked().closeInventory();
-                event.setCancelled(true);
             }
         }
 

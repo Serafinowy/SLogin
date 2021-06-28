@@ -24,7 +24,7 @@ public final class PlayerActionListener implements Listener {
         this.manager = SLogin.getInstance().getLoginManager();
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInteract(PlayerInteractEvent event) {
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
@@ -34,15 +34,17 @@ public final class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInventoryClick(InventoryClickEvent event) {
+        System.out.println(1);
+        System.out.println(event.isCancelled());
         if (!manager.isLogged(event.getWhoClicked().getName()) && !event.isCancelled()) {
             event.getWhoClicked().sendMessage(langManager.getLang(((Player) event.getWhoClicked()).getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent event) {
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
@@ -50,14 +52,14 @@ public final class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onMove(PlayerMoveEvent event) {
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().teleport(event.getFrom());
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onDrop(PlayerDropItemEvent event) {
         if (!manager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
@@ -65,7 +67,7 @@ public final class PlayerActionListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String cmd = event.getMessage().split(" ")[0].replace("/", "");
         if (config.ALLOWED_COMMANDS.contains(cmd))
