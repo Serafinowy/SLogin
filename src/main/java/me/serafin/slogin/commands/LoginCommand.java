@@ -55,7 +55,7 @@ public final class LoginCommand implements CommandExecutor {
             loginManager.playerLogged(player, LoginManager.LoginType.LOGIN);
         } else {
             player.sendMessage(lang.system_wrongPassword_chatMessage);
-            if (config.KICK_ON_WRONG_PASSWORD)
+            if (config.isKICK_ON_WRONG_PASSWORD())
                 player.kickPlayer(lang.system_wrongPassword_kickMessage);
         }
 

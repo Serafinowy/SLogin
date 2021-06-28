@@ -1,5 +1,6 @@
 package me.serafin.slogin.managers;
 
+import lombok.Getter;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.utils.FileLoader;
 import me.serafin.slogin.utils.Utils;
@@ -9,45 +10,52 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.List;
 
+@Getter
 public final class ConfigManager {
 
-    public final boolean LANGUAGE_AUTO;
-    public final String LANGUAGE_DEFAULT;
+    private final File file;
 
-    public final String DATATYPE;
-    public final String MYSQL_HOST;
-    public final String MYSQL_PORT;
-    public final String MYSQL_USER;
-    public final String MYSQL_PASS;
-    public final String MYSQL_DATABASE;
-    public final String MYSQL_PROPERTIES;
+    private boolean LANGUAGE_AUTO;
+    private String LANGUAGE_DEFAULT;
 
-    public final int MAX_ACCOUNTS_PER_IP;
-    public final boolean MESSAGES_CHAT_MESSAGES;
-    public final boolean MESSAGES_TITLE_MESSAGES;
-    public final List<String> ALLOWED_COMMANDS;
-    public final int PASSWORD_MIN_LENGTH;
-    public final int PASSWORD_MAX_LENGTH;
-    public final boolean EMAIL_NOTIFICATION;
-    public final int LOGIN_TIMEOUT;
+    private String DATATYPE;
+    private String MYSQL_HOST;
+    private String MYSQL_PORT;
+    private String MYSQL_USER;
+    private String MYSQL_PASS;
+    private String MYSQL_DATABASE;
+    private String MYSQL_PROPERTIES;
+
+    private int MAX_ACCOUNTS_PER_IP;
+    private boolean MESSAGES_CHAT_MESSAGES;
+    private boolean MESSAGES_TITLE_MESSAGES;
+    private List<String> ALLOWED_COMMANDS;
+    private int PASSWORD_MIN_LENGTH;
+    private int PASSWORD_MAX_LENGTH;
+    private boolean EMAIL_NOTIFICATION;
+    private int LOGIN_TIMEOUT;
+
+    private boolean CAPTCHA_ON_REGISTER;
+    private boolean CAPTCHA_ON_LOGIN;
+    private boolean KICK_ON_WRONG_PASSWORD;
 
     ///////////////////////////////////////////
-    public final boolean CAPTCHA_ON_REGISTER;
-    public final boolean CAPTCHA_ON_LOGIN;
-    public final boolean KICK_ON_WRONG_PASSWORD;
 
     public ConfigManager() {
         // Load defaults
-        File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
+        file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
 
         if (!file.exists()) {
             SLogin.getInstance().saveResource("config.yml", false);
         }
-        FileLoader.matchConfig(file);
 
-        FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-
+        loadConfig();
         SLogin.getInstance().getLogger().info("Loaded config file");
+    }
+
+    public void loadConfig() {
+        FileLoader.matchConfig(file);
+        FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
         // Load settings
         this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
@@ -80,4 +88,10 @@ public final class ConfigManager {
 
         this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
+
+    public void reloadConfig() {
+        loadConfig();
+        SLogin.getInstance().getLogger().info("Reloaded config file");
+    }
+
 }

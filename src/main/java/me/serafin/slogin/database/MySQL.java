@@ -16,12 +16,12 @@ public final class MySQL implements DataBase {
     @Override
     public void openConnection() throws SQLException {
         if (connection == null || connection.isClosed() || !connection.isValid(3)) {
-            String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
-                    + config.MYSQL_PORT + "/"
-                    + config.MYSQL_DATABASE + "?"
-                    + config.MYSQL_PROPERTIES;
-            String USER = config.MYSQL_USER;
-            String PASS = config.MYSQL_PASS;
+            String URL = "jdbc:mysql://" + config.getMYSQL_HOST() + ":"
+                    + config.getMYSQL_PORT() + "/"
+                    + config.getMYSQL_DATABASE() + "?"
+                    + config.getMYSQL_PROPERTIES();
+            String USER = config.getMYSQL_USER();
+            String PASS = config.getMYSQL_PASS();
             connection = DriverManager.getConnection(URL, USER, PASS);
         }
     }

@@ -37,7 +37,7 @@ public final class LangManager {
      */
     public Lang getLang(String locale) {
         Lang lang = TRANSLATIONS.get(locale.toLowerCase());
-        return (!config.LANGUAGE_AUTO || lang == null) ? TRANSLATIONS.get(config.LANGUAGE_DEFAULT.toLowerCase()) : lang;
+        return (!config.isLANGUAGE_AUTO() || lang == null) ? TRANSLATIONS.get(config.getLANGUAGE_DEFAULT().toLowerCase()) : lang;
     }
 
     /**
@@ -71,7 +71,7 @@ public final class LangManager {
             logger.severe("Cannot load any translations! SLogin has been disabled!");
             plugin.getPluginLoader().disablePlugin(plugin);
         }
-        if (TRANSLATIONS.get(config.LANGUAGE_DEFAULT.toLowerCase()) == null) {
+        if (TRANSLATIONS.get(config.getLANGUAGE_DEFAULT().toLowerCase()) == null) {
             logger.severe("Cannot load default translation! SLogin has been disabled!");
             plugin.getPluginLoader().disablePlugin(plugin);
         }
@@ -118,6 +118,13 @@ public final class LangManager {
                 logger.severe("Error while copying " + name + " language file!");
             }
         }
+    }
+
+    /**
+     * Reloads all languages.
+     */
+    public void reloadLanguages() {
+        loadLanguages();
     }
 
 }

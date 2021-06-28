@@ -47,10 +47,8 @@ public final class ReloadSubCommand implements SubCommand {
         if (sender instanceof Player)
             lang = langManager.getLang(((Player) sender).getLocale());
 
-        if (plugin.setup())
-            sender.sendMessage(lang.admin_reload_success);
-        else
-            sender.sendMessage(lang.admin_reload_error);
+        plugin.getConfigManager().reloadConfig();
+        plugin.getLangManager().reloadLanguages();
 
     }
 }

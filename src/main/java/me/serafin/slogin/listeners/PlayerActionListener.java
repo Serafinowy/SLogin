@@ -68,7 +68,7 @@ public final class PlayerActionListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String cmd = event.getMessage().split(" ")[0].replace("/", "");
-        if (config.ALLOWED_COMMANDS.contains(cmd))
+        if (config.getALLOWED_COMMANDS().contains(cmd))
             return;
 
         if (!loginManager.isLogged(event.getPlayer().getName())) {

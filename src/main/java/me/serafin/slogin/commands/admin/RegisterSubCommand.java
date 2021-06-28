@@ -61,7 +61,7 @@ public final class RegisterSubCommand implements SubCommand {
             return;
         }
 
-        if (args[2].length() < config.PASSWORD_MIN_LENGTH || args[2].length() > config.PASSWORD_MAX_LENGTH) {
+        if (args[2].length() < config.getPASSWORD_MIN_LENGTH() || args[2].length() > config.getPASSWORD_MAX_LENGTH()) {
             sender.sendMessage(lang.system_notAllowedPasswordLength);
             return;
         }

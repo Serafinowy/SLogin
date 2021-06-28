@@ -50,7 +50,7 @@ public final class ChangePasswordCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[1].length() < config.PASSWORD_MIN_LENGTH || args[1].length() > config.PASSWORD_MAX_LENGTH) {
+        if (args[1].length() < config.getPASSWORD_MIN_LENGTH() || args[1].length() > config.getPASSWORD_MAX_LENGTH()) {
             player.sendMessage(lang.system_notAllowedPasswordLength);
             return true;
         }

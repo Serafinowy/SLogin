@@ -50,7 +50,7 @@ public final class RegisterCommand implements CommandExecutor {
         }
 
         String address = Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress();
-        if (!(accountManager.accountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)) {
+        if (!(accountManager.accountIPCount(address) < config.getMAX_ACCOUNTS_PER_IP())) {
             player.sendMessage(lang.system_maxAccounts);
             return true;
         }
@@ -60,7 +60,7 @@ public final class RegisterCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[0].length() < config.PASSWORD_MIN_LENGTH || args[0].length() > config.PASSWORD_MAX_LENGTH) {
+        if (args[0].length() < config.getPASSWORD_MIN_LENGTH() || args[0].length() > config.getPASSWORD_MAX_LENGTH()) {
             player.sendMessage(lang.system_notAllowedPasswordLength);
             return true;
         }

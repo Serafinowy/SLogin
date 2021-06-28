@@ -45,22 +45,6 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!setup())
-            getLogger().severe("An error occurred while loading the plugin.");
-    }
-
-    @Override
-    public void onDisable() {
-        if (dataBase != null) {
-            try {
-                dataBase.closeConnection();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public boolean setup() {
         instance = this;
         this.configManager = new ConfigManager();
         this.langManager = new LangManager();
@@ -70,7 +54,7 @@ public final class SLogin extends JavaPlugin {
         if (dataBase == null) {
             getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
-            return false;
+            getLogger().severe("An error occurred while loading the plugin.");
         }
 
         this.accountManager = new AccountManager();
@@ -88,14 +72,24 @@ public final class SLogin extends JavaPlugin {
         for (Player online : Bukkit.getOnlinePlayers())
             loginManager.playerJoin(online);
 
-        return true;
+    }
+
+    @Override
+    public void onDisable() {
+        if (dataBase != null) {
+            try {
+                dataBase.closeConnection();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private DataBase setupDatabase() {
         DataBase dataBase = null;
         try {
-            assert configManager.DATATYPE != null;
-            if (configManager.DATATYPE.equals("MYSQL")) {
+            assert configManager.getDATATYPE() != null;
+            if (configManager.getDATATYPE().equals("MYSQL")) {
                 dataBase = new MySQL(configManager);
             } else {
                 dataBase = new SQLite(new File(getDataFolder(), "database.db"));
@@ -110,7 +104,7 @@ public final class SLogin extends JavaPlugin {
                     "`registerDate` BIGINT NOT NULL, " +
                     "`lastLoginIP` TEXT NOT NULL, " +
                     "`lastLoginDate` BIGINT NOT NULL)");
-            getLogger().info("Connected to the " + configManager.DATATYPE + " database");
+            getLogger().info("Connected to the " + configManager.getDATATYPE() + " database");
         } catch (SQLException e) {
             e.printStackTrace();
         }
