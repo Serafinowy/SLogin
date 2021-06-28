@@ -89,7 +89,7 @@ public final class SLogin extends JavaPlugin {
     private boolean setupDatabase() {
         try {
             assert configManager.DATATYPE != null;
-            if (configManager.DATATYPE.equals("MYSQL")) {
+            if (configManager.DATATYPE.equalsIgnoreCase("MYSQL")) {
                 this.dataBase = new MySQL(configManager);
             } else {
                 this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
