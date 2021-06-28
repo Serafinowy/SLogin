@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public final class LoginManager {
 
-    private final AccountManager accountManager;
-    private final LangManager langManager;
     private final ConfigManager config;
+    private final LangManager langManager;
+    private final AccountManager accountManager;
     /**
      * List of not logged in players
      */

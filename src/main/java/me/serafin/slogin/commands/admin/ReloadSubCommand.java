@@ -49,6 +49,7 @@ public final class ReloadSubCommand implements SubCommand {
 
         plugin.getConfigManager().reloadConfig();
         plugin.getLangManager().reloadLanguages();
+        plugin.getAccountManager().reloadDatabase();
 
     }
 }

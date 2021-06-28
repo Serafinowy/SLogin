@@ -2,11 +2,14 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
+import me.serafin.slogin.database.MySQL;
+import me.serafin.slogin.database.SQLite;
 import me.serafin.slogin.objects.Account;
 import me.serafin.slogin.objects.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -15,10 +18,16 @@ import java.util.Optional;
 
 public class AccountManager {
 
-    private final DataBase dataBase;
+    private final SLogin plugin;
+    private DataBase dataBase;
 
     public AccountManager() {
-        this.dataBase = SLogin.getInstance().getDataBase();
+        this.plugin = SLogin.getInstance();
+        this.dataBase = setupDatabase();
+        if (dataBase == null) {
+            plugin.getLogger().severe("Error connecting to database! SLogin has been disabled!");
+            plugin.getServer().getPluginManager().disablePlugin(plugin);
+        }
     }
 
     /**
@@ -44,7 +53,57 @@ public class AccountManager {
     }
 
     /**
-     * Getting player account if exists, otherwise getting empty optional
+     * Creating database from config information.
+     * @return database object
+     */
+    private DataBase setupDatabase() {
+        DataBase dataBase = null;
+        try {
+            assert plugin.getConfigManager().getDATATYPE() != null;
+            if (plugin.getConfigManager().getDATATYPE().equals("MYSQL")) {
+                dataBase = new MySQL(plugin.getConfigManager());
+            } else {
+                dataBase = new SQLite(new File(plugin.getDataFolder(), "database.db"));
+            }
+
+            dataBase.openConnection();
+            dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
+                    "(`name` VARCHAR(255) NOT NULL PRIMARY KEY, " +
+                    "`password` VARCHAR(255) NOT NULL, " +
+                    "`email` VARCHAR(255) NULL, " +
+                    "`registerIP` TEXT NOT NULL, " +
+                    "`registerDate` BIGINT NOT NULL, " +
+                    "`lastLoginIP` TEXT NOT NULL, " +
+                    "`lastLoginDate` BIGINT NOT NULL)");
+            plugin.getLogger().info("Connected to the " + plugin.getConfigManager().getDATATYPE() + " database");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dataBase;
+    }
+
+    /**
+     * Closing the database when shutting down the plugin
+     */
+    public void closeDatabase() {
+        if (dataBase != null) {
+            try {
+                dataBase.closeConnection();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Reloading database
+     */
+    public void reloadDatabase() {
+        this.dataBase = setupDatabase();
+    }
+
+    /**
+     * Getting player account if exists, otherwise getting empty optional.
      *
      * @param name player's name
      * @return optional player's account
@@ -53,7 +112,6 @@ public class AccountManager {
         try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", name.toLowerCase())) {
             if (result.next()) {
                 return Optional.of(new Account(
-                        dataBase,
                         result.getString("name"),
                         result.getString("password"),
                         result.getString("email"),
@@ -143,6 +201,7 @@ public class AccountManager {
     public void deleteAccount(Account account) {
         deleteAccount(account.getDisplayName());
     }
+
     ///////////////////////////////////////
 
     public enum DataType {

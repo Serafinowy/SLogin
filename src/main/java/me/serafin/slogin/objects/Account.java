@@ -1,13 +1,10 @@
 package me.serafin.slogin.objects;
 
 import lombok.Data;
-import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 
 @Data
 public final class Account {
-
-    private final DataBase dataBase;
 
     private final String displayName, hashedPassword, email, registerIP, lastLoginIP;
     private final long registerDate, lastLoginDate;

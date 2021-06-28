@@ -89,6 +89,9 @@ public final class ConfigManager {
         this.KICK_ON_WRONG_PASSWORD = configuration.getBoolean("KickOnWrongPassword");
     }
 
+    /**
+     * Reloading
+     */
     public void reloadConfig() {
         loadConfig();
         SLogin.getInstance().getLogger().info("Reloaded config file");
