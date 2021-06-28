@@ -36,7 +36,6 @@ Messages:
   # Shows chat messages on join
   ChatMessages: true
   # Shows title messages on join
-  # Enable only if your server version is 1.11 or newer
   TitleMessages: true
 
 # Allowed commands when you are not logged in
