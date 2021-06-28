@@ -58,7 +58,6 @@ public final class CaptchaManager {
 
         @EventHandler(priority = EventPriority.LOWEST)
         public void onClick(InventoryClickEvent event) {
-            System.out.println(2);
             if (tempCaptcha.contains(event.getWhoClicked().getName())) {
                 event.setCancelled(true);
 
