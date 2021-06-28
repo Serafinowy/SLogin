@@ -20,19 +20,20 @@ public class Lang {
     public final String system_differentPasswords;
     public final String system_alreadyRegistered;
     public final String system_notRegistered;
-    public final String auth_login_info;
 
     ///////////////////////////////////////////
+    public final String auth_login_info;
     public final String auth_login_correctUsage;
     public final String auth_login_success;
     public final String auth_login_title;
     public final String auth_login_subTitle;
     public final String auth_login_successTitle;
     public final String auth_login_successSubTitle;
+    public final String auth_login_timeoutInfo;
     public final String auth_login_timeoutKick;
-    public final String auth_register_info;
 
     ///////////////////////////////////////////
+    public final String auth_register_info;
     public final String auth_register_correctUsage;
     public final String auth_register_success;
     public final String auth_register_title;
@@ -43,16 +44,16 @@ public class Lang {
 
     ///////////////////////////////////////////
     public final String auth_changePass_success;
-    public final String auth_email_info;
 
     ///////////////////////////////////////////
+    public final String auth_email_info;
     public final String auth_email_correctUsage;
     public final String auth_email_changeSuccess;
     public final String auth_email_notSet;
     public final String auth_email_badFormat;
-    public final String captcha_guiName;
 
     ///////////////////////////////////////////
+    public final String captcha_guiName;
     public final String captcha_kickMessage;
     public final String admin_user_notExists;
 
@@ -109,6 +110,7 @@ public class Lang {
         auth_login_subTitle = format(properties.getProperty("slogin.auth.login.subTitle"));
         auth_login_successTitle = format(properties.getProperty("slogin.auth.login.successTitle"));
         auth_login_successSubTitle = format(properties.getProperty("slogin.auth.login.successSubTitle"));
+        auth_login_timeoutInfo = format(properties.getProperty("slogin.auth.login.timeoutInfo"));
         auth_login_timeoutKick = format(properties.getProperty("slogin.auth.login.timeoutKick"));
 
         ///////////////////////////////////////////

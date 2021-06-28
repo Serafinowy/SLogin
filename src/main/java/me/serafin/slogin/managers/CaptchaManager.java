@@ -77,8 +77,7 @@ public final class CaptchaManager {
 
         @EventHandler(priority = EventPriority.LOWEST)
         public void onClose(InventoryCloseEvent event) {
-            if (event.getView().getTitle().contains("Captcha") &&
-                    tempCaptcha.contains(event.getPlayer().getName())) {
+            if (tempCaptcha.contains(event.getPlayer().getName())) {
                 Player player = (Player) event.getPlayer();
                 player.kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
             }
