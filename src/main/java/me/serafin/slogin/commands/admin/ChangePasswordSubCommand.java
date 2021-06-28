@@ -32,8 +32,8 @@ public final class ChangePasswordSubCommand implements SubCommand {
     }
 
     @Override
-    public String getDescription() {
-        return "Change player's password";
+    public String getDescription(Lang lang) {
+        return lang.admin_changePass_description;
     }
 
     @Override
@@ -43,7 +43,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("changepassword", "cp", "changepass", "cpass", "change", "c");
+        return Arrays.asList("cp", "changepass", "cpass", "change", "c");
     }
 
     @Override

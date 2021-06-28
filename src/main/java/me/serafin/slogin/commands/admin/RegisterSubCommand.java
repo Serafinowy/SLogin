@@ -32,8 +32,8 @@ public final class RegisterSubCommand implements SubCommand {
     }
 
     @Override
-    public String getDescription() {
-        return "Register specified player";
+    public String getDescription(Lang lang) {
+        return lang.admin_register_description;
     }
 
     @Override
@@ -43,7 +43,7 @@ public final class RegisterSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("register", "reg", "r");
+        return Arrays.asList("reg", "r");
     }
 
     @Override

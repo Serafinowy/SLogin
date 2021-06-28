@@ -12,7 +12,7 @@
 Language:
   # Player see the message in his language
   Auto: true
-  # Console messages and player messages if Auto is disabled or player language does not exists!
+  # Console messages and player messages if Auto is disabled or player language does not exists
   Default: en_US
 
 # The place where the data will be saved
@@ -29,13 +29,13 @@ MySQL:
   Properties: "useSSL=false&autoReconnect=true"
 
 # One IP address cannot have more than this number of accounts
+# -1 -> disabled
 MaxAccountsPerIP: 2
 
 Messages:
   # Shows chat messages on join
   ChatMessages: true
   # Shows title messages on join
-  # Enable only if your server version is 1.11 or newer
   TitleMessages: true
 
 # Allowed commands when you are not logged in

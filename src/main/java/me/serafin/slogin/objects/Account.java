@@ -4,6 +4,8 @@ import lombok.Data;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,64 +20,6 @@ public final class Account {
 
     private final String displayName, hashedPassword, email, registerIP, lastLoginIP;
     private final long registerDate, lastLoginDate;
-
-    /**
-     * Check if password is correct
-     *
-     * @param password player's password
-     * @return password is correct
-     */
-    public boolean comparePassword(String password) {
-        return BCrypt.checkpw(password, this.hashedPassword);
-    }
-
-    /**
-     * Update player's account
-     *
-     * @param dataType type of data to change
-     * @param value    new value
-     */
-    public void update(DataType dataType, String value) {
-        String set = "";
-        switch (dataType) {
-            case PASSWORD:
-                set = "`password` = ?";
-                String salt = BCrypt.gensalt();
-                value = BCrypt.hashpw(value, salt);
-                break;
-            case EMAIL:
-                set = "`email` = ?";
-                break;
-            case LAST_LOGIN_IP:
-                set = "`lastLoginIP` = ?";
-                break;
-            case LAST_LOGIN_DATE:
-                set = "`lastLoginDate` = ?";
-                break;
-        }
-        String command = "UPDATE `slogin_accounts` SET " + set + " WHERE `name` = ?";
-        try {
-            dataBase.update(command, value, this.displayName.toLowerCase());
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    /**
-     * Delete player's account from database
-     */
-    public void delete() {
-        String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
-        try {
-            dataBase.update(command, this.displayName.toLowerCase());
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
-        }
-    }
-
-    ///////////////////////////////////////
 
     /**
      * Get player account if exists or get empty optional
@@ -160,7 +104,60 @@ public final class Account {
                 .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
     }
 
+    /**
+     * Check if password is correct
+     *
+     * @param password player's password
+     * @return password is correct
+     */
+    public boolean comparePassword(String password) {
+        return BCrypt.checkpw(password, this.hashedPassword);
+    }
+
+    /**
+     * Update player's account
+     *
+     * @param dataType type of data to change
+     * @param value    new value
+     */
+    public void update(DataType dataType, String value) {
+        if (dataType == DataType.PASSWORD) {
+            value = BCrypt.hashpw(value, BCrypt.gensalt());
+        }
+        String command = "UPDATE `slogin_accounts` SET `" + dataType.name + "` = ? WHERE `name` = ?";
+        try {
+            dataBase.update(command, value, this.displayName.toLowerCase());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
+    }
+
+    ///////////////////////////////////////
+
+    /**
+     * Delete player's account from database
+     */
+    public void delete() {
+        String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
+        try {
+            dataBase.update(command, this.displayName.toLowerCase());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            Bukkit.getLogger().severe("Error at command: " + command);
+        }
+    }
+
     public enum DataType {
-        PASSWORD, EMAIL, LAST_LOGIN_IP, LAST_LOGIN_DATE
+        PASSWORD("password"),
+        EMAIL("email"),
+        LAST_LOGIN_IP("lastLoginIP"),
+        LAST_LOGIN_DATE("lastLoginDate");
+
+        private final String name;
+
+        DataType(String name) {
+            this.name = name;
+        }
     }
 }

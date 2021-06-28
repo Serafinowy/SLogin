@@ -50,7 +50,6 @@ public final class SLogin extends JavaPlugin {
         if (!setupDatabase()) {
             getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
 
         this.loginManager = new LoginManager(dataBase);
@@ -82,7 +81,7 @@ public final class SLogin extends JavaPlugin {
     private boolean setupDatabase() {
         try {
             assert configManager.DATATYPE != null;
-            if (configManager.DATATYPE.equals("MYSQL")) {
+            if (configManager.DATATYPE.equalsIgnoreCase("MYSQL")) {
                 this.dataBase = new MySQL(configManager);
             } else {
                 this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
@@ -106,6 +105,7 @@ public final class SLogin extends JavaPlugin {
     }
 
     private void setupListeners() {
+        getServer().getPluginManager().getPlugin("SLogin").
         getServer().getPluginManager().registerEvents(new PlayerActionListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }

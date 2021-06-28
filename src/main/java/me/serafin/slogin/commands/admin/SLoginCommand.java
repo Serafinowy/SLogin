@@ -28,6 +28,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         commands.add(new RegisterSubCommand());
         commands.add(new ChangePasswordSubCommand());
         commands.add(new UnRegisterSubCommand());
+        // commands.add(new ReloadSubCommand());
     }
 
     @Override
@@ -39,7 +40,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
         if (args.length != 0) {
             for (SubCommand subCommand : commands) {
-                if (subCommand.getAliases().contains(args[0].toLowerCase())) {
+                if (subCommand.getName().equals(args[0].toLowerCase()) || subCommand.getAliases().contains(args[0].toLowerCase())) {
                     subCommand.perform(sender, args);
                     return true;
                 }
@@ -51,23 +52,14 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for (SubCommand subCommand : commands) {
-            if (Utils.isCompatible(Utils.getServerVersion(), "1.12")) {
-                sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                        lang.admin_commandList_chatFormat
-                                .replace("{COMMAND}", subCommand.getSyntax())
-                                .replace("{DESCRIPTION}", subCommand.getDescription()),
-                        lang.admin_commandList_hoverFormat
-                                .replace("{COMMAND}", subCommand.getName())
-                                .replace("{DESCRIPTION}", subCommand.getDescription()),
-                        //Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()),
-                        //Utils.format("&e" + subCommand.getName().toUpperCase() + "\n&7" + subCommand.getDescription()),
-                        "/sl " + subCommand.getName() + " "));
-            } else {
-                //sender.sendMessage(Utils.format("&e" + subCommand.getSyntax() + " &7- " + subCommand.getDescription()));
-                sender.sendMessage(lang.admin_commandList_chatFormat
-                        .replace("{COMMAND}", subCommand.getSyntax())
-                        .replace("DESCRIPTION", subCommand.getDescription()));
-            }
+            sender.spigot().sendMessage(Utils.sendCommandSuggest(
+                    lang.admin_commandList_chatFormat
+                            .replace("{COMMAND}", subCommand.getSyntax())
+                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                    lang.admin_commandList_hoverFormat
+                            .replace("{COMMAND}", subCommand.getName())
+                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                    "/sl " + subCommand.getName() + " "));
         }
 
         sender.sendMessage("");

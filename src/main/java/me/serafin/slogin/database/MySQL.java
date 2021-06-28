@@ -6,8 +6,8 @@ import java.sql.*;
 
 public final class MySQL implements DataBase {
 
-    private Connection connection;
     private final ConfigManager config;
+    private Connection connection;
 
     public MySQL(ConfigManager config) {
         this.config = config;
@@ -52,14 +52,4 @@ public final class MySQL implements DataBase {
         }
         return statement.executeQuery();
     }
-//
-//    @Override
-//    public boolean isValidConnection() {
-//        try {
-//            connection.createStatement().execute("SELECT 1");
-//            connection.isValid()
-//            return true;
-//        } catch (SQLException ignored) { }
-//        return false;
-//    }
 }

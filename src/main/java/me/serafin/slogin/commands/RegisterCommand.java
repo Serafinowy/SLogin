@@ -47,7 +47,7 @@ public final class RegisterCommand implements CommandExecutor {
         }
 
         String address = Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress();
-        if (!(manager.getAccountIPCount(address) < config.MAX_ACCOUNTS_PER_IP)) {
+        if (!manager.canRegister(address)) {
             player.sendMessage(lang.system_maxAccounts);
             return true;
         }

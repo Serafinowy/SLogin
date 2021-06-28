@@ -28,8 +28,8 @@ public final class ForceLoginSubCommand implements SubCommand {
     }
 
     @Override
-    public String getDescription() {
-        return "Login specified player";
+    public String getDescription(Lang lang) {
+        return lang.admin_forceLogin_description;
     }
 
     @Override
@@ -39,7 +39,7 @@ public final class ForceLoginSubCommand implements SubCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("forcelogin", "fl", "force", "f");
+        return Arrays.asList("fl", "force", "f");
     }
 
     @Override
