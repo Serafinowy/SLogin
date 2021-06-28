@@ -125,6 +125,7 @@ public final class LangManager {
      */
     public void reloadLanguages() {
         loadLanguages();
+        SLogin.getInstance().getLogger().info("Reloaded languages files");
     }
 
 }
