@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -51,15 +50,14 @@ public final class CaptchaManager {
             public void run() {
                 player.openInventory(inventory(player.getLocale()));
             }
-        }.runTaskLater(SLogin.getInstance(), 20);
+        }.runTaskLaterAsynchronously(SLogin.getInstance(), 10);
     }
 
     private class Events implements Listener {
 
-        @EventHandler(priority = EventPriority.LOWEST)
+        @EventHandler
         public void onClick(InventoryClickEvent event) {
-            if (tempCaptcha.contains(event.getWhoClicked().getName())) {
-                event.setCancelled(true);
+            if (event.getView().getTitle().contains("Captcha")) {
 
                 if (event.getCurrentItem() == null)
                     return;
@@ -72,12 +70,14 @@ public final class CaptchaManager {
 
                 tempCaptcha.remove(event.getWhoClicked().getName());
                 event.getWhoClicked().closeInventory();
+                event.setCancelled(true);
             }
         }
 
-        @EventHandler(priority = EventPriority.LOWEST)
+        @EventHandler
         public void onClose(InventoryCloseEvent event) {
-            if (tempCaptcha.contains(event.getPlayer().getName())) {
+            if (event.getView().getTitle().contains("Captcha") &&
+                    tempCaptcha.contains(event.getPlayer().getName())) {
                 Player player = (Player) event.getPlayer();
                 player.kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
             }

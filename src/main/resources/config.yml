@@ -29,7 +29,6 @@ MySQL:
   Properties: "useSSL=false&autoReconnect=true"
 
 # One IP address cannot have more than this number of accounts
-# -1 -> disabled
 MaxAccountsPerIP: 2
 
 Messages:

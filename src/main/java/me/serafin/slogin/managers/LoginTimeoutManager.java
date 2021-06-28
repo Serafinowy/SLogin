@@ -1,9 +1,6 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.objects.Lang;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -30,15 +27,11 @@ public final class LoginTimeoutManager {
 
                         loginTimeout.put(entry.getKey(), entry.getValue() - 1);
 
-                        Lang lang = SLogin.getInstance().getLangManager().getLang(entry.getKey().getLocale());
-                        Player player = entry.getKey();
-
                         if (entry.getValue() <= 0) {
                             iterator.remove();
-                            player.kickPlayer(lang.auth_login_timeoutKick);
+                            Player player = entry.getKey();
+                            player.kickPlayer(SLogin.getInstance().getLangManager().getLang(player.getLocale()).auth_login_timeoutKick);
                         }
-
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format(lang.auth_login_timeoutInfo, entry.getValue())));
                     }
                 }
             }.runTaskTimer(SLogin.getInstance(), 0, 20);

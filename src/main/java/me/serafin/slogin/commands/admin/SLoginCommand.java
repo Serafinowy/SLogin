@@ -28,7 +28,7 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         commands.add(new RegisterSubCommand());
         commands.add(new ChangePasswordSubCommand());
         commands.add(new UnRegisterSubCommand());
-        // commands.add(new ReloadSubCommand());
+        commands.add(new ReloadSubCommand());
     }
 
     @Override
@@ -52,14 +52,20 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for (SubCommand subCommand : commands) {
-            sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                    lang.admin_commandList_chatFormat
-                            .replace("{COMMAND}", subCommand.getSyntax())
-                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
-                    lang.admin_commandList_hoverFormat
-                            .replace("{COMMAND}", subCommand.getName())
-                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
-                    "/sl " + subCommand.getName() + " "));
+            if (Utils.isCompatible(Utils.getServerVersion(), "1.12") && sender instanceof Player) {
+                sender.spigot().sendMessage(Utils.sendCommandSuggest(
+                        lang.admin_commandList_chatFormat
+                                .replace("{COMMAND}", subCommand.getSyntax())
+                                .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                        lang.admin_commandList_hoverFormat
+                                .replace("{COMMAND}", subCommand.getName())
+                                .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                        "/sl " + subCommand.getName() + " "));
+            } else {
+                sender.sendMessage(lang.admin_commandList_chatFormat
+                        .replace("{COMMAND}", subCommand.getSyntax())
+                        .replace("DESCRIPTION", subCommand.getDescription(lang)));
+            }
         }
 
         sender.sendMessage("");
