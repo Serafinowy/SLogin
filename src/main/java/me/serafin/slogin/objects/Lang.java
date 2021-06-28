@@ -149,28 +149,28 @@ public class Lang {
         admin_commandList_hoverFormat = format(properties.getProperty("slogin.admin.commandList.hoverFormat"));
 
         admin_playerInfo_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.correctUsage"));
-        admin_playerInfo_description = PREFIX + format(properties.getProperty("slogin.admin.playerInfo.description"));
+        admin_playerInfo_description = format(properties.getProperty("slogin.admin.playerInfo.description"));
         admin_playerInfo_message = format(properties.getProperty("slogin.admin.playerInfo.message"));
 
         admin_changePass_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.changePass.correctUsage"));
-        admin_changePass_description = PREFIX + format(properties.getProperty("slogin.admin.changePass.description"));
+        admin_changePass_description = format(properties.getProperty("slogin.admin.changePass.description"));
         admin_changePass_success = PREFIX + format(properties.getProperty("slogin.admin.changePass.success"));
 
         admin_forceLogin_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.forceLogin.correctUsage"));
-        admin_forceLogin_description = PREFIX + format(properties.getProperty("slogin.admin.forceLogin.description"));
+        admin_forceLogin_description = format(properties.getProperty("slogin.admin.forceLogin.description"));
         admin_forceLogin_success = PREFIX + format(properties.getProperty("slogin.admin.forceLogin.success"));
         admin_forceLogin_deny = PREFIX + format(properties.getProperty("slogin.admin.forceLogin.deny"));
 
         admin_register_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.register.correctUsage"));
-        admin_register_description = PREFIX + format(properties.getProperty("slogin.admin.register.description"));
+        admin_register_description = format(properties.getProperty("slogin.admin.register.description"));
         admin_register_success = PREFIX + format(properties.getProperty("slogin.admin.register.success"));
         admin_register_deny = PREFIX + format(properties.getProperty("slogin.admin.register.deny"));
 
         admin_unRegister_correctUsage = PREFIX + format(properties.getProperty("slogin.admin.unRegister.correctUsage"));
-        admin_unRegister_description = PREFIX + format(properties.getProperty("slogin.admin.unRegister.description"));
+        admin_unRegister_description = format(properties.getProperty("slogin.admin.unRegister.description"));
         admin_unRegister_success = PREFIX + format(properties.getProperty("slogin.admin.unRegister.success"));
 
-        admin_reload_description = PREFIX + format(properties.getProperty("slogin.admin.reload.description"));
+        admin_reload_description = format(properties.getProperty("slogin.admin.reload.description"));
         admin_reload_success = PREFIX + format(properties.getProperty("slogin.admin.reload.success"));
         admin_reload_error = PREFIX + format(properties.getProperty("slogin.admin.reload.error"));
     }
