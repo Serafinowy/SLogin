@@ -15,6 +15,7 @@ public final class LoginManager {
     private final ConfigManager config;
     private final LangManager langManager;
     private final AccountManager accountManager;
+
     /**
      * List of not logged in players
      */
@@ -175,6 +176,17 @@ public final class LoginManager {
             player.sendMessage(lang.auth_email_notSet);
         }
         notLoggedPlayers.remove(player.getName());
+    }
+
+    /**
+     * Check if player can register new account. Returns true only if
+     * player does not exceed the maximum number of accounts.
+     * @param address - player's IP address
+     * @return player can register new account
+     */
+    public boolean canRegister(String address) {
+        int accountsCount = accountManager.accountIPCount(address);
+        return accountsCount < config.getMAX_ACCOUNTS_PER_IP() || config.getMAX_ACCOUNTS_PER_IP() < 0;
     }
 
     ///////////////////////////////////////

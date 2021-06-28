@@ -18,14 +18,12 @@ public final class RegisterCommand implements CommandExecutor {
 
     private final ConfigManager config;
     private final LangManager langManager;
-    private final AccountManager accountManager;
     private final LoginManager loginManager;
 
     public RegisterCommand() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.loginManager = SLogin.getInstance().getLoginManager();
-        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -50,7 +48,7 @@ public final class RegisterCommand implements CommandExecutor {
         }
 
         String address = Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress();
-        if (!(accountManager.accountIPCount(address) < config.getMAX_ACCOUNTS_PER_IP())) {
+        if (loginManager.canRegister(address)) {
             player.sendMessage(lang.system_maxAccounts);
             return true;
         }
