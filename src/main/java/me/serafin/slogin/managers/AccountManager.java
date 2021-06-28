@@ -106,11 +106,11 @@ public class AccountManager {
     /**
      * Getting player account if exists, otherwise getting empty optional.
      *
-     * @param name player's name
+     * @param displayName player's name
      * @return optional player's account
      */
-    public Optional<Account> getAccount(String name) {
-        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", name.toLowerCase())) {
+    public Optional<Account> getAccount(String displayName) {
+        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", displayName.toLowerCase())) {
             if (result.next()) {
                 return Optional.of(new Account(
                         result.getString("name"),
@@ -130,14 +130,14 @@ public class AccountManager {
     /**
      * Creating new account
      *
-     * @param name           player's name
+     * @param displayName player's name
      * @param hashedPassword player's hashed password
-     * @param IP             player's register IP address
+     * @param IP player's register IP address
      */
-    public void createAccount(String name, String hashedPassword, String IP) {
+    public void createAccount(String displayName, String hashedPassword, String IP) {
         String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            dataBase.update(command, name.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
+            dataBase.update(command, displayName.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
         } catch (SQLException exception) {
             exception.printStackTrace();
             Bukkit.getLogger().severe("Error at command: " + command);
@@ -164,6 +164,7 @@ public class AccountManager {
     /**
      * Updating player's account
      *
+     * @param displayName player's name
      * @param dataType type of data to change
      * @param value    new value
      */
