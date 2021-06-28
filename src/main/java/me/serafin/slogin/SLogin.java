@@ -26,12 +26,12 @@ public final class SLogin extends JavaPlugin {
     @Getter
     private static SLogin instance;
 
-    private DataBase dataBase;
-
     @Getter
     private ConfigManager configManager;
     @Getter
     private LangManager langManager;
+    @Getter
+    private AccountManager accountManager;
     @Getter
     private LoginManager loginManager;
 
@@ -40,20 +40,25 @@ public final class SLogin extends JavaPlugin {
     @Getter
     private CaptchaManager captchaManager;
 
+    @Getter
+    private DataBase dataBase;
+
     @Override
     public void onEnable() {
         instance = this;
         this.configManager = new ConfigManager();
-        this.langManager = new LangManager(configManager);
+        this.langManager = new LangManager();
         this.langManager.loadLanguages();
 
-        if (!setupDatabase()) {
+        this.dataBase = setupDatabase();
+        if (dataBase == null) {
             getLogger().severe("Error connecting to database! SLogin has been disabled!");
             getServer().getPluginManager().disablePlugin(this);
             getLogger().severe("An error occurred while loading the plugin.");
         }
 
-        this.loginManager = new LoginManager(dataBase);
+        this.accountManager = new AccountManager();
+        this.loginManager = new LoginManager();
 
         setupListeners();
         setupCommands();
@@ -79,13 +84,14 @@ public final class SLogin extends JavaPlugin {
         }
     }
 
-    private boolean setupDatabase() {
+    private DataBase setupDatabase() {
+        DataBase dataBase = null;
         try {
             assert configManager.DATATYPE != null;
             if (configManager.DATATYPE.equalsIgnoreCase("MYSQL")) {
                 this.dataBase = new MySQL(configManager);
             } else {
-                this.dataBase = new SQLite(new File(getDataFolder(), "database.db"));
+                dataBase = new SQLite(new File(getDataFolder(), "database.db"));
             }
 
             dataBase.openConnection();
@@ -98,11 +104,10 @@ public final class SLogin extends JavaPlugin {
                     "`lastLoginIP` TEXT NOT NULL, " +
                     "`lastLoginDate` BIGINT NOT NULL)");
             getLogger().info("Connected to the " + configManager.DATATYPE + " database");
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return dataBase;
     }
 
     private void setupListeners() {

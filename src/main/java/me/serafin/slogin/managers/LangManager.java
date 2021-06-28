@@ -2,7 +2,7 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.objects.Lang;
-import me.serafin.slogin.utils.Utils;
+import me.serafin.slogin.utils.FileLoader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,35 +16,34 @@ import java.util.logging.Logger;
 
 public final class LangManager {
 
-    private final SLogin plugin = SLogin.getInstance();
+    private final SLogin plugin;
     private final ConfigManager config;
     private final Logger logger;
 
-    private final File translationsFolder = new File(plugin.getDataFolder(), "translations");
-
     private final HashMap<String, Lang> TRANSLATIONS = new HashMap<>();
 
-    public LangManager(ConfigManager config) {
-        this.config = config;
-        this.logger = SLogin.getInstance().getLogger();
+    public LangManager() {
+        this.plugin = SLogin.getInstance();
+        this.config = plugin.getConfigManager();
+        this.logger = plugin.getLogger();
     }
 
     /**
-     * Gets lang from plugin settings
+     * Getting specified Lang
      *
-     * @param locale lang locale
-     * @return Lang object with messages
+     * @param locale locale to get
+     * @return Lang object with messages if locale is in translations map and
+     * auto language is disabled, otherwise the default language.
      */
     public Lang getLang(String locale) {
-        if (!config.LANGUAGE_AUTO) locale = config.LANGUAGE_DEFAULT;
-        if (TRANSLATIONS.get(locale.toLowerCase()) == null) locale = config.LANGUAGE_DEFAULT;
-        return TRANSLATIONS.get(locale.toLowerCase());
+        Lang lang = TRANSLATIONS.get(locale.toLowerCase());
+        return (!config.LANGUAGE_AUTO || lang == null) ? TRANSLATIONS.get(config.LANGUAGE_DEFAULT.toLowerCase()) : lang;
     }
 
     /**
-     * Add lang file into plugin setting
+     * Loading translation file to translations map
      *
-     * @param locale lang locale
+     * @param locale locale to load
      */
     private void registerLang(String locale) {
         File file = new File(plugin.getDataFolder(), "translations/" + locale + ".properties");
@@ -64,7 +63,8 @@ public final class LangManager {
     }
 
     /**
-     * Check lang files
+     * Checking translations map. If map is empty or does not contain
+     * default language, the entire plugin is disable.
      */
     private void checkLanguages() {
         if (TRANSLATIONS.size() == 0) {
@@ -78,9 +78,11 @@ public final class LangManager {
     }
 
     /**
-     * Load all languages file from plugin folder
+     * Load all translations files from plugin translations folder
      */
     public void loadLanguages() {
+        final File translationsFolder = new File(plugin.getDataFolder(), "translations");
+
         File[] files = translationsFolder.listFiles();
         if (!translationsFolder.exists() || files == null || files.length == 0) {
             translationsFolder.mkdir();
@@ -100,14 +102,14 @@ public final class LangManager {
      * Load all languages from plugin JAR
      */
     private void loadDefaults() {
-        List<String> defaultLanguagesFiles = Utils.getAllResourcesIn("translations");
+        List<String> defaultLanguagesFiles = FileLoader.getAllResourcesIn("translations");
 
         if (defaultLanguagesFiles == null) {
-            logger.severe("Cannot copy languages files from jar!");
+            logger.severe("List of translations in jar is empty!");
             return;
         }
 
-        defaultLanguagesFiles.forEach(name -> {
+        for (String name : defaultLanguagesFiles) {
             try {
                 plugin.saveResource(name, false);
                 logger.warning("Created " + name + " language file");
@@ -115,7 +117,7 @@ public final class LangManager {
                 e.printStackTrace();
                 logger.severe("Error while copying " + name + " language file!");
             }
-        });
+        }
     }
 
 }

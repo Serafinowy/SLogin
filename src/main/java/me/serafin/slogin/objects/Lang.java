@@ -82,6 +82,7 @@ public class Lang {
     public final String admin_reload_description;
     public final String admin_reload_success;
     public final String admin_reload_error;
+
     public Lang(Properties properties) {
 
         PREFIX = format(properties.getProperty("slogin.misc.prefix"));

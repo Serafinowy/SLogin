@@ -1,8 +1,8 @@
 package me.serafin.slogin.commands.admin;
 
 import me.serafin.slogin.SLogin;
+import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.LangManager;
-import me.serafin.slogin.managers.LoginManager;
 import me.serafin.slogin.objects.Account;
 import me.serafin.slogin.objects.Lang;
 import org.bukkit.command.CommandSender;
@@ -16,11 +16,11 @@ import java.util.Optional;
 public final class PlayerInfoSubCommand implements SubCommand {
 
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final AccountManager accountManager;
 
     public PlayerInfoSubCommand() {
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
     @Override
@@ -55,12 +55,12 @@ public final class PlayerInfoSubCommand implements SubCommand {
             return;
         }
 
-        Optional<Account> account = manager.getAccount(args[1]);
+        Optional<Account> account = accountManager.getAccount(args[1]);
         if (!account.isPresent()) {
             sender.sendMessage(lang.admin_user_notExists);
             return;
         }
 
-        sender.sendMessage(Account.formatData(account.get(), lang.admin_playerInfo_message, lang));
+        sender.sendMessage(AccountManager.formatData(account.get(), lang.admin_playerInfo_message, lang));
     }
 }

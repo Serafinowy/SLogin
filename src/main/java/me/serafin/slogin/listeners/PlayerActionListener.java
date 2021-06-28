@@ -16,17 +16,17 @@ public final class PlayerActionListener implements Listener {
 
     private final ConfigManager config;
     private final LangManager langManager;
-    private final LoginManager manager;
+    private final LoginManager loginManager;
 
     public PlayerActionListener() {
         this.config = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
-        this.manager = SLogin.getInstance().getLoginManager();
+        this.loginManager = SLogin.getInstance().getLoginManager();
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onInteract(PlayerInteractEvent event) {
-        if (!manager.isLogged(event.getPlayer().getName())) {
+        if (!loginManager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
@@ -44,7 +44,7 @@ public final class PlayerActionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent event) {
-        if (!manager.isLogged(event.getPlayer().getName())) {
+        if (!loginManager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
@@ -52,14 +52,14 @@ public final class PlayerActionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onMove(PlayerMoveEvent event) {
-        if (!manager.isLogged(event.getPlayer().getName())) {
+        if (!loginManager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().teleport(event.getFrom());
         }
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onDrop(PlayerDropItemEvent event) {
-        if (!manager.isLogged(event.getPlayer().getName())) {
+        if (!loginManager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
@@ -71,7 +71,7 @@ public final class PlayerActionListener implements Listener {
         if (config.ALLOWED_COMMANDS.contains(cmd))
             return;
 
-        if (!manager.isLogged(event.getPlayer().getName())) {
+        if (!loginManager.isLogged(event.getPlayer().getName())) {
             event.getPlayer().sendMessage(langManager.getLang(event.getPlayer().getLocale()).system_mustLogin);
             event.setCancelled(true);
         }
