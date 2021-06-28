@@ -4,8 +4,8 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.database.MySQL;
 import me.serafin.slogin.database.SQLite;
-import me.serafin.slogin.objects.Account;
-import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.models.Account;
+import me.serafin.slogin.models.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.Bukkit;
 
@@ -54,6 +54,7 @@ public class AccountManager {
 
     /**
      * Creating database from config information.
+     *
      * @return database object
      */
     private DataBase setupDatabase() {

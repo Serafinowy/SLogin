@@ -3,7 +3,7 @@ package me.serafin.slogin.commands.admin;
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
-import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.models.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

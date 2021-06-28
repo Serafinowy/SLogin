@@ -1,8 +1,8 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.objects.Account;
-import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.models.Account;
+import me.serafin.slogin.models.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

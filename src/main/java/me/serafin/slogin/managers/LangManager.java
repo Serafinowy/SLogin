@@ -1,7 +1,7 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.models.Lang;
 import me.serafin.slogin.utils.FileLoader;
 
 import java.io.File;

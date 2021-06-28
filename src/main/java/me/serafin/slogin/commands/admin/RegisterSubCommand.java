@@ -4,7 +4,7 @@ import me.serafin.slogin.SLogin;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
-import me.serafin.slogin.objects.Lang;
+import me.serafin.slogin.models.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
