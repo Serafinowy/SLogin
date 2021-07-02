@@ -185,6 +185,7 @@ public final class LoginManager {
     /**
      * Check if player can register new account. Returns true only if
      * player does not exceed the maximum number of accounts.
+     *
      * @param address - player's IP address
      * @return player can register new account
      */

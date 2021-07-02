@@ -42,6 +42,7 @@ public final class ConfigManager {
 
     /**
      * Getter for config object
+     *
      * @return config object
      */
     public Config getConfig() {

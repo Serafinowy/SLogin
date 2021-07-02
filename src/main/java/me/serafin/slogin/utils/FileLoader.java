@@ -18,7 +18,8 @@ import java.util.zip.ZipInputStream;
 
 public final class FileLoader {
 
-    private FileLoader() { }
+    private FileLoader() {
+    }
 
     /**
      * Checking if YAML file has all needed options. If not,
@@ -31,7 +32,7 @@ public final class FileLoader {
         FileConfiguration configToCheck = YamlConfiguration.loadConfiguration(fileToCheck);
 
         try (InputStream originalIS = SLogin.getInstance().getResource(fileToCheck.getName());
-            InputStreamReader originalReader = new InputStreamReader(originalIS, StandardCharsets.UTF_8)
+             InputStreamReader originalReader = new InputStreamReader(originalIS, StandardCharsets.UTF_8)
         ) {
             boolean hasUpdated = false;
 

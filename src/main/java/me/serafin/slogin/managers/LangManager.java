@@ -111,7 +111,7 @@ public final class LangManager {
             return;
         }
 
-        for (String name: defaultLanguagesFiles) {
+        for (String name : defaultLanguagesFiles) {
             try {
                 plugin.saveResource(name, false);
                 logger.warning("Created " + name + " language file");

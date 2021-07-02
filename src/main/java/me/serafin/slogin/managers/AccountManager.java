@@ -130,9 +130,9 @@ public class AccountManager {
     /**
      * Creating new account
      *
-     * @param displayName player's name
+     * @param displayName    player's name
      * @param hashedPassword player's hashed password
-     * @param IP player's register IP address
+     * @param IP             player's register IP address
      */
     public void createAccount(String displayName, String hashedPassword, String IP) {
         String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
@@ -165,8 +165,8 @@ public class AccountManager {
      * Updating player's account
      *
      * @param displayName player's name
-     * @param dataType type of data to change
-     * @param value    new value
+     * @param dataType    type of data to change
+     * @param value       new value
      */
     public void updateAccount(String displayName, DataType dataType, String value) {
         if (dataType == AccountManager.DataType.PASSWORD) {
