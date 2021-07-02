@@ -14,12 +14,12 @@ import org.bukkit.event.player.*;
 
 public final class PlayerActionListener implements Listener {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final LoginManager loginManager;
 
     public PlayerActionListener() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.loginManager = SLogin.getInstance().getLoginManager();
     }
@@ -68,7 +68,7 @@ public final class PlayerActionListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String cmd = event.getMessage().split(" ")[0].replace("/", "");
-        if (config.getALLOWED_COMMANDS().contains(cmd))
+        if (configManager.getConfig().ALLOWED_COMMANDS.contains(cmd))
             return;
 
         if (!loginManager.isLogged(event.getPlayer().getName())) {

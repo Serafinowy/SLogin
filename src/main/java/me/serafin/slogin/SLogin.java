@@ -38,6 +38,7 @@ public final class SLogin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.configManager = new ConfigManager();
+        this.configManager.loadConfig();
         this.langManager = new LangManager();
         this.langManager.loadLanguages();
 

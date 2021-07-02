@@ -2,6 +2,7 @@ package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
 import me.serafin.slogin.models.Account;
+import me.serafin.slogin.models.Config;
 import me.serafin.slogin.models.Lang;
 import me.serafin.slogin.utils.BCrypt;
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public final class LoginManager {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final AccountManager accountManager;
 
@@ -25,7 +26,7 @@ public final class LoginManager {
 
     public LoginManager() {
         this.langManager = SLogin.getInstance().getLangManager();
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.accountManager = SLogin.getInstance().getAccountManager();
     }
 
@@ -60,35 +61,37 @@ public final class LoginManager {
         player.setInvulnerable(true);
         SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
 
+        Config config = configManager.getConfig();
+
         Optional<Account> account = accountManager.getAccount(player.getName());
         notLoggedPlayers.put(player.getName(), account);
         if (account.isPresent()) {
-            if (config.isCAPTCHA_ON_LOGIN())
+            if (config.CAPTCHA_ON_LOGIN)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (!isLogged(player.getName())) {
-                        if (config.isMESSAGES_CHAT_MESSAGES())
+                        if (config.MESSAGES_CHAT_MESSAGES)
                             player.sendMessage(langManager.getLang(player.getLocale()).auth_login_info);
-                        if (config.isMESSAGES_TITLE_MESSAGES())
+                        if (config.MESSAGES_TITLE_MESSAGES)
                             player.sendTitle(langManager.getLang(player.getLocale()).auth_login_title,
                                     langManager.getLang(player.getLocale()).auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 2 * 20);
         } else {
-            if (config.isCAPTCHA_ON_REGISTER())
+            if (config.CAPTCHA_ON_REGISTER)
                 SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (!isLogged(player.getName())) {
-                        if (config.isMESSAGES_CHAT_MESSAGES())
+                        if (config.MESSAGES_CHAT_MESSAGES)
                             player.sendMessage(langManager.getLang(player.getLocale()).auth_register_info);
-                        if (config.isMESSAGES_TITLE_MESSAGES())
+                        if (config.MESSAGES_TITLE_MESSAGES)
                             player.sendTitle(langManager.getLang(player.getLocale()).auth_register_title,
                                     langManager.getLang(player.getLocale()).auth_register_subTitle, 0, 4 * 20, 10);
                     }
@@ -154,25 +157,26 @@ public final class LoginManager {
         player.setInvulnerable(false);
         SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
 
+        Config config = configManager.getConfig();
         Lang lang = langManager.getLang(player.getLocale());
 
         if (loginType == LoginType.LOGIN) {
-            if (config.isMESSAGES_TITLE_MESSAGES())
+            if (config.MESSAGES_TITLE_MESSAGES)
                 player.sendTitle(lang.auth_login_successTitle, lang.auth_login_successSubTitle, 0, 4 * 10, 10);
-            if (config.isMESSAGES_CHAT_MESSAGES())
+            if (config.MESSAGES_CHAT_MESSAGES)
                 player.sendMessage(lang.auth_login_success);
         }
         if (loginType == LoginType.REGISTER) {
-            if (config.isMESSAGES_TITLE_MESSAGES())
+            if (config.MESSAGES_TITLE_MESSAGES)
                 player.sendTitle(lang.auth_register_successTitle, lang.auth_register_successSubTitle, 0, 4 * 10, 10);
-            if (config.isMESSAGES_CHAT_MESSAGES()) {
+            if (config.MESSAGES_CHAT_MESSAGES) {
                 player.sendMessage(lang.auth_register_success);
             }
         }
 
         Optional<Account> account = notLoggedPlayers.get(player.getName());
         account = account.isPresent() ? account : accountManager.getAccount(player.getName());
-        if (account.isPresent() && config.isEMAIL_NOTIFICATION() && account.get().getEmail() == null) {
+        if (account.isPresent() && config.EMAIL_NOTIFICATION && account.get().getEmail() == null) {
             player.sendMessage(lang.auth_email_notSet);
         }
         notLoggedPlayers.remove(player.getName());
@@ -186,7 +190,8 @@ public final class LoginManager {
      */
     public boolean canRegister(String address) {
         int accountsCount = accountManager.accountIPCount(address);
-        return accountsCount < config.getMAX_ACCOUNTS_PER_IP() || config.getMAX_ACCOUNTS_PER_IP() < 0;
+        int maxAccountsPerIP = configManager.getConfig().MAX_ACCOUNTS_PER_IP;
+        return accountsCount < maxAccountsPerIP || maxAccountsPerIP < 0;
     }
 
     ///////////////////////////////////////

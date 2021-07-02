@@ -1,7 +1,6 @@
 package me.serafin.slogin.commands;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.ConfigManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.managers.LoginManager;
@@ -16,12 +15,12 @@ import java.util.Objects;
 
 public final class RegisterCommand implements CommandExecutor {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final LoginManager loginManager;
 
     public RegisterCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.loginManager = SLogin.getInstance().getLoginManager();
     }
@@ -58,7 +57,7 @@ public final class RegisterCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[0].length() < config.getPASSWORD_MIN_LENGTH() || args[0].length() > config.getPASSWORD_MAX_LENGTH()) {
+        if (args[0].length() < configManager.getConfig().PASSWORD_MIN_LENGTH || args[0].length() > configManager.getConfig().PASSWORD_MAX_LENGTH) {
             player.sendMessage(lang.system_notAllowedPasswordLength);
             return true;
         }

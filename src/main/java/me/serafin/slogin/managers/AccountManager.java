@@ -60,8 +60,8 @@ public class AccountManager {
     private DataBase setupDatabase() {
         DataBase dataBase = null;
         try {
-            assert plugin.getConfigManager().getDATATYPE() != null;
-            if (plugin.getConfigManager().getDATATYPE().equals("MYSQL")) {
+            String dataType = plugin.getConfigManager().getConfig().DATATYPE;
+            if (dataType.equals("MYSQL")) {
                 dataBase = new MySQL(plugin.getConfigManager());
             } else {
                 dataBase = new SQLite(new File(plugin.getDataFolder(), "database.db"));
@@ -76,7 +76,7 @@ public class AccountManager {
                     "`registerDate` BIGINT NOT NULL, " +
                     "`lastLoginIP` TEXT NOT NULL, " +
                     "`lastLoginDate` BIGINT NOT NULL)");
-            plugin.getLogger().info("Connected to the " + plugin.getConfigManager().getDATATYPE() + " database");
+            plugin.getLogger().info("Connected to the " + dataType + " database");
         } catch (SQLException e) {
             e.printStackTrace();
         }

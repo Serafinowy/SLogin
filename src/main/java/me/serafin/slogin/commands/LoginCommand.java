@@ -15,12 +15,12 @@ import java.util.Objects;
 
 public final class LoginCommand implements CommandExecutor {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final LoginManager loginManager;
 
     public LoginCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.loginManager = SLogin.getInstance().getLoginManager();
     }
@@ -55,7 +55,7 @@ public final class LoginCommand implements CommandExecutor {
             loginManager.playerLogged(player, LoginManager.LoginType.LOGIN);
         } else {
             player.sendMessage(lang.system_wrongPassword_chatMessage);
-            if (config.isKICK_ON_WRONG_PASSWORD())
+            if (configManager.getConfig().KICK_ON_WRONG_PASSWORD)
                 player.kickPlayer(lang.system_wrongPassword_kickMessage);
         }
 

@@ -14,12 +14,12 @@ import java.util.List;
 
 public final class RegisterSubCommand implements SubCommand {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final LoginManager loginManager;
 
     public RegisterSubCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.loginManager = SLogin.getInstance().getLoginManager();
     }
@@ -61,7 +61,7 @@ public final class RegisterSubCommand implements SubCommand {
             return;
         }
 
-        if (args[2].length() < config.getPASSWORD_MIN_LENGTH() || args[2].length() > config.getPASSWORD_MAX_LENGTH()) {
+        if (args[2].length() < configManager.getConfig().PASSWORD_MIN_LENGTH || args[2].length() > configManager.getConfig().PASSWORD_MAX_LENGTH) {
             sender.sendMessage(lang.system_notAllowedPasswordLength);
             return;
         }

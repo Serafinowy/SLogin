@@ -16,12 +16,12 @@ import java.util.Optional;
 
 public final class ChangePasswordSubCommand implements SubCommand {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final LangManager langManager;
     private final AccountManager accountManager;
 
     public ChangePasswordSubCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
         this.langManager = SLogin.getInstance().getLangManager();
         this.accountManager = SLogin.getInstance().getAccountManager();
     }
@@ -64,7 +64,7 @@ public final class ChangePasswordSubCommand implements SubCommand {
             return;
         }
 
-        if (args[2].length() < config.getPASSWORD_MIN_LENGTH() || args[2].length() > config.getPASSWORD_MAX_LENGTH()) {
+        if (args[2].length() < configManager.getConfig().PASSWORD_MIN_LENGTH || args[2].length() > configManager.getConfig().PASSWORD_MAX_LENGTH) {
             sender.sendMessage(lang.system_notAllowedPasswordLength);
             return;
         }

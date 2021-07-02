@@ -17,14 +17,14 @@ import java.util.logging.Logger;
 public final class LangManager {
 
     private final SLogin plugin;
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private final Logger logger;
 
     private final HashMap<String, Lang> TRANSLATIONS = new HashMap<>();
 
     public LangManager() {
         this.plugin = SLogin.getInstance();
-        this.config = plugin.getConfigManager();
+        this.configManager = plugin.getConfigManager();
         this.logger = plugin.getLogger();
     }
 
@@ -37,7 +37,7 @@ public final class LangManager {
      */
     public Lang getLang(String locale) {
         Lang lang = TRANSLATIONS.get(locale.toLowerCase());
-        return (!config.isLANGUAGE_AUTO() || lang == null) ? TRANSLATIONS.get(config.getLANGUAGE_DEFAULT().toLowerCase()) : lang;
+        return (!configManager.getConfig().LANGUAGE_AUTO || lang == null) ? TRANSLATIONS.get(configManager.getConfig().LANGUAGE_DEFAULT.toLowerCase()) : lang;
     }
 
     /**
@@ -71,7 +71,7 @@ public final class LangManager {
             logger.severe("Cannot load any translations! SLogin has been disabled!");
             plugin.getPluginLoader().disablePlugin(plugin);
         }
-        if (TRANSLATIONS.get(config.getLANGUAGE_DEFAULT().toLowerCase()) == null) {
+        if (TRANSLATIONS.get(configManager.getConfig().LANGUAGE_DEFAULT.toLowerCase()) == null) {
             logger.severe("Cannot load default translation! SLogin has been disabled!");
             plugin.getPluginLoader().disablePlugin(plugin);
         }

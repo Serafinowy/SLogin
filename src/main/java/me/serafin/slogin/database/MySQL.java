@@ -1,27 +1,29 @@
 package me.serafin.slogin.database;
 
 import me.serafin.slogin.managers.ConfigManager;
+import me.serafin.slogin.models.Config;
 
 import java.sql.*;
 
 public final class MySQL implements DataBase {
 
-    private final ConfigManager config;
+    private final ConfigManager configManager;
     private Connection connection;
 
-    public MySQL(ConfigManager config) {
-        this.config = config;
+    public MySQL(ConfigManager configManager) {
+        this.configManager = configManager;
     }
 
     @Override
     public void openConnection() throws SQLException {
+        Config config = configManager.getConfig();
         if (connection == null || connection.isClosed() || !connection.isValid(3)) {
-            String URL = "jdbc:mysql://" + config.getMYSQL_HOST() + ":"
-                    + config.getMYSQL_PORT() + "/"
-                    + config.getMYSQL_DATABASE() + "?"
-                    + config.getMYSQL_PROPERTIES();
-            String USER = config.getMYSQL_USER();
-            String PASS = config.getMYSQL_PASS();
+            String URL = "jdbc:mysql://" + config.MYSQL_HOST + ":"
+                    + config.MYSQL_PORT + "/"
+                    + config.MYSQL_DATABASE + "?"
+                    + config.MYSQL_PROPERTIES;
+            String USER = config.MYSQL_USER;
+            String PASS = config.MYSQL_PASS;
             connection = DriverManager.getConnection(URL, USER, PASS);
         }
     }

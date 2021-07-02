@@ -11,12 +11,12 @@ import java.util.Map;
 public final class LoginTimeoutManager {
 
     private final HashMap<Player, Integer> loginTimeout = new HashMap<>();
-    private final ConfigManager config;
+    private final ConfigManager configManager;
 
     public LoginTimeoutManager() {
-        this.config = SLogin.getInstance().getConfigManager();
+        this.configManager = SLogin.getInstance().getConfigManager();
 
-        if (config.getLOGIN_TIMEOUT() > 0) {
+        if (configManager.getConfig().LOGIN_TIMEOUT > 0) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -39,12 +39,12 @@ public final class LoginTimeoutManager {
     }
 
     public void addTimeout(Player player) {
-        if (config.getLOGIN_TIMEOUT() > 0)
-            loginTimeout.put(player, config.getLOGIN_TIMEOUT());
+        if (configManager.getConfig().LOGIN_TIMEOUT > 0)
+            loginTimeout.put(player, configManager.getConfig().LOGIN_TIMEOUT);
     }
 
     public void removeTimeout(Player player) {
-        if (config.getLOGIN_TIMEOUT() > 0)
+        if (configManager.getConfig().LOGIN_TIMEOUT > 0)
             loginTimeout.remove(player);
     }
 
