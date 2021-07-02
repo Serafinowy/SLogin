@@ -24,33 +24,37 @@ public final class FileLoader {
      * Checking if YAML file has all needed options. If not,
      * the entire file is overwritten with the default settings.
      *
-     * @param file file to be checked
+     * @param fileToCheck file to be checked
      */
     @SuppressWarnings("ConstantConditions")
-    public static void matchConfig(File file) {
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    public static void matchConfig(File fileToCheck) {
+        FileConfiguration configToCheck = YamlConfiguration.loadConfiguration(fileToCheck);
 
-        try (InputStream is = SLogin.getPlugin(SLogin.class).getResource(file.getName())) {
+        try (InputStream originalIS = SLogin.getInstance().getResource(fileToCheck.getName());
+            InputStreamReader originalReader = new InputStreamReader(originalIS, StandardCharsets.UTF_8)
+        ) {
             boolean hasUpdated = false;
-            assert is != null;
-            InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(isr);
-            for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
-                if (!config.contains(key)) {
-                    config.set(key, defConfig.get(key));
+
+            YamlConfiguration originalConfig = YamlConfiguration.loadConfiguration(originalReader);
+
+            for (String key : originalConfig.getConfigurationSection("").getKeys(true)) {
+                if (!configToCheck.contains(key)) {
+                    configToCheck.set(key, originalConfig.get(key));
                     hasUpdated = true;
                 }
             }
-            for (String key : config.getConfigurationSection("").getKeys(true)) {
-                if (!defConfig.contains(key) && !key.equalsIgnoreCase("recipe-delay")) {
-                    config.set(key, null);
+            for (String key : configToCheck.getConfigurationSection("").getKeys(true)) {
+                if (!originalConfig.contains(key)) {
+                    configToCheck.set(key, null);
                     hasUpdated = true;
                 }
             }
-            if (hasUpdated)
-                config.save(file);
+            if (hasUpdated) {
+                configToCheck.save(fileToCheck);
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            SLogin.getInstance().getLogger().severe("Error while validating " + fileToCheck.getName() + " file");
         }
     }
 
