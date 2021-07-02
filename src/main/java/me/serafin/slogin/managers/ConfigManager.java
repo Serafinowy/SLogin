@@ -23,6 +23,9 @@ public final class ConfigManager {
         }
     }
 
+    /**
+     * Loading config file from plugin's folder
+     */
     public void loadConfig() {
         FileLoader.matchConfig(file);
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
@@ -31,12 +34,16 @@ public final class ConfigManager {
     }
 
     /**
-     * Reloading
+     * Reloading config data
      */
     public void reloadConfig() {
         loadConfig();
     }
 
+    /**
+     * Getter for config object
+     * @return config object
+     */
     public Config getConfig() {
         return config;
     }

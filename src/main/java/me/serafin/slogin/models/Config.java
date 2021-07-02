@@ -30,6 +30,8 @@ public class Config {
     public final boolean CAPTCHA_ON_LOGIN;
     public final boolean KICK_ON_WRONG_PASSWORD;
 
+    ///////////////////////////////////////////
+
     public Config(FileConfiguration configuration) {
         this.LANGUAGE_AUTO = configuration.getBoolean("Language.Auto");
         this.LANGUAGE_DEFAULT = configuration.getString("Language.Default");

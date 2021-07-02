@@ -9,6 +9,7 @@ public class Lang {
     public final String PREFIX;
 
     ///////////////////////////////////////////
+
     public final String misc_onlyForPlayers;
     public final String misc_nullValue;
     public final String system_alreadyLogged;
@@ -20,9 +21,10 @@ public class Lang {
     public final String system_differentPasswords;
     public final String system_alreadyRegistered;
     public final String system_notRegistered;
-    public final String auth_login_info;
 
     ///////////////////////////////////////////
+
+    public final String auth_login_info;
     public final String auth_login_correctUsage;
     public final String auth_login_success;
     public final String auth_login_title;
@@ -30,57 +32,71 @@ public class Lang {
     public final String auth_login_successTitle;
     public final String auth_login_successSubTitle;
     public final String auth_login_timeoutKick;
-    public final String auth_register_info;
 
     ///////////////////////////////////////////
+
+    public final String auth_register_info;
     public final String auth_register_correctUsage;
     public final String auth_register_success;
     public final String auth_register_title;
     public final String auth_register_subTitle;
     public final String auth_register_successTitle;
     public final String auth_register_successSubTitle;
+
+    ///////////////////////////////////////////
+
     public final String auth_changePass_correctUsage;
-
-    ///////////////////////////////////////////
     public final String auth_changePass_success;
-    public final String auth_email_info;
 
     ///////////////////////////////////////////
+
+    public final String auth_email_info;
     public final String auth_email_correctUsage;
     public final String auth_email_changeSuccess;
     public final String auth_email_notSet;
     public final String auth_email_badFormat;
+
+    ///////////////////////////////////////////
+
     public final String captcha_guiName;
-
-    ///////////////////////////////////////////
     public final String captcha_kickMessage;
-    public final String admin_user_notExists;
 
     ///////////////////////////////////////////
+
+    public final String admin_user_notExists;
     public final String admin_user_isNotOnline;
+
     public final String admin_commandList_title;
     public final String admin_commandList_chatFormat;
     public final String admin_commandList_hoverFormat;
+
     public final String admin_playerInfo_correctUsage;
     public final String admin_playerInfo_description;
     public final String admin_playerInfo_message;
+
     public final String admin_changePass_correctUsage;
     public final String admin_changePass_description;
     public final String admin_changePass_success;
+
     public final String admin_forceLogin_correctUsage;
     public final String admin_forceLogin_description;
     public final String admin_forceLogin_success;
     public final String admin_forceLogin_deny;
+
     public final String admin_register_correctUsage;
     public final String admin_register_description;
     public final String admin_register_success;
     public final String admin_register_deny;
+
     public final String admin_unRegister_correctUsage;
     public final String admin_unRegister_description;
     public final String admin_unRegister_success;
+
     public final String admin_reload_description;
     public final String admin_reload_success;
     public final String admin_reload_error;
+
+    ///////////////////////////////////////////
 
     public Lang(Properties properties) {
 
@@ -95,7 +111,6 @@ public class Lang {
         system_maxAccounts = PREFIX + format(properties.getProperty("slogin.system.maxAccounts"));
         system_wrongPassword_chatMessage = PREFIX + format(properties.getProperty("slogin.system.wrongPassword.chatMessage"));
         system_wrongPassword_kickMessage = PREFIX + format(properties.getProperty("slogin.system.wrongPassword.kickMessage"));
-
         system_notAllowedPasswordLength = PREFIX + format(properties.getProperty("slogin.system.notAllowedPasswordLength"));
         system_differentPasswords = PREFIX + format(properties.getProperty("slogin.system.differentPasswords"));
         system_alreadyRegistered = PREFIX + format(properties.getProperty("slogin.system.alreadyRegistered"));

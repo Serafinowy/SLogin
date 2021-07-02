@@ -85,7 +85,9 @@ public final class LangManager {
 
         File[] files = translationsFolder.listFiles();
         if (!translationsFolder.exists() || files == null || files.length == 0) {
-            translationsFolder.mkdir();
+            if (translationsFolder.mkdir()) {
+                logger.info("Created translations folder!");
+            }
             loadDefaults();
         }
 

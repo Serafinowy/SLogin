@@ -33,8 +33,8 @@ public final class ChangePasswordCommand implements CommandExecutor {
             sender.sendMessage(langManager.getLang("default").misc_onlyForPlayers);
             return true;
         }
-        Player player = (Player) sender;
 
+        Player player = (Player) sender;
         Lang lang = langManager.getLang(player.getLocale());
 
         if (args.length != 2) {
