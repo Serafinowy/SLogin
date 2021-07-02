@@ -18,8 +18,7 @@ import java.util.zip.ZipInputStream;
 
 public final class FileLoader {
 
-    private FileLoader() {
-    }
+    private FileLoader() { }
 
     /**
      * Checking if YAML file has all needed options. If not,

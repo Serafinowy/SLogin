@@ -52,20 +52,14 @@ public final class SLoginCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
 
         for (SubCommand subCommand : commands) {
-            if (Utils.isCompatible(Utils.getServerVersion(), "1.12") && sender instanceof Player) {
-                sender.spigot().sendMessage(Utils.sendCommandSuggest(
-                        lang.admin_commandList_chatFormat
-                                .replace("{COMMAND}", subCommand.getSyntax())
-                                .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
-                        lang.admin_commandList_hoverFormat
-                                .replace("{COMMAND}", subCommand.getName())
-                                .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
-                        "/sl " + subCommand.getName() + " "));
-            } else {
-                sender.sendMessage(lang.admin_commandList_chatFormat
-                        .replace("{COMMAND}", subCommand.getSyntax())
-                        .replace("DESCRIPTION", subCommand.getDescription(lang)));
-            }
+            sender.spigot().sendMessage(Utils.sendCommandSuggest(
+                    lang.admin_commandList_chatFormat
+                            .replace("{COMMAND}", subCommand.getSyntax())
+                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                    lang.admin_commandList_hoverFormat
+                            .replace("{COMMAND}", subCommand.getName())
+                            .replace("{DESCRIPTION}", subCommand.getDescription(lang)),
+                    "/sl " + subCommand.getName() + " "));
         }
 
         sender.sendMessage("");

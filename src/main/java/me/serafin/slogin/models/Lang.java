@@ -31,6 +31,7 @@ public class Lang {
     public final String auth_login_subTitle;
     public final String auth_login_successTitle;
     public final String auth_login_successSubTitle;
+    public final String auth_login_timeoutInfo;
     public final String auth_login_timeoutKick;
 
     ///////////////////////////////////////////
@@ -125,6 +126,7 @@ public class Lang {
         auth_login_subTitle = format(properties.getProperty("slogin.auth.login.subTitle"));
         auth_login_successTitle = format(properties.getProperty("slogin.auth.login.successTitle"));
         auth_login_successSubTitle = format(properties.getProperty("slogin.auth.login.successSubTitle"));
+        auth_login_timeoutInfo = format(properties.getProperty("slogin.auth.login.timeoutInfo"));
         auth_login_timeoutKick = format(properties.getProperty("slogin.auth.login.timeoutKick"));
 
         ///////////////////////////////////////////
