@@ -20,6 +20,12 @@ public final class Utils {
     private Utils() {
     }
 
+    /**
+     * Check if given string is in email format.
+     *
+     * @param emailStr string to check
+     * @return true if given string is in email format, false otherwise
+     */
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
@@ -27,6 +33,11 @@ public final class Utils {
 
     ///////////////////////////////////////
 
+    /**
+     * Get latest version of plugin from SpigotMC API.
+     *
+     * @return the String representing the version
+     */
     public static String getLatestVersion() {
         try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=87073").openStream();
              Scanner scanner = new Scanner(inputStream)) {
@@ -39,6 +50,13 @@ public final class Utils {
         return null;
     }
 
+    /**
+     * Checking if curVersion is greater of equals to minVersion.
+     *
+     * @param curVersion current version
+     * @param minVersion minimum working version
+     * @return true if curVersion is greater of equals to minVersion, false otherwise
+     */
     public static boolean isCompatible(String curVersion, String minVersion) {
         String[] curVersionT = curVersion.split("\\.");
         String[] minVersionT = minVersion.split("\\.");
@@ -69,6 +87,15 @@ public final class Utils {
     }
 
     ///////////////////////////////////////
+
+    /**
+     * Creates a text component that displays the tooltip when hovered over and prepares the command when clicked.
+     *
+     * @param text  visible text in component
+     * @param hover content of tooltip
+     * @param cmd   command to be prepared
+     * @return ready text component
+     */
     @SuppressWarnings("deprecation")
     public static TextComponent sendCommandSuggest(String text, String hover, String cmd) {
         TextComponent component = new TextComponent(text);
