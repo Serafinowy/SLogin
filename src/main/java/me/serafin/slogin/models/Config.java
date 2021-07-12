@@ -18,16 +18,22 @@ public class Config {
     public final String MYSQL_PROPERTIES;
 
     public final int MAX_ACCOUNTS_PER_IP;
+
     public final boolean MESSAGES_CHAT_MESSAGES;
     public final boolean MESSAGES_TITLE_MESSAGES;
+
     public final List<String> ALLOWED_COMMANDS;
+
     public final int PASSWORD_MIN_LENGTH;
     public final int PASSWORD_MAX_LENGTH;
+
     public final boolean EMAIL_NOTIFICATION;
+
     public final int LOGIN_TIMEOUT;
 
     public final boolean CAPTCHA_ON_REGISTER;
     public final boolean CAPTCHA_ON_LOGIN;
+
     public final boolean KICK_ON_WRONG_PASSWORD;
 
     ///////////////////////////////////////////
