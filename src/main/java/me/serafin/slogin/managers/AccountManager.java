@@ -117,8 +117,8 @@ public class AccountManager {
                         result.getString("password"),
                         result.getString("email"),
                         result.getString("registerIP"),
-                        result.getString("lastLoginIP"),
                         result.getLong("registerDate"),
+                        result.getString("lastLoginIP"),
                         result.getLong("lastLoginDate")));
             }
         } catch (SQLException exception) {
