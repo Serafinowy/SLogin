@@ -31,28 +31,6 @@ public class AccountManager {
     }
 
     /**
-     * Format placeholders in string.
-     *
-     * @param account player's account
-     * @param pattern string to format
-     * @return formatted string
-     */
-    public static String formatData(Account account, String pattern, Lang lang) {
-
-        String datePattern = "dd.MM.yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
-        Date registerDate = new Date(account.getRegisterDate());
-        Date lastLoginDate = new Date(account.getLastLoginDate());
-
-        return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
-                .replace("{EMAIL}", account.getEmail() == null ? lang.misc_nullValue : account.getEmail())
-                .replace("{REGISTER_IP}", account.getRegisterIP())
-                .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
-                .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
-                .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
-    }
-
-    /**
      * Creating database from config information.
      *
      * @return database object

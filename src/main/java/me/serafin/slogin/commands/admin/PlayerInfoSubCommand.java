@@ -5,6 +5,7 @@ import me.serafin.slogin.managers.AccountManager;
 import me.serafin.slogin.managers.LangManager;
 import me.serafin.slogin.models.Account;
 import me.serafin.slogin.models.Lang;
+import me.serafin.slogin.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -61,6 +62,6 @@ public final class PlayerInfoSubCommand implements SubCommand {
             return;
         }
 
-        sender.sendMessage(AccountManager.formatData(account.get(), lang.admin_playerInfo_message, lang));
+        sender.sendMessage(Utils.formatData(account.get(), lang.admin_playerInfo_message, lang));
     }
 }

@@ -1,5 +1,7 @@
 package me.serafin.slogin.utils;
 
+import me.serafin.slogin.models.Account;
+import me.serafin.slogin.models.Lang;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -8,6 +10,8 @@ import org.bukkit.Bukkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,6 +106,30 @@ public final class Utils {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, cmd));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(hover)}));
         return component;
+    }
+
+    ///////////////////////////////////////
+
+    /**
+     * Format placeholders in string.
+     *
+     * @param account player's account
+     * @param pattern string to format
+     * @return formatted string
+     */
+    public static String formatData(Account account, String pattern, Lang lang) {
+
+        String datePattern = "dd.MM.yyyy HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+        Date registerDate = new Date(account.getRegisterDate());
+        Date lastLoginDate = new Date(account.getLastLoginDate());
+
+        return pattern.replace("{PLAYER}", account.getDisplayName().toUpperCase())
+                .replace("{EMAIL}", account.getEmail() == null ? lang.misc_nullValue : account.getEmail())
+                .replace("{REGISTER_IP}", account.getRegisterIP())
+                .replace("{REGISTER_DATE}", simpleDateFormat.format(registerDate))
+                .replace("{LASTLOGIN_IP}", account.getLastLoginIP())
+                .replace("{LASTLOGIN_DATE}", simpleDateFormat.format(lastLoginDate));
     }
 
 }
