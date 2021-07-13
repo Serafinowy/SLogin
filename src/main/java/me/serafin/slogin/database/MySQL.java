@@ -14,6 +14,11 @@ public final class MySQL implements DataBase {
         this.configManager = configManager;
     }
 
+    /**
+     * Opens database connection
+     *
+     * @throws SQLException if connection can not be opened
+     */
     @Override
     public void openConnection() throws SQLException {
         Config config = configManager.getConfig();
@@ -28,6 +33,11 @@ public final class MySQL implements DataBase {
         }
     }
 
+    /**
+     * Closes database connection
+     *
+     * @throws SQLException if connection can not be closed
+     */
     @Override
     public void closeConnection() throws SQLException {
         if (connection != null && !connection.isClosed()) {
@@ -35,6 +45,13 @@ public final class MySQL implements DataBase {
         }
     }
 
+    /**
+     * Send SQL update prepared statement. Symbol '?' is replaced by parameter
+     *
+     * @param command sql command string
+     * @param params  parameters table
+     * @throws SQLException if statement can not be send
+     */
     @Override
     public void update(String command, String... params) throws SQLException {
         openConnection();
@@ -45,6 +62,14 @@ public final class MySQL implements DataBase {
         statement.executeUpdate();
     }
 
+    /**
+     * Send SQL query prepared statement. Symbol '?' is replaced by parameter
+     *
+     * @param command sql command string
+     * @param params  parameters table
+     * @return result in ResultSet object
+     * @throws SQLException if statement can not be send
+     */
     @Override
     public ResultSet query(String command, String... params) throws SQLException {
         openConnection();
