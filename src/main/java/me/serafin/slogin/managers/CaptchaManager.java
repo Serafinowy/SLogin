@@ -22,34 +22,43 @@ public final class CaptchaManager {
     private final LangManager langManager;
     private final Set<String> tempCaptcha = new HashSet<>();
 
+    private final Random random = new Random();
+
     public CaptchaManager() {
         this.langManager = SLogin.getInstance().getLangManager();
         SLogin.getInstance().getServer().getPluginManager().registerEvents(new Events(), SLogin.getInstance());
     }
 
-    private Inventory inventory(String locale) {
-        Random random = new Random();
-
+    /**
+     * Creates captcha inventory with messages in the player's locale
+     * @param locale player's locale String
+     * @return Inventory object
+     */
+    private Inventory createInventory(String locale) {
+        int correctSlot = random.nextInt(54);
         Material chose = Material.APPLE;
-        int correctSlot = random.nextInt(27);
 
-        Inventory inv = Bukkit.createInventory(null, 54, langManager.getLang(locale).captcha_guiName);
+        Inventory inventory = Bukkit.createInventory(null, 54, langManager.getLang(locale).captcha_guiName);
 
-        for (int i = 0; i < inv.getSize(); i++) {
-            inv.setItem(i, new ItemStack(Material.BARRIER));
+        for (int i = 0; i < inventory.getSize(); i++) {
+            inventory.setItem(i, new ItemStack(Material.BARRIER));
         }
 
-        inv.setItem(correctSlot, new ItemStack(chose));
+        inventory.setItem(correctSlot, new ItemStack(chose));
 
-        return inv;
+        return inventory;
     }
 
+    /**
+     * Adding the player to the captcha database and opening the captcha inventory.
+     * @param player the player to be added to the database
+     */
     public void sendCaptcha(Player player) {
         tempCaptcha.add(player.getName());
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.openInventory(inventory(player.getLocale()));
+                player.openInventory(createInventory(player.getLocale()));
             }
         }.runTaskLater(SLogin.getInstance(), 20);
     }
@@ -67,11 +76,11 @@ public final class CaptchaManager {
                 Player player = (Player) event.getWhoClicked();
 
                 if (!event.getCurrentItem().getType().equals(Material.APPLE)) {
-                    ((Player) event.getWhoClicked()).kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
+                    player.kickPlayer(langManager.getLang(player.getLocale()).captcha_kickMessage);
                 }
 
-                tempCaptcha.remove(event.getWhoClicked().getName());
-                event.getWhoClicked().closeInventory();
+                tempCaptcha.remove(player.getName());
+                player.closeInventory();
             }
         }
 

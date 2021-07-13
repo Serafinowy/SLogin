@@ -45,11 +45,19 @@ public final class LoginTimeoutManager {
         }
     }
 
+    /**
+     * Setting the player's timeout
+     * @param player the player to be added to the database
+     */
     public void addTimeout(Player player) {
         if (configManager.getConfig().LOGIN_TIMEOUT > 0)
             loginTimeout.put(player, configManager.getConfig().LOGIN_TIMEOUT);
     }
 
+    /**
+     * Removing the player's timeout
+     * @param player the player to be removed from the database
+     */
     public void removeTimeout(Player player) {
         if (configManager.getConfig().LOGIN_TIMEOUT > 0)
             loginTimeout.remove(player);
