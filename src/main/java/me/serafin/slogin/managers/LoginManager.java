@@ -72,12 +72,13 @@ public final class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    Lang lang = langManager.getLang(player.getLocale());
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(langManager.getLang(player.getLocale()).auth_login_info);
+                            player.sendMessage(lang.auth_login_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(langManager.getLang(player.getLocale()).auth_login_title,
-                                    langManager.getLang(player.getLocale()).auth_login_subTitle, 0, 4 * 20, 10);
+                            player.sendTitle(lang.auth_login_title,
+                                    lang.auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 2 * 20);
@@ -88,12 +89,13 @@ public final class LoginManager {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    Lang lang = langManager.getLang(player.getLocale());
                     if (!isLogged(player.getName())) {
                         if (config.MESSAGES_CHAT_MESSAGES)
-                            player.sendMessage(langManager.getLang(player.getLocale()).auth_register_info);
+                            player.sendMessage(lang.auth_register_info);
                         if (config.MESSAGES_TITLE_MESSAGES)
-                            player.sendTitle(langManager.getLang(player.getLocale()).auth_register_title,
-                                    langManager.getLang(player.getLocale()).auth_register_subTitle, 0, 4 * 20, 10);
+                            player.sendTitle(lang.auth_register_title,
+                                    lang.auth_register_subTitle, 0, 4 * 20, 10);
                     }
                 }
             }.runTaskLater(SLogin.getInstance(), 2 * 20);
