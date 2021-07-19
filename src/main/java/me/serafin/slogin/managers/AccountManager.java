@@ -5,27 +5,27 @@ import me.serafin.slogin.database.DataBase;
 import me.serafin.slogin.database.MySQL;
 import me.serafin.slogin.database.SQLite;
 import me.serafin.slogin.models.Account;
-import me.serafin.slogin.models.Lang;
 import me.serafin.slogin.utils.BCrypt;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class AccountManager {
 
     private final SLogin plugin;
+    private final Logger logger;
+
     private DataBase dataBase;
 
     public AccountManager() {
         this.plugin = SLogin.getInstance();
+        this.logger = plugin.getLogger();
         this.dataBase = setupDatabase();
         if (dataBase == null) {
-            plugin.getLogger().severe("Error connecting to database! SLogin has been disabled!");
+            logger.severe("Error connecting to database! SLogin has been disabled!");
             plugin.getServer().getPluginManager().disablePlugin(plugin);
         }
     }
@@ -118,7 +118,7 @@ public class AccountManager {
             dataBase.update(command, displayName.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
         } catch (SQLException exception) {
             exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
+            logger.severe("Error at command: " + command);
         }
     }
 
@@ -155,7 +155,7 @@ public class AccountManager {
             dataBase.update(command, value, displayName.toLowerCase());
         } catch (SQLException exception) {
             exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
+            logger.severe("Error at command: " + command);
         }
     }
 
@@ -174,7 +174,7 @@ public class AccountManager {
             dataBase.update(command, displayName.toLowerCase());
         } catch (SQLException exception) {
             exception.printStackTrace();
-            Bukkit.getLogger().severe("Error at command: " + command);
+            logger.severe("Error at command: " + command);
         }
     }
 
