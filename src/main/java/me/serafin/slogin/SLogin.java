@@ -10,6 +10,7 @@ import me.serafin.slogin.listeners.PlayerActionListener;
 import me.serafin.slogin.listeners.PlayerJoinListener;
 import me.serafin.slogin.managers.*;
 import me.serafin.slogin.utils.LoggerFilter;
+import me.serafin.slogin.utils.Metrics;
 import me.serafin.slogin.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public final class SLogin extends JavaPlugin {
 
     @Getter
     private static SLogin instance;
+    private Metrics metrics;
 
     @Getter
     private ConfigManager configManager;
@@ -37,6 +39,8 @@ public final class SLogin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        this.metrics = new Metrics(this, 12160);
+
         this.configManager = new ConfigManager();
         this.configManager.loadConfig();
         this.langManager = new LangManager();
