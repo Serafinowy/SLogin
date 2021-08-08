@@ -19,14 +19,14 @@ import java.util.Set;
 
 public final class CaptchaManager {
 
-    private final LangManager langManager;
+    private final SLogin plugin = SLogin.getInstance();
+    private final LangManager langManager = plugin.getLangManager();
     private final Set<String> tempCaptcha = new HashSet<>();
 
     private final Random random = new Random();
 
     public CaptchaManager() {
-        this.langManager = SLogin.getInstance().getLangManager();
-        SLogin.getInstance().getServer().getPluginManager().registerEvents(new Events(), SLogin.getInstance());
+        plugin.getServer().getPluginManager().registerEvents(new Events(), plugin);
     }
 
     /**

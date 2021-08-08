@@ -16,13 +16,8 @@ import java.util.Optional;
 
 public final class PlayerInfoSubCommand implements SubCommand {
 
-    private final LangManager langManager;
-    private final AccountManager accountManager;
-
-    public PlayerInfoSubCommand() {
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.accountManager = SLogin.getInstance().getAccountManager();
-    }
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
 
     @Override
     public String getName() {

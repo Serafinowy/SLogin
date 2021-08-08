@@ -12,13 +12,8 @@ import java.util.List;
 
 public final class ReloadSubCommand implements SubCommand {
 
-    private final SLogin plugin;
-    private final LangManager langManager;
-
-    public ReloadSubCommand() {
-        plugin = SLogin.getInstance();
-        langManager = plugin.getLangManager();
-    }
+    private final SLogin plugin = SLogin.getInstance();
+    private final LangManager langManager = plugin.getLangManager();
 
     @Override
     public String getName() {

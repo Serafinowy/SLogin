@@ -16,15 +16,9 @@ import java.util.Optional;
 
 public final class ChangePasswordCommand implements CommandExecutor {
 
-    private final ConfigManager config;
-    private final LangManager langManager;
-    private final AccountManager accountManager;
-
-    public ChangePasswordCommand() {
-        this.config = SLogin.getInstance().getConfigManager();
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.accountManager = SLogin.getInstance().getAccountManager();
-    }
+    private final ConfigManager config = SLogin.getInstance().getConfigManager();
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {

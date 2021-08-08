@@ -14,13 +14,8 @@ import java.util.List;
 
 public final class ForceLoginSubCommand implements SubCommand {
 
-    private final LangManager langManager;
-    private final LoginManager loginManager;
-
-    public ForceLoginSubCommand() {
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.loginManager = SLogin.getInstance().getLoginManager();
-    }
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final LoginManager loginManager = SLogin.getInstance().getLoginManager();
 
     @Override
     public String getName() {

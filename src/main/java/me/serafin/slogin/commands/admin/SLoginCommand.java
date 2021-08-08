@@ -18,11 +18,9 @@ import java.util.List;
 public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
     private final ArrayList<SubCommand> commands = new ArrayList<>();
-    private final LangManager langManager;
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
 
     public SLoginCommand() {
-        this.langManager = SLogin.getInstance().getLangManager();
-
         commands.add(new PlayerInfoSubCommand());
         commands.add(new ForceLoginSubCommand());
         commands.add(new RegisterSubCommand());

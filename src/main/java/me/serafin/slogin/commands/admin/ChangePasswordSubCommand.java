@@ -16,15 +16,9 @@ import java.util.Optional;
 
 public final class ChangePasswordSubCommand implements SubCommand {
 
-    private final ConfigManager configManager;
-    private final LangManager langManager;
-    private final AccountManager accountManager;
-
-    public ChangePasswordSubCommand() {
-        this.configManager = SLogin.getInstance().getConfigManager();
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.accountManager = SLogin.getInstance().getAccountManager();
-    }
+    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
 
     @Override
     public String getName() {

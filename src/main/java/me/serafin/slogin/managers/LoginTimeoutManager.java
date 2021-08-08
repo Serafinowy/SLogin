@@ -14,35 +14,37 @@ import java.util.Map;
 public final class LoginTimeoutManager {
 
     private final HashMap<Player, Integer> loginTimeout = new HashMap<>();
-    private final ConfigManager configManager;
+    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
 
     public LoginTimeoutManager() {
-        this.configManager = SLogin.getInstance().getConfigManager();
-
         if (configManager.getConfig().LOGIN_TIMEOUT > 0) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Iterator<Map.Entry<Player, Integer>> iterator = loginTimeout.entrySet().iterator();
-
-                    while (iterator.hasNext()) {
-                        Map.Entry<Player, Integer> entry = iterator.next();
-
-                        loginTimeout.put(entry.getKey(), entry.getValue() - 1);
-
-                        Player player = entry.getKey();
-                        Lang lang = SLogin.getInstance().getLangManager().getLang(player.getLocale());
-
-                        if (entry.getValue() <= 0) {
-                            iterator.remove();
-                            player.kickPlayer(lang.auth_login_timeoutKick);
-                        }
-
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format(lang.auth_login_timeoutInfo, entry.getValue())));
-                    }
-                }
-            }.runTaskTimer(SLogin.getInstance(), 0, 20);
+            runRunnable();
         }
+    }
+
+    private void runRunnable() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Iterator<Map.Entry<Player, Integer>> iterator = loginTimeout.entrySet().iterator();
+
+                while (iterator.hasNext()) {
+                    Map.Entry<Player, Integer> entry = iterator.next();
+
+                    loginTimeout.put(entry.getKey(), entry.getValue() - 1);
+
+                    Player player = entry.getKey();
+                    Lang lang = SLogin.getInstance().getLangManager().getLang(player.getLocale());
+
+                    if (entry.getValue() <= 0) {
+                        iterator.remove();
+                        player.kickPlayer(lang.auth_login_timeoutKick);
+                    }
+
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format(lang.auth_login_timeoutInfo, entry.getValue())));
+                }
+            }
+        }.runTaskTimer(SLogin.getInstance(), 0, 20);
     }
 
     /**

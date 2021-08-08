@@ -10,14 +10,12 @@ import java.io.File;
 
 public final class ConfigManager {
 
-    private final File file;
+    private final File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
     private Config config;
 
     ///////////////////////////////////////////
 
     public ConfigManager() {
-        file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
-
         if (!file.exists()) {
             SLogin.getInstance().saveResource("config.yml", false);
         }

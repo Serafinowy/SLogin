@@ -13,9 +13,9 @@ import java.util.Optional;
 
 public final class LoginManager {
 
-    private final ConfigManager configManager;
-    private final LangManager langManager;
-    private final AccountManager accountManager;
+    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
 
     /**
      * List of not logged in players
@@ -23,12 +23,6 @@ public final class LoginManager {
     private final HashMap<String, Optional<Account>> notLoggedPlayers = new HashMap<>();
 
     ///////////////////////////////////////
-
-    public LoginManager() {
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.configManager = SLogin.getInstance().getConfigManager();
-        this.accountManager = SLogin.getInstance().getAccountManager();
-    }
 
     /**
      * Check if players is logged in

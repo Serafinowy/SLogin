@@ -15,14 +15,12 @@ import java.util.logging.Logger;
 
 public class AccountManager {
 
-    private final SLogin plugin;
-    private final Logger logger;
+    private final SLogin plugin = SLogin.getInstance();
+    private final Logger logger = plugin.getLogger();
 
     private SQL SQL;
 
     public AccountManager() {
-        this.plugin = SLogin.getInstance();
-        this.logger = plugin.getLogger();
         this.SQL = setupDatabase();
         if (SQL == null) {
             logger.severe("Error connecting to database! SLogin has been disabled!");

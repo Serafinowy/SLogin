@@ -16,17 +16,11 @@ import java.util.logging.Logger;
 
 public final class LangManager {
 
-    private final SLogin plugin;
-    private final ConfigManager configManager;
-    private final Logger logger;
+    private final SLogin plugin = SLogin.getInstance();
+    private final ConfigManager configManager = plugin.getConfigManager();
+    private final Logger logger = plugin.getLogger();
 
     private final HashMap<String, Lang> TRANSLATIONS = new HashMap<>();
-
-    public LangManager() {
-        this.plugin = SLogin.getInstance();
-        this.configManager = plugin.getConfigManager();
-        this.logger = plugin.getLogger();
-    }
 
     /**
      * Getting specified Lang

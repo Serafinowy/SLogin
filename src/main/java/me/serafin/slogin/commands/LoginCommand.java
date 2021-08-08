@@ -15,15 +15,9 @@ import java.util.Objects;
 
 public final class LoginCommand implements CommandExecutor {
 
-    private final ConfigManager configManager;
-    private final LangManager langManager;
-    private final LoginManager loginManager;
-
-    public LoginCommand() {
-        this.configManager = SLogin.getInstance().getConfigManager();
-        this.langManager = SLogin.getInstance().getLangManager();
-        this.loginManager = SLogin.getInstance().getLoginManager();
-    }
+    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
+    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final LoginManager loginManager = SLogin.getInstance().getLoginManager();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
