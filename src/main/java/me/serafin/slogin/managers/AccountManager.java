@@ -1,7 +1,7 @@
 package me.serafin.slogin.managers;
 
 import me.serafin.slogin.SLogin;
-import me.serafin.slogin.database.DataBase;
+import me.serafin.slogin.database.SQL;
 import me.serafin.slogin.database.MySQL;
 import me.serafin.slogin.database.SQLite;
 import me.serafin.slogin.models.Account;
@@ -18,13 +18,13 @@ public class AccountManager {
     private final SLogin plugin;
     private final Logger logger;
 
-    private DataBase dataBase;
+    private SQL SQL;
 
     public AccountManager() {
         this.plugin = SLogin.getInstance();
         this.logger = plugin.getLogger();
-        this.dataBase = setupDatabase();
-        if (dataBase == null) {
+        this.SQL = setupDatabase();
+        if (SQL == null) {
             logger.severe("Error connecting to database! SLogin has been disabled!");
             plugin.getServer().getPluginManager().disablePlugin(plugin);
         }
@@ -35,18 +35,18 @@ public class AccountManager {
      *
      * @return database object
      */
-    private DataBase setupDatabase() {
-        DataBase dataBase = null;
+    private SQL setupDatabase() {
+        SQL SQL = null;
         try {
             String dataType = plugin.getConfigManager().getConfig().DATATYPE;
             if (dataType.equals("MYSQL")) {
-                dataBase = new MySQL(plugin.getConfigManager());
+                SQL = new MySQL(plugin.getConfigManager());
             } else {
-                dataBase = new SQLite(new File(plugin.getDataFolder(), "database.db"));
+                SQL = new SQLite(new File(plugin.getDataFolder(), "database.db"));
             }
 
-            dataBase.openConnection();
-            dataBase.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
+            SQL.openConnection();
+            SQL.update("CREATE TABLE IF NOT EXISTS `slogin_accounts`" +
                     "(`name` VARCHAR(255) NOT NULL PRIMARY KEY, " +
                     "`password` VARCHAR(255) NOT NULL, " +
                     "`email` VARCHAR(255) NULL, " +
@@ -58,16 +58,16 @@ public class AccountManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dataBase;
+        return SQL;
     }
 
     /**
      * Closing the database when shutting down the plugin
      */
     public void closeDatabase() {
-        if (dataBase != null) {
+        if (SQL != null) {
             try {
-                dataBase.closeConnection();
+                SQL.closeConnection();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -78,7 +78,7 @@ public class AccountManager {
      * Reloading database
      */
     public void reloadDatabase() {
-        this.dataBase = setupDatabase();
+        this.SQL = setupDatabase();
     }
 
     /**
@@ -88,7 +88,7 @@ public class AccountManager {
      * @return optional player's account
      */
     public Optional<Account> getAccount(String displayName) {
-        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", displayName.toLowerCase())) {
+        try (ResultSet result = SQL.query("SELECT * FROM `slogin_accounts` WHERE `name` = ?", displayName.toLowerCase())) {
             if (result.next()) {
                 return Optional.of(new Account(
                         result.getString("name"),
@@ -115,7 +115,7 @@ public class AccountManager {
     public void createAccount(String displayName, String hashedPassword, String IP) {
         String command = "INSERT INTO `slogin_accounts` (`name`, `password`, `registerIP`, `registerDate`, `lastLoginIP`, `lastLoginDate`) VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            dataBase.update(command, displayName.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
+            SQL.update(command, displayName.toLowerCase(), hashedPassword, IP, System.currentTimeMillis() + "", IP, System.currentTimeMillis() + "");
         } catch (SQLException exception) {
             exception.printStackTrace();
             logger.severe("Error at command: " + command);
@@ -130,7 +130,7 @@ public class AccountManager {
      */
     public int accountIPCount(String address) {
         int count = 0;
-        try (ResultSet result = dataBase.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
+        try (ResultSet result = SQL.query("SELECT * FROM `slogin_accounts` WHERE `registerIP` = ?", address)) {
             while (result.next()) count++;
             return count;
         } catch (SQLException exception) {
@@ -152,7 +152,7 @@ public class AccountManager {
         }
         String command = "UPDATE `slogin_accounts` SET `" + dataType.name + "` = ? WHERE `name` = ?";
         try {
-            dataBase.update(command, value, displayName.toLowerCase());
+            SQL.update(command, value, displayName.toLowerCase());
         } catch (SQLException exception) {
             exception.printStackTrace();
             logger.severe("Error at command: " + command);
@@ -171,7 +171,7 @@ public class AccountManager {
     public void deleteAccount(String displayName) {
         String command = "DELETE FROM `slogin_accounts` WHERE `name` = ?";
         try {
-            dataBase.update(command, displayName.toLowerCase());
+            SQL.update(command, displayName.toLowerCase());
         } catch (SQLException exception) {
             exception.printStackTrace();
             logger.severe("Error at command: " + command);

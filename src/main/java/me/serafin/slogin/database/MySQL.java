@@ -5,7 +5,7 @@ import me.serafin.slogin.models.Config;
 
 import java.sql.*;
 
-public final class MySQL implements DataBase {
+public final class MySQL implements SQL {
 
     private final ConfigManager configManager;
     private Connection connection;

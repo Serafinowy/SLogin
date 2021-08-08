@@ -3,7 +3,7 @@ package me.serafin.slogin.database;
 import java.io.File;
 import java.sql.*;
 
-public final class SQLite implements DataBase {
+public final class SQLite implements SQL {
 
     private final File file;
     private Connection connection;
