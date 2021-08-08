@@ -24,3 +24,11 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+
+tasks.withType<ProcessResources> {
+    filesMatching("**/plugin.yml") {
+        filter {
+            it.replace("\$version", version.toString())
+        }
+    }
+}
