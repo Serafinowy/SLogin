@@ -46,5 +46,6 @@ public final class ReloadSubCommand implements SubCommand {
         plugin.getLangManager().reloadLanguages();
         plugin.getAccountManager().reloadDatabase();
 
+        sender.sendMessage(lang.admin_reload_success);
     }
 }

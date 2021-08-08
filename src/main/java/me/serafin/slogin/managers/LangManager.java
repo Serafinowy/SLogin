@@ -117,9 +117,17 @@ public final class LangManager {
     }
 
     /**
+     * Deletes all languages from translations map.
+     */
+    private void clearLanguages() {
+        TRANSLATIONS.clear();
+    }
+
+    /**
      * Reloads all languages.
      */
     public void reloadLanguages() {
+        clearLanguages();
         loadLanguages();
         SLogin.getInstance().getLogger().info("Reloaded languages files");
     }
