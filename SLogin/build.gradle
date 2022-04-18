@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group "me.serafin.slogin"
+version "1.8.2"
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    compileOnly('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
+    compileOnly('org.apache.logging.log4j:log4j-core:2.14.0')
+
+    compileOnly(fileTree('libs/FastLogin.jar'))
+
+    implementation('org.jetbrains:annotations:20.1.0')
+    compileOnly('org.projectlombok:lombok:1.18.20')
+    annotationProcessor('org.projectlombok:lombok:1.18.20')
+
+    compileOnly('com.github.simplix-softworks:SimplixStorage:3.2.3')
+}
+
+java.targetCompatibility = 8
+java.sourceCompatibility = 8
+
+tasks.withType(ProcessResources) {
+    filesMatching('**/plugin.yml') {
+        filter {
+            it.replace('\$version', version.toString())
+        }
+    }
+}
