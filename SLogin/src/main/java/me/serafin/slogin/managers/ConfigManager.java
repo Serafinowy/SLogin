@@ -29,7 +29,7 @@ public final class ConfigManager {
      * Loading config file from plugin's folder
      */
     public void loadConfig() {
-        FileLoader.matchConfig(file);
+        FileLoader.matchConfig(plugin, file);
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
         this.config = new Config(configuration);
         plugin.getLogger().info("Loaded config file");

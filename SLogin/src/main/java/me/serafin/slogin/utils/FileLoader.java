@@ -28,10 +28,10 @@ public final class FileLoader {
      * @param fileToCheck file to be checked
      */
     @SuppressWarnings("ConstantConditions")
-    public static void matchConfig(File fileToCheck) {
+    public static void matchConfig(SLogin plugin, File fileToCheck) {
         FileConfiguration configToCheck = YamlConfiguration.loadConfiguration(fileToCheck);
 
-        try (InputStream originalIS = SLogin.getInstance().getResource(fileToCheck.getName());
+        try (InputStream originalIS = plugin.getResource(fileToCheck.getName());
              InputStreamReader originalReader = new InputStreamReader(originalIS, StandardCharsets.UTF_8)
         ) {
             boolean hasUpdated = false;
@@ -55,7 +55,7 @@ public final class FileLoader {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            SLogin.getInstance().getLogger().severe("Error while validating " + fileToCheck.getName() + " file");
+            plugin.getLogger().severe("Error while validating " + fileToCheck.getName() + " file");
         }
     }
 
