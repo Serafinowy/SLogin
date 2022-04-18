@@ -10,14 +10,18 @@ import java.io.File;
 
 public final class ConfigManager {
 
-    private final File file = new File(SLogin.getInstance().getDataFolder(), "config.yml");
+    private final SLogin plugin;
+    private final File file;
     private Config config;
 
     ///////////////////////////////////////////
 
-    public ConfigManager() {
+    public ConfigManager(SLogin plugin) {
+        this.plugin = plugin;
+        this.file = new File(plugin.getDataFolder(), "config.yml");
+
         if (!file.exists()) {
-            SLogin.getInstance().saveResource("config.yml", false);
+            plugin.saveResource("config.yml", false);
         }
     }
 
@@ -28,7 +32,7 @@ public final class ConfigManager {
         FileLoader.matchConfig(file);
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
         this.config = new Config(configuration);
-        SLogin.getInstance().getLogger().info("Loaded config file");
+        plugin.getLogger().info("Loaded config file");
     }
 
     /**

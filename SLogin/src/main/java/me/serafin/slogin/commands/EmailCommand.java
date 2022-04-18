@@ -16,8 +16,13 @@ import java.util.Optional;
 
 public final class EmailCommand implements CommandExecutor {
 
-    private final LangManager langManager = SLogin.getInstance().getLangManager();
-    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
+    private final LangManager langManager;
+    private final AccountManager accountManager;
+
+    public EmailCommand(SLogin plugin) {
+        this.langManager = plugin.getLangManager();
+        this.accountManager = plugin.getAccountManager();
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

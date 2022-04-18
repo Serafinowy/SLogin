@@ -19,8 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SLogin extends JavaPlugin {
 
-    @Getter
-    private static SLogin instance;
     private Metrics metrics;
 
     @Getter
@@ -39,22 +37,21 @@ public final class SLogin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
         this.metrics = new Metrics(this, 12160);
 
-        this.configManager = new ConfigManager();
+        this.configManager = new ConfigManager(this);
         this.configManager.loadConfig();
-        this.langManager = new LangManager();
+        this.langManager = new LangManager(this);
         this.langManager.loadLanguages();
 
-        this.accountManager = new AccountManager();
-        this.loginManager = new LoginManager();
+        this.accountManager = new AccountManager(this);
+        this.loginManager = new LoginManager(this);
 
         setupListeners();
         setupCommands();
 
-        this.loginTimeoutManager = new LoginTimeoutManager();
-        this.captchaManager = new CaptchaManager();
+        this.loginTimeoutManager = new LoginTimeoutManager(this);
+        this.captchaManager = new CaptchaManager(this);
 
         new LoggerFilter().registerFilter();
 
@@ -74,18 +71,18 @@ public final class SLogin extends JavaPlugin {
     }
 
     private void setupListeners() {
-        getServer().getPluginManager().registerEvents(new PlayerActionListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerActionListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     }
 
     @SuppressWarnings("all")
     private void setupCommands() {
-        getCommand("register").setExecutor(new RegisterCommand());
-        getCommand("login").setExecutor(new LoginCommand());
-        getCommand("changepassword").setExecutor(new ChangePasswordCommand());
-        getCommand("email").setExecutor(new EmailCommand());
+        getCommand("register").setExecutor(new RegisterCommand(this));
+        getCommand("login").setExecutor(new LoginCommand(this));
+        getCommand("changepassword").setExecutor(new ChangePasswordCommand(this));
+        getCommand("email").setExecutor(new EmailCommand(this));
 
-        getCommand("slogin").setExecutor(new SLoginCommand());
+        getCommand("slogin").setExecutor(new SLoginCommand(this));
     }
 
     private void checkVersion() {

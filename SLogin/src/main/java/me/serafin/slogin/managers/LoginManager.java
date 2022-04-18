@@ -13,9 +13,17 @@ import java.util.Optional;
 
 public final class LoginManager {
 
-    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
-    private final LangManager langManager = SLogin.getInstance().getLangManager();
-    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
+    private final SLogin plugin;
+    private final ConfigManager configManager;
+    private final LangManager langManager;
+    private final AccountManager accountManager;
+
+    public LoginManager(SLogin plugin) {
+        this.plugin = plugin;
+        this.configManager = plugin.getConfigManager();
+        this.langManager = plugin.getLangManager();
+        this.accountManager = plugin.getAccountManager();
+    }
 
     /**
      * List of not logged in players
@@ -53,7 +61,7 @@ public final class LoginManager {
      */
     public void playerJoin(Player player) {
         player.setInvulnerable(true);
-        SLogin.getInstance().getLoginTimeoutManager().addTimeout(player);
+        plugin.getLoginTimeoutManager().addTimeout(player);
 
         Config config = configManager.getConfig();
 
@@ -61,7 +69,7 @@ public final class LoginManager {
         notLoggedPlayers.put(player.getName(), account);
         if (account.isPresent()) {
             if (config.CAPTCHA_ON_LOGIN)
-                SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
+                plugin.getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -75,10 +83,10 @@ public final class LoginManager {
                                     lang.auth_login_subTitle, 0, 4 * 20, 10);
                     }
                 }
-            }.runTaskLater(SLogin.getInstance(), 2 * 20);
+            }.runTaskLater(plugin, 2 * 20);
         } else {
             if (config.CAPTCHA_ON_REGISTER)
-                SLogin.getInstance().getCaptchaManager().sendCaptcha(player);
+                plugin.getCaptchaManager().sendCaptcha(player);
 
             new BukkitRunnable() {
                 @Override
@@ -92,7 +100,7 @@ public final class LoginManager {
                                     lang.auth_register_subTitle, 0, 4 * 20, 10);
                     }
                 }
-            }.runTaskLater(SLogin.getInstance(), 2 * 20);
+            }.runTaskLater(plugin, 2 * 20);
         }
     }
 
@@ -151,7 +159,7 @@ public final class LoginManager {
      */
     public void playerLogged(Player player, LoginType loginType) {
         player.setInvulnerable(false);
-        SLogin.getInstance().getLoginTimeoutManager().removeTimeout(player);
+        plugin.getLoginTimeoutManager().removeTimeout(player);
 
         Config config = configManager.getConfig();
         Lang lang = langManager.getLang(player.getLocale());

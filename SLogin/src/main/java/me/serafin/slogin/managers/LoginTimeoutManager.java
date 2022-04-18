@@ -13,10 +13,14 @@ import java.util.Map;
 
 public final class LoginTimeoutManager {
 
+    private final SLogin plugin;
+    private final ConfigManager configManager;
     private final HashMap<Player, Integer> loginTimeout = new HashMap<>();
-    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
 
-    public LoginTimeoutManager() {
+    public LoginTimeoutManager(SLogin plugin) {
+        this.plugin = plugin;
+        this.configManager = plugin.getConfigManager();
+
         if (configManager.getConfig().LOGIN_TIMEOUT > 0) {
             runRunnable();
         }
@@ -34,7 +38,7 @@ public final class LoginTimeoutManager {
                     loginTimeout.put(entry.getKey(), entry.getValue() - 1);
 
                     Player player = entry.getKey();
-                    Lang lang = SLogin.getInstance().getLangManager().getLang(player.getLocale());
+                    Lang lang = plugin.getLangManager().getLang(player.getLocale());
 
                     if (entry.getValue() <= 0) {
                         iterator.remove();
@@ -44,7 +48,7 @@ public final class LoginTimeoutManager {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(String.format(lang.auth_login_timeoutInfo, entry.getValue())));
                 }
             }
-        }.runTaskTimer(SLogin.getInstance(), 0, 20);
+        }.runTaskTimer(plugin, 0, 20);
     }
 
     /**

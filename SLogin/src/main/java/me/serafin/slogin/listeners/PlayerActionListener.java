@@ -14,9 +14,15 @@ import org.bukkit.event.player.*;
 
 public final class PlayerActionListener implements Listener {
 
-    private final ConfigManager configManager = SLogin.getInstance().getConfigManager();
-    private final LangManager langManager = SLogin.getInstance().getLangManager();
-    private final LoginManager loginManager = SLogin.getInstance().getLoginManager();
+    private final ConfigManager configManager;
+    private final LangManager langManager;
+    private final LoginManager loginManager;
+
+    public PlayerActionListener(SLogin plugin) {
+        this.configManager = plugin.getConfigManager();
+        this.langManager = plugin.getLangManager();
+        this.loginManager = plugin.getLoginManager();
+    }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onInteract(PlayerInteractEvent event) {

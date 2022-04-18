@@ -15,8 +15,13 @@ import java.util.Optional;
 
 public final class UnRegisterSubCommand implements SubCommand {
 
-    private final LangManager langManager = SLogin.getInstance().getLangManager();
-    private final AccountManager accountManager = SLogin.getInstance().getAccountManager();
+    private final LangManager langManager;
+    private final AccountManager accountManager;
+
+    public UnRegisterSubCommand(SLogin plugin) {
+        this.langManager = plugin.getLangManager();
+        this.accountManager = plugin.getAccountManager();
+    }
 
     @Override
     public String getName() {

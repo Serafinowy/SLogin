@@ -18,15 +18,17 @@ import java.util.List;
 public final class SLoginCommand implements CommandExecutor, TabCompleter {
 
     private final ArrayList<SubCommand> commands = new ArrayList<>();
-    private final LangManager langManager = SLogin.getInstance().getLangManager();
+    private final LangManager langManager;
 
-    public SLoginCommand() {
-        commands.add(new PlayerInfoSubCommand());
-        commands.add(new ForceLoginSubCommand());
-        commands.add(new RegisterSubCommand());
-        commands.add(new ChangePasswordSubCommand());
-        commands.add(new UnRegisterSubCommand());
-        commands.add(new ReloadSubCommand());
+    public SLoginCommand(SLogin plugin) {
+        this.langManager = plugin.getLangManager();
+
+        commands.add(new PlayerInfoSubCommand(plugin));
+        commands.add(new ForceLoginSubCommand(plugin));
+        commands.add(new RegisterSubCommand(plugin));
+        commands.add(new ChangePasswordSubCommand(plugin));
+        commands.add(new UnRegisterSubCommand(plugin));
+        commands.add(new ReloadSubCommand(plugin));
     }
 
     @Override
