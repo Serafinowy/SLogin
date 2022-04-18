@@ -121,4 +121,4 @@ gradlew.bat
 build
 
 # Formatted languages file in resources
-/src/main/resources/devonly-en_US.properties
+/SLogin/src/main/resources/devonly-en_US.properties
